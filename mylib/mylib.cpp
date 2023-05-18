@@ -20,7 +20,7 @@ bool Mylib::readInputData(string dirRF, string dirZRV){
     bool rf = in.make_RF_trace_list(dirRF);
 
 
-    bool zrv = true;
+    bool zrv = in.make_ZRV_trace_list(dirZRV);
 
     if (rf && zrv) {
         return true;

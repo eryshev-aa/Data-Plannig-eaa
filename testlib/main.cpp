@@ -14,7 +14,7 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    cout<<"Hello Git!"<<endl;
+    //cout<<"Hello Git!"<<endl;
     QCoreApplication a(argc, argv);
 
 //    QSettings settings("settings.ini", QSettings::IniFormat); // читаем файл настроек из папки сборки. Нужно его туда скопировать!

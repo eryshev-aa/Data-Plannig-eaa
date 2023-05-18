@@ -32,6 +32,7 @@ public:
     InputFileRFHandler();
 
     bool make_RF_trace_list(string dirPath);
+    bool make_ZRV_trace_list(string dirPath);
 
 private:
     void GetFilesInDirectory(vector<string> &out, const string &directory);
