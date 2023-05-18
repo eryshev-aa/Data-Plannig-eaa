@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
 //        return 0;
 //    }
 
-    string dirRF  = "/home/user/qt_projects/planer_new/DATA_Files/Russia2Constellation/";
-    string dirZRV = "/home/user/qt_projects/planer_new/DATA_Files/Facility2Constellation/";
+    string dirRF  = "/home/user/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
+    string dirZRV = "/home/user/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
 
 
     Mylib lib;

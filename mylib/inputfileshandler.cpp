@@ -17,13 +17,8 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath) {
     string line;
 
     for (const auto & entry : std::filesystem::directory_iterator(dirPath)) {
-        std::cout << entry.path() << std::endl;
-}
-
-    //for (const auto & entry : std::filesystem::directory_iterator(dirPath)) {
         //std::cout << "!========== " << entry.path() << std::endl;
-        //ifstream in_RF_file(entry.path());
-        ifstream in_RF_file("123");
+        ifstream in_RF_file(entry.path());
 
         if (in_RF_file.is_open())
         {
@@ -63,7 +58,7 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath) {
             return false;
         }
         in_RF_file.close();
-    //}
+    }
 
 
     return true;
