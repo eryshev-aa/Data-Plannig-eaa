@@ -24,6 +24,17 @@ public:
      */
     Mylib();
 
+    /*! \fn bool readInputData(string dirRF, string dirZRV);
+        \brief Чтение входных данных из файлов с пролетами над РФ и фалов с ЗРВ
+        \param [in] dirRF абсолютный путь к папке с файлами пролетов над РФ
+        \param [in] dirZRV абсолютный путь к папке с файлами с зонами видимости
+        \return false - если возникли проблемы при работе с файлами. Иначе - true.
+    */
+    bool readInputData(string dirRF, string dirZRV);
+
+
+
+    //ниже все старые функции. Пока их не удаляю
     /*! \struct Time
         \brief Структура для ЗРВ
 
@@ -127,6 +138,8 @@ private:
     * \return вектор из пары одного элемента из kp и одного элемента из segments
     */
     vector<pair<Mylib::Time, Mylib::Ppi>> ServiceSatellite(vector<Mylib::Time>segments, vector<Mylib::Ppi>kp);
+
+
 
 private:
     vector <Mylib::Ppi> m_kp = {};

@@ -6,11 +6,30 @@
 #include <QTextStream>
 #include <QFileInfo>
 
+#include "inputfileshandler.h"
+
+using namespace file_RF;
+
 Mylib::Mylib()
 {
-    //m_path=path;
+
 }
 
+bool Mylib::readInputData(string dirRF, string dirZRV){
+    InputFileRFHandler in;
+    bool rf = in.make_RF_trace_list(dirRF);
+
+
+    bool zrv = true;
+
+    if (rf && zrv) {
+        return true;
+    } else
+        return false;
+}
+
+
+    //ниже все старые функции. Пока их не удаляю
 vector <Mylib::Ppi> Mylib::makePpi(string file) {
     QString fileSrt = QString::fromStdString(file);
 
