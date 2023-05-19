@@ -59,7 +59,10 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     continue;
                 } else if (line.find("Russia-To-KinoSat_") != std::string::npos) {
                     int sat_number = std::stoi(line.substr(18,6));  // получаем номер КА
-
+                    Satellite.KA=sat_number;
+                    Satellite.NS=0;
+                    Satellite.filled_inf=0;
+                    Satellite.filled_inf_percent=0.0;
                     tz_current.satellite = sat_number;
                     if (vitok != 0) {
                         prolet.IsUpload(rf_trace_vitok_list);
