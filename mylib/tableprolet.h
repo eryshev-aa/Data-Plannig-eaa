@@ -41,7 +41,7 @@ private:
 };
 }
 
-namespace proletRF {
+namespace proletZRV {
 struct ZRV{ // КА, НС, время начала, время конца, продолжительность.
     struct tm tm_start = {}; ///< время начала ЗРВ без мили секунд
     int milisecs_start; ///< миллисекунды начала ЗРВ

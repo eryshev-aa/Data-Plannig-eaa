@@ -138,7 +138,7 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
 }
 
 bool InputFileRFHandler::make_ZRV_trace_list(string dirPath) {
-    return true;
+    //return true;
     vector <string> files = getFileNamesInDir_FS(dirPath);
     string line;
     string ppi;

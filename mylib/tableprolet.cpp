@@ -2,6 +2,7 @@
 #include <time.h>
 #include <algorithm>
 using namespace proletRF;
+using namespace proletZRV;
 
 TableProletRF::TableProletRF()
 {
