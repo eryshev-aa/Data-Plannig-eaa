@@ -36,8 +36,8 @@ int main(int argc, char *argv[]) {
 //        return 0;
 //    }
 
-    string dirRF  = "/home/user/qt_projects/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
-    string dirZRV = "/home/user/qt_projects/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
+    string dirRF  = "/home/user/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
+    string dirZRV = "/home/user/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
 
 
     Mylib lib;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
 //    if (!lib.sendReady(resultFile.toStdString(), r)) {
 //        return 0;
 //    } else {
-//        std::cout << "Finish!" << std::endl;
+       std::cout << "Finish!" << std::endl;
 //    }
 
     //return a.exec();

@@ -36,7 +36,7 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
         {
             getline(in_RF_file, line);
             std::vector<TimeZone> rf_trace_vitok_list;
-            TableProlet prolet;
+            TableProletRF prolet;
             while (std::getline(in_RF_file, line))
             {
                 if ((line.find("Civil Air Patrol Use Only") != std::string::npos) ||

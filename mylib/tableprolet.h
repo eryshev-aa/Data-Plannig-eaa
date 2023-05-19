@@ -5,14 +5,8 @@
 #include <vector>
 
 namespace proletRF {
-
-struct  BULLETIN_B {
-   int final;       ///< block of Final values
-   int preliminary; ///< block of Preliminary extension
-};
-
 /*!
-   * \brief Набор навигационных систем
+   * \brief Набор состояний спутника
    */
 enum class SATELLITE_TASK {
     WAIT = 0,
@@ -31,15 +25,14 @@ struct TimeZone{
     SATELLITE_TASK task; ///< задача
 };
 
-class TableProlet
+class TableProletRF
 {
 public:
-    TableProlet();
+    TableProletRF();
 
     double TimeDifference(TimeZone zone1, TimeZone zone2);
     double TimeDifference30(TimeZone zone1, TimeZone zone2);
     void IsUpload(std::vector<TimeZone> &rf_trace_vitok_list);
-    bool IsUploadFor1Vitok(TimeZone rf_trace_vitok);
 
 private:
     std::vector <TimeZone> m_prolety_nad_RF;
