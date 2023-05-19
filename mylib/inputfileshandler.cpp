@@ -21,12 +21,13 @@ vector <string> InputFileRFHandler::getFileNamesInDir_FS(string dirName){
     return result;
 }
 
-bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::TimeZoneRF> &rf_trace_list) {
+bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::TimeZoneRF> &rf_trace_list, vector<Satellite> &sattelites_list) {
     //return true;
     vector <string> files = getFileNamesInDir_FS(dirPath);
     string line;
     int vitok = 0;
     proletRF::TimeZoneRF tz_current, tz_previos;
+    proletRF::Satellite satellite;
 
     for (const auto& entry : files) {
         //std::cout << "!========== " << entry.path() << std::endl;
@@ -59,10 +60,10 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     continue;
                 } else if (line.find("Russia-To-KinoSat_") != std::string::npos) {
                     int sat_number = std::stoi(line.substr(18,6));  // получаем номер КА
-                    Satellite.KA=sat_number;
-                    Satellite.NS=0;
-                    Satellite.filled_inf=0;
-                    Satellite.filled_inf_percent=0.0;
+                    satellite.satellite = sat_number;
+                    satellite.filled_inf = 0;
+                    satellite.filled_inf_percent = 0.0;
+                    sattelites_list.push_back(satellite);
                     tz_current.satellite = sat_number;
                     if (vitok != 0) {
                         prolet.IsUpload(rf_trace_vitok_list);

@@ -10,7 +10,7 @@ namespace proletRF {
    * \brief Набор состояний спутника
    */
 enum class SATELLITE_TASK {
-    WAIT = 0,
+    WAIT = 0, ///< Ожидание (ничего не делаем)
     SHOOTING = 1, ///< Съемка (фотографирование)
     UPLOAD = 2,   ///< Сброс данных
 };
@@ -25,11 +25,11 @@ struct TimeZoneRF{
     double duration; ///< продолжительность
     SATELLITE_TASK task; ///< задача
 };
+
 struct Satellite{
-    int KA;
-    int NS;
-    int filled_inf;
-    double filled_inf_percent;
+    int satellite; ///< КА
+    int filled_inf; ///< объем заполненной памяти
+    double filled_inf_percent; ///< объем заполненной памяти в %
 };
 
 class TableProletRF

@@ -19,9 +19,10 @@ Mylib::Mylib()
 bool Mylib::readInputData(string dirRF, string dirZRV){
     vector <proletRF::TimeZoneRF> proletyRF;
     vector <proletZRV::ZRV> proletyZRV;
+    vector<Satellite> sattelites_list;
 
     InputFileRFHandler in;
-    bool rf = in.make_RF_trace_list(dirRF, proletyRF);
+    bool rf = in.make_RF_trace_list(dirRF, proletyRF, sattelites_list);
     bool zrv = in.make_ZRV_trace_list(dirZRV, proletyZRV);
 
     if (rf && zrv) {
