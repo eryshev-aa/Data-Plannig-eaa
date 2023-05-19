@@ -21,12 +21,12 @@ vector <string> InputFileRFHandler::getFileNamesInDir_FS(string dirName){
     return result;
 }
 
-bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::TimeZone> &rf_trace_list) {
+bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::TimeZoneRF> &rf_trace_list) {
     //return true;
     vector <string> files = getFileNamesInDir_FS(dirPath);
     string line;
     int vitok = 0;
-    proletRF::TimeZone tz_current, tz_previos;
+    proletRF::TimeZoneRF tz_current, tz_previos;
 
     for (const auto& entry : files) {
         //std::cout << "!========== " << entry.path() << std::endl;
@@ -35,7 +35,7 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
         if (in_RF_file.is_open())
         {
             getline(in_RF_file, line);
-            std::vector<TimeZone> rf_trace_vitok_list;
+            std::vector<TimeZoneRF> rf_trace_vitok_list;
             TableProletRF prolet;
             while (std::getline(in_RF_file, line))
             {

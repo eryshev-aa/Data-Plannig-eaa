@@ -17,7 +17,7 @@ Mylib::Mylib()
 }
 
 bool Mylib::readInputData(string dirRF, string dirZRV){
-    vector <proletRF::TimeZone> proletyRF;
+    vector <proletRF::TimeZoneRF> proletyRF;
 
     InputFileRFHandler in;
     bool rf = in.make_RF_trace_list(dirRF, proletyRF);

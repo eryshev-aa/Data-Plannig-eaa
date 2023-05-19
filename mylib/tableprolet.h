@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include <vector>
+#include <string>
 
 namespace proletRF {
 /*!
@@ -14,11 +15,11 @@ enum class SATELLITE_TASK {
     UPLOAD = 2,   ///< Сброс данных
 };
 
-struct TimeZone{
-    struct tm tm_start = {}; ///< время начала без мили секунд
-    int milisecs_start; ///< миллисекунды начала
-    struct tm tm_end = {}; ///< время конца без мили секунд
-    int milisecs_end; ///< миллисекунды начала
+struct TimeZoneRF{
+    struct tm tm_start = {}; ///< время начала пролета над РФ без мили секунд
+    int milisecs_start; ///< миллисекунды начала пролета над РФ
+    struct tm tm_end = {}; ///< время конца пролета над РФ без мили секунд
+    int milisecs_end; ///< миллисекунды начала пролета над РФ
     int satellite; ///< КА
     int vitok; ///< виток
     double duration; ///< продолжительность
@@ -30,12 +31,33 @@ class TableProletRF
 public:
     TableProletRF();
 
-    double TimeDifference(TimeZone zone1, TimeZone zone2);
-    double TimeDifference30(TimeZone zone1, TimeZone zone2);
-    void IsUpload(std::vector<TimeZone> &rf_trace_vitok_list);
+    double TimeDifference(TimeZoneRF zone1, TimeZoneRF zone2);
+    double TimeDifference30(TimeZoneRF zone1, TimeZoneRF zone2);
+    void IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list);
 
 private:
-    std::vector <TimeZone> m_prolety_nad_RF;
+    std::vector <TimeZoneRF> m_prolety_nad_RF;
+};
+}
+
+namespace proletRF {
+struct ZRV{ // КА, НС, время начала, время конца, продолжительность.
+    struct tm tm_start = {}; ///< время начала ЗРВ без мили секунд
+    int milisecs_start; ///< миллисекунды начала ЗРВ
+    struct tm tm_end = {}; ///< время конца ЗРВ без мили секунд
+    int milisecs_end; ///< миллисекунды начала ЗРВ
+    int satellite; ///< КА
+    std::string ppi; ///< пункт приема информации (ППИ/НС)
+    double duration; ///< продолжительность
+};
+
+class TableZRV
+{
+public:
+    TableZRV();
+
+private:
+
 };
 }
 #endif // TABLEPROLET_H

@@ -8,7 +8,12 @@ TableProletRF::TableProletRF()
 
 }
 
-double TableProletRF::TimeDifference(TimeZone zone1, TimeZone zone2){
+TableZRV::TableZRV()
+{
+
+}
+
+double TableProletRF::TimeDifference(TimeZoneRF zone1, TimeZoneRF zone2){
     time_t first = mktime(&(zone1.tm_start)) * 1000 + zone1.milisecs_start;
     time_t second = mktime(&(zone2.tm_start)) * 1000 + zone2.milisecs_start;
     double differ = (first - second) / 1000;
@@ -17,7 +22,7 @@ double TableProletRF::TimeDifference(TimeZone zone1, TimeZone zone2){
 }
 
 //добавил себе отдельно функцию, потому что мне нужно вычитать из начала конец.
-double TableProletRF::TimeDifference30(TimeZone zone1, TimeZone zone2){
+double TableProletRF::TimeDifference30(TimeZoneRF zone1, TimeZoneRF zone2){
     time_t first = mktime(&zone1.tm_start) * 1000 + zone1.milisecs_start;
     time_t second = mktime(&zone2.tm_end) * 1000 + zone2.milisecs_end;
     double differ = (first - second);
@@ -26,7 +31,7 @@ double TableProletRF::TimeDifference30(TimeZone zone1, TimeZone zone2){
 }
 
 // если пролет (на ВИТКЕ) с 18:00 до 9:00, то это Сброс (2)
-void TableProletRF::IsUpload(std::vector<TimeZone> &rf_trace_vitok_list) {
+void TableProletRF::IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list) {
     int result = 0;
     for (const auto& vitok : rf_trace_vitok_list) {
         if ((vitok.tm_end.tm_hour >= 18 && vitok.tm_end.tm_min >= 0 && vitok.tm_end.tm_sec >= 0) || (vitok.tm_start.tm_hour < 9 && vitok.tm_start.tm_min >= 0 && vitok.tm_start.tm_sec >= 0)) {

@@ -14,7 +14,7 @@ class InputFileRFHandler
 public:
     InputFileRFHandler();
 
-    bool make_RF_trace_list(string dirPath, vector<proletRF::TimeZone> &rf_trace_list);
+    bool make_RF_trace_list(string dirPath, vector<TimeZoneRF> &rf_trace_list);
     bool make_ZRV_trace_list(string dirPath);
 
 private:
