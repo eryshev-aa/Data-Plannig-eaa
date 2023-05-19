@@ -8,8 +8,8 @@
 #include <QTextStream>
 
 #include <finddatafilenames.h>
-#include <restrictionsparser.h>
-#include <zrvparser.h>
+//#include <restrictionsparser.h>
+//#include <zrvparser.h>
 
 using namespace std;
 
@@ -36,12 +36,13 @@ int main(int argc, char *argv[]) {
 //        return 0;
 //    }
 
-    string dirRF  = "/home/user/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
-    string dirZRV = "/home/user/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
+    string dirRF  = "/home/anton/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
+    string dirZRV = "/home/anton/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
 
 
     Mylib lib;
     lib.readInputData(dirRF,dirZRV);
+
     //lib.readInputData(dirRF,dirZRV);
 
 //    vector <Mylib::Ppi> kp = lib.makePpi(restrictionsFile.toStdString()); // подаем абсолютный путь и имя файла с ограничениями для пунктов передачи информации

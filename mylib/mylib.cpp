@@ -8,7 +8,7 @@
 
 #include "inputfileshandler.h"
 #include "tableprolet.h"
-
+#include <iostream>
 using namespace proletRF;
 
 Mylib::Mylib()
@@ -22,9 +22,20 @@ bool Mylib::readInputData(string dirRF, string dirZRV){
     vector<Satellite> sattelites_list;
 
     InputFileRFHandler in;
+    TableProletRF prol;
     bool rf = in.make_RF_trace_list(dirRF, proletyRF, sattelites_list);
     bool zrv = in.make_ZRV_trace_list(dirZRV, proletyZRV);
-
+    proletyRF=prol.SortTable(proletyRF);
+//    int i=0;
+//    for(const auto& item:proletyRF){
+//        char buffer[80];
+//        strftime(buffer,sizeof(buffer),"%H:%M:%S",&item.tm_start);
+//        std::cout<<buffer<<" "<<item.milisecs_start<<" "<<item.vitok<<std::endl;
+//        i++;
+//        if(i==30){
+//            break;
+//        }
+//    }
     if (rf && zrv) {
         return true;
     } else
@@ -38,7 +49,7 @@ vector <Mylib::Ppi> Mylib::makePpi(string file) {
 
     QFile restrictionsFile(fileSrt);
     if (!restrictionsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        cout << "File restrictions open error" << endl;
+        std::cout << "File restrictions open error" << std::endl;
     }
 
     int i = 0;

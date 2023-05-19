@@ -52,6 +52,7 @@ public:
     double TimeDifference30(TimeZoneRF zone1, TimeZoneRF zone2);
     void IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list);
     static bool Comparator(const TimeZoneRF& zone1,const TimeZoneRF& zone2);
+    static bool ZoneComporator(const TimeZoneRF& zone1,const TimeZoneRF& zone2);
     std::vector<TimeZoneRF> SortTable(std::vector<TimeZoneRF> ProletRF);
     double get_bitrate(SATELLITE_TYPE type);
     double get_tank_size(SATELLITE_TYPE type);
