@@ -137,11 +137,12 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
     return true;
 }
 
-bool InputFileRFHandler::make_ZRV_trace_list(string dirPath) {
+bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list) {
     //return true;
     vector <string> files = getFileNamesInDir_FS(dirPath);
     string line;
     string ppi;
+    proletZRV::ZRV zrv_current;
 
     for (const auto& entry : files) {
         //std::cout << "!========== " << entry.path() << std::endl;
@@ -156,10 +157,10 @@ bool InputFileRFHandler::make_ZRV_trace_list(string dirPath) {
                 if (line.find("Facility-") != std::string::npos) {
                     ppi = line.substr(line.find('-') + 1,50);
                     ppi = ppi.substr(0,ppi.find('-'));
-                    std::cout << ppi << std::endl;
+                    zrv_current.ppi = ppi;
                 } else if (line.find(ppi + "-To-") != std::string::npos) {
                     int sat_number = std::stoi(line.substr(line.find('_') + 1,6));  // получаем номер КА
-                    std::cout << sat_number << std::endl;
+                    zrv_current.satellite = sat_number;
                 } else if ((line.find("------") != std::string::npos) ||
                            (line.find("Access") != std::string::npos) ||
                            (line.find("Min Duration") != std::string::npos) ||             // В нашем алгоритме
@@ -171,8 +172,26 @@ bool InputFileRFHandler::make_ZRV_trace_list(string dirPath) {
                                 continue;
                 } else {
                     string zrv_start_time = line.substr(28,24);
+                    string start = zrv_start_time.substr(0,20);
+                    if (start[0] == ' ') {
+                        start[0] = '0';
+                    }
+                    struct tm tm = {};
+                    istringstream inTime1(start);
+                    inTime1 >> get_time(&tm,"%d %b %Y %H:%M:%S");
+                    zrv_current.tm_start = tm;
+                    zrv_current.milisecs_start = std::stoi(zrv_start_time.substr(21,3));
+
                     string zrv_end_time   = line.substr(56,24);
-                    //previos_rf_trace_end_time = rf_trace_end_time;
+                    string end = zrv_end_time.substr(0,20);
+                    if (end[0] == ' ') {
+                        end[0] = '0';
+                    }
+                    istringstream inTime2(end);
+                    inTime2 >> get_time(&tm,"%d %b %Y %H:%M:%S");
+                    zrv_current.tm_end = tm;
+                    zrv_current.milisecs_end = std::stoi(zrv_end_time.substr(21,3));
+
                     string zrv_duration_str = line.substr(91,7);
                     size_t ptr = -1;
                     double zrv_duration   = std::stod(zrv_duration_str, &ptr);
@@ -180,8 +199,10 @@ bool InputFileRFHandler::make_ZRV_trace_list(string dirPath) {
                         std::replace(zrv_duration_str.begin(), zrv_duration_str.end(), '.', ','); // у меня в Линукс почему-то работает на "," а не на "."
                         zrv_duration = std::stod(zrv_duration_str);
                     }
+                    zrv_current.duration = zrv_duration;
 
-                    std::cout << zrv_start_time << "==" << zrv_end_time << "==" << zrv_duration << std::endl;
+                    zrv_trace_list.push_back(zrv_current);
+                    //std::cout << zrv_start_time << "==" << zrv_end_time << "==" << zrv_duration << std::endl;
                 }
             }
         } else
