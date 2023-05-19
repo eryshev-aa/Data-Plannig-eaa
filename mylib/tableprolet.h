@@ -52,6 +52,18 @@ struct ZRV{ // КА, НС, время начала, время конца, пр�
     double duration; ///< продолжительность
 };
 
+namespace satelliteINF{
+ struct Satellite{
+    int KA;
+    int NS;
+    int duration;
+    struct tm tm_start = {}; ///< время начала ЗРВ без мили секунд
+    int milisecs_start; ///< миллисекунды начала ЗРВ
+    struct tm tm_end = {}; ///< время конца ЗРВ без мили секунд
+    int milisecs_end; ///< миллисекунды начала ЗРВ
+ };
+};
+
 class TableZRV
 {
 public:
