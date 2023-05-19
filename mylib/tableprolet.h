@@ -34,7 +34,8 @@ public:
     double TimeDifference(TimeZoneRF zone1, TimeZoneRF zone2);
     double TimeDifference30(TimeZoneRF zone1, TimeZoneRF zone2);
     void IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list);
-
+    static bool Comparator(const TimeZoneRF& zone1,const TimeZoneRF& zone2);
+    std::vector<TimeZoneRF> SortTable(std::vector<TimeZoneRF> ProletRF);
 private:
     std::vector <TimeZoneRF> m_prolety_nad_RF;
 };

@@ -1,6 +1,6 @@
 #include "tableprolet.h"
 #include <time.h>
-
+#include <algorithm>
 using namespace proletRF;
 
 TableProletRF::TableProletRF()
@@ -48,3 +48,28 @@ void TableProletRF::IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list) {
         }
     }
 }
+
+// компоратор для сравнения двух структур таблицы "пролет"
+bool TableProletRF::Comparator(const TimeZoneRF& zone1,const  TimeZoneRF& zone2){
+    tm zone1_start=zone1.tm_start;
+    tm zone2_start=zone2.tm_start;
+    tm zone1_end=zone1.tm_end;
+    tm zone2_end=zone1.tm_end;
+    time_t first_start = mktime(&zone1_start) * 1000 + zone1.milisecs_start;
+    time_t second_start = mktime(&zone2_start) * 1000 + zone2.milisecs_start;
+    time_t first_end = mktime(&zone1_end) * 1000 + zone1.milisecs_end;
+    time_t second_end = mktime(&zone2_end) * 1000 + zone2.milisecs_end;
+    if(first_start!=second_start){
+        return first_start<second_start;
+    } else if(first_end!=second_end){
+        return first_end<second_end;
+    }else{
+        return false;
+    }
+}
+//функция в которой происходит сортировка таблицы
+std::vector<TimeZoneRF> TableProletRF::SortTable(std::vector<TimeZoneRF> ProletRF){
+    std::sort(ProletRF.begin(), ProletRF.end(), &TableProletRF::Comparator);
+    return ProletRF;
+}
+
