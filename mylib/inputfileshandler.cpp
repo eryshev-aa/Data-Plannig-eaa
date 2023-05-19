@@ -6,26 +6,37 @@
 #include <string>
 #include <algorithm>
 
-using namespace file_RF;
-
 InputFileRFHandler::InputFileRFHandler()
 {
 
 }
 
-bool InputFileRFHandler::make_RF_trace_list(string dirPath) {
-    return true;
-    string line;
-    int vitok = 1;
-    //string previos_rf_trace_end_time;
+vector <string> InputFileRFHandler::getFileNamesInDir_FS(string dirName){
+    vector <string> result;
 
-    for (const auto & entry : std::filesystem::directory_iterator(dirPath)) {
+    for (const auto & entry : std::filesystem::directory_iterator(dirName)) {
+        result.push_back(entry.path());
+    }
+
+    return result;
+}
+
+bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::TimeZone> &rf_trace_list) {
+    //return true;
+    vector <string> files = getFileNamesInDir_FS(dirPath);
+    string line;
+    int vitok = 0;
+    proletRF::TimeZone tz_current, tz_previos;
+
+    for (const auto& entry : files) {
         //std::cout << "!========== " << entry.path() << std::endl;
-        ifstream in_RF_file(entry.path());
+        ifstream in_RF_file(entry);
 
         if (in_RF_file.is_open())
         {
             getline(in_RF_file, line);
+            std::vector<TimeZone> rf_trace_vitok_list;
+            TableProlet prolet;
             while (std::getline(in_RF_file, line))
             {
                 if ((line.find("Civil Air Patrol Use Only") != std::string::npos) ||
@@ -38,26 +49,82 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath) {
                     (line.find("Total Duration") != std::string::npos) ||           // Но может их не просто так дали...?
                     (line.find("Global Statistics") != std::string::npos) ||
                     (line[0] == '\0')) {
-
+                    if (vitok != 0) {
+                        prolet.IsUpload(rf_trace_vitok_list);
+                        for (auto vitok: rf_trace_vitok_list) {
+                            rf_trace_list.push_back(vitok);
+                        }
+                        rf_trace_vitok_list.clear();
+                    }
                     continue;
                 } else if (line.find("Russia-To-KinoSat_") != std::string::npos) {
                     int sat_number = std::stoi(line.substr(18,6));  // получаем номер КА
-                    std::cout << sat_number << std::endl;
+                    tz_current.satellite = sat_number;
+                    if (vitok != 0) {
+                        prolet.IsUpload(rf_trace_vitok_list);
+                        for (auto vitok: rf_trace_vitok_list) {
+                            rf_trace_list.push_back(vitok);
+                        }
+                        rf_trace_vitok_list.clear();
+                    }
+                    vitok = 0;
                 } else {
                     string rf_trace_start_time = line.substr(28,24);
+                    string start = rf_trace_start_time.substr(0,20);
+                    if (start[0] == ' ') {
+                        start[0] = '0';
+                    }
+                    struct tm tm = {};
+                    istringstream inTime1(start);
+                    inTime1 >> get_time(&tm,"%d %b %Y %H:%M:%S");
+                    tz_current.tm_start = tm;
+                    tz_current.milisecs_start = std::stoi(rf_trace_start_time.substr(21,3));
+
                     string rf_trace_end_time   = line.substr(56,24);
-                    //previos_rf_trace_end_time = rf_trace_end_time;
+                    string end = rf_trace_end_time.substr(0,20);
+                    if (end[0] == ' ') {
+                        end[0] = '0';
+                    }
+                    istringstream inTime2(end);
+                    inTime2 >> get_time(&tm,"%d %b %Y %H:%M:%S");
+                    tz_current.tm_end = tm;
+                    tz_current.milisecs_end = std::stoi(rf_trace_end_time.substr(21,3));
+
                     string rf_trace_duration_str = line.substr(91,7);
                     size_t ptr = -1;
-                    double rf_trace_duration   = std::stod(rf_trace_duration_str, &ptr);
+                    double rf_trace_duration = std::stod(rf_trace_duration_str, &ptr);
                     if (ptr = 3) {
                         std::replace(rf_trace_duration_str.begin(), rf_trace_duration_str.end(), '.', ','); // у меня в Линукс почему-то работает на "," а не на "."
                         rf_trace_duration = std::stod(rf_trace_duration_str);
                     }
-//                    if (TimeDifference() > 30 * 60) {
-//                        vitok++;
-//                    }
-                    std::cout << rf_trace_start_time << "==" << rf_trace_end_time << "==" << rf_trace_duration << "==" << vitok << std::endl;
+                    tz_current.duration = rf_trace_duration;
+
+                    if (vitok != 0) {
+                        // нужно сравнить с концом предыдущего пролета
+                        double dif = prolet.TimeDifference30(tz_current,tz_previos);
+                        if (dif > 1800.0) {
+                            prolet.IsUpload(rf_trace_vitok_list);
+                            for (auto vitok: rf_trace_vitok_list) {
+                                rf_trace_list.push_back(vitok);
+                            }
+                            vitok++;
+                            tz_current.vitok = vitok;
+                            rf_trace_vitok_list.clear();
+                            rf_trace_vitok_list.push_back(tz_current);
+                        } else {
+                            tz_current.vitok = vitok;
+                            rf_trace_vitok_list.push_back(tz_current);
+                        }
+                        //
+
+                        tz_previos = tz_current;
+                    } else { //vitok = 0
+                        vitok ++;
+                        tz_current.vitok = vitok;
+                        rf_trace_vitok_list.push_back(tz_current);
+                        tz_previos = tz_current;
+                        //rf_trace_list.push_back(tz_current);
+                    }
                 }
             }
         } else
@@ -70,15 +137,15 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath) {
     return true;
 }
 
-
 bool InputFileRFHandler::make_ZRV_trace_list(string dirPath) {
-    //return true;
+    return true;
+    vector <string> files = getFileNamesInDir_FS(dirPath);
     string line;
     string ppi;
 
-    for (const auto & entry : std::filesystem::directory_iterator(dirPath)) {
+    for (const auto& entry : files) {
         //std::cout << "!========== " << entry.path() << std::endl;
-        ifstream in_ZRV_file(entry.path());
+        ifstream in_ZRV_file(entry);
 
         if (in_ZRV_file.is_open())
         {

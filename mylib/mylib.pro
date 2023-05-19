@@ -11,13 +11,13 @@ CONFIG += c++17
 SOURCES += \
     inputfileshandler.cpp \
     mylib.cpp \
-    table_prolet.cpp
+    tableprolet.cpp
 
 HEADERS += \
     inputfileshandler.h \
     mylib_global.h \
     mylib.h \
-    table_prolet.h
+    tableprolet.h
 
 # Default rules for deployment.
 unix {
