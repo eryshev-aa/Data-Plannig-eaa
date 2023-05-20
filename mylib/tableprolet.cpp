@@ -74,3 +74,20 @@ std::vector<TimeZoneRF> TableProletRF::SortTable(std::vector<TimeZoneRF> ProletR
     return ProletRF;
 }
 
+double TableProletRF::get_bitrate(SATELLITE_TYPE type){
+    if (type == SATELLITE_TYPE::KINOSPUTNIK) {
+        return 1.0;
+    } else if (type == SATELLITE_TYPE::ZORKIY) {
+        return 0.25;
+    } else
+        return 0.0;
+}
+
+double TableProletRF::get_tank_size(SATELLITE_TYPE type){
+    if (type == SATELLITE_TYPE::KINOSPUTNIK) {
+        return 1024.0;
+    } else if (type == SATELLITE_TYPE::ZORKIY) {
+        return 512.0;
+    } else
+        return 0.0;
+}

@@ -26,10 +26,21 @@ struct TimeZoneRF{
     SATELLITE_TASK task; ///< задача
 };
 
+/*!
+   * \brief Набор типов спетников
+   */
+enum class SATELLITE_TYPE {
+    KINOSPUTNIK = 0, ///< Киноспутник
+    ZORKIY = 1, ///< Зоркий
+};
+
 struct Satellite{
     int satellite; ///< КА
-    int filled_inf; ///< объем заполненной памяти
+    SATELLITE_TYPE type; ///< тип КА
+    int filled_inf; ///< объем заполненной памяти в Гбит
     double filled_inf_percent; ///< объем заполненной памяти в %
+    int tank; ///< размер памяти в Гбит
+    int bitrate; ///< скорость передечи в Гбит/с
 };
 
 class TableProletRF
@@ -42,6 +53,9 @@ public:
     void IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list);
     static bool Comparator(const TimeZoneRF& zone1,const TimeZoneRF& zone2);
     std::vector<TimeZoneRF> SortTable(std::vector<TimeZoneRF> ProletRF);
+    double get_bitrate(SATELLITE_TYPE type);
+    double get_tank_size(SATELLITE_TYPE type);
+
 private:
     std::vector <TimeZoneRF> m_prolety_nad_RF;
 };

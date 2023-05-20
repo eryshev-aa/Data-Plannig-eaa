@@ -21,9 +21,31 @@ vector <string> InputFileRFHandler::getFileNamesInDir_FS(string dirName){
     return result;
 }
 
+vector <string> InputFileRFHandler::getFileNamesInDir_QDir(string dirName){
+    vector <string> result;
+
+    QFileInfoList filesList;
+    QDir filesDir(QString::fromStdString(dirName));
+    filesDir.setFilter(QDir::Files);
+    filesList = filesDir.entryInfoList();
+    if (filesList.count() > 0) {
+        for (int i = 0; i < filesList.size(); ++i) {
+            QFileInfo fileInfo = filesList.at(i);
+            result.push_back(fileInfo.absolutePath().toStdString() + "/" + fileInfo.fileName().toStdString());
+        }
+    } else {
+        cout << "Data folder " << dirName << " is empty!" << endl;
+        result.clear();
+        return result;
+    }
+
+    return result;
+}
+
 bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::TimeZoneRF> &rf_trace_list, vector<Satellite> &sattelites_list) {
     //return true;
-    vector <string> files = getFileNamesInDir_FS(dirPath);
+    //vector <string> files = getFileNamesInDir_FS(dirPath); //gcc: filesistem
+    vector <string> files = getFileNamesInDir_QDir(dirPath); //gcc+MinGW: QDir
     string line;
     int vitok = 0;
     proletRF::TimeZoneRF tz_current, tz_previos;
@@ -63,6 +85,9 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     satellite.satellite = sat_number;
                     satellite.filled_inf = 0;
                     satellite.filled_inf_percent = 0.0;
+                    satellite.type = SATELLITE_TYPE::KINOSPUTNIK;
+                    satellite.bitrate = prolet.get_bitrate(SATELLITE_TYPE::KINOSPUTNIK);
+                    satellite.tank = prolet.get_tank_size(SATELLITE_TYPE::KINOSPUTNIK);
                     sattelites_list.push_back(satellite);
                     tz_current.satellite = sat_number;
                     if (vitok != 0) {

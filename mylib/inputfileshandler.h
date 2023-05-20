@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 
+#include <QDir>
+#include <QFileInfo>
+
 #include "tableprolet.h"
 
 using namespace std;
@@ -19,7 +22,8 @@ public:
     bool make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list);
 
 private:
-    vector <string> getFileNamesInDir_FS(string dirName);
+    vector <string> getFileNamesInDir_FS(string dirName); //gcc: filesistem
+    vector <string> getFileNamesInDir_QDir(string dirName); //gcc+MinGW: QDir
 };
 
 #endif // INPUTFILESHANDLER_H
