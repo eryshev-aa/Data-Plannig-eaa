@@ -110,7 +110,7 @@ double TableProletRF::get_tank_size(SATELLITE_TYPE type){
 }
 
 bool TableZRV::ZRVComporator(const proletZRV::ZRV& zone1,const proletZRV::ZRV& zone2){
-    return zone1.duration<zone2.duration;
+    return zone1.duration>zone2.duration;
 }
 
 std::vector<proletZRV::ZRV> TableZRV::SortZRV(std::vector<proletZRV::ZRV>tableZRV){
