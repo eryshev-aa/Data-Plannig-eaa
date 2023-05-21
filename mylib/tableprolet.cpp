@@ -78,7 +78,7 @@ bool TableProletRF::ZoneComporator(const TimeZoneRF& zone1,const TimeZoneRF& zon
 std::vector<TimeZoneRF> TableProletRF::SortTable(std::vector<TimeZoneRF> ProletRF){
     std::sort(ProletRF.begin(), ProletRF.end(), &TableProletRF::Comparator);
     // добавить в однук сортировку не получилось иначе происходит "каша" с данными
-    std::sort(ProletRF.begin(), ProletRF.end(), &TableProletRF::ZoneComporator);
+    //std::sort(ProletRF.begin(), ProletRF.end(), &TableProletRF::ZoneComporator);
     return ProletRF;
 }
 

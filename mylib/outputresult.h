@@ -6,6 +6,12 @@
 #include <fstream>
 #include <iostream>
 
+template <typename SATELLITE_TYPE>
+auto as_integer(SATELLITE_TYPE const value)
+    -> typename std::underlying_type<SATELLITE_TYPE>::type
+{
+    return static_cast<typename std::underlying_type<SATELLITE_TYPE>::type>(value);
+}
 /*!
  * \brief Класс для вывода результатов в файл
  */
@@ -21,6 +27,8 @@ public:
 
 private:
     std::string m_out_file_name;
+
+    std::string makeOutputStringMsec(int msec);
 };
 
 #endif // OUTPUTRESULT_H
