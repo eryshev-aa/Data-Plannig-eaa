@@ -1,6 +1,7 @@
 #include "tableprolet.h"
 #include <time.h>
 #include <algorithm>
+#include <iostream>
 using namespace proletRF;
 using namespace proletZRV;
 
@@ -52,18 +53,26 @@ void TableProletRF::IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list) {
 
 // компоратор для сравнения двух структур таблицы "пролет"
 bool TableProletRF::Comparator(const TimeZoneRF& zone1,const  TimeZoneRF& zone2){
-    tm zone1_start=zone1.tm_start;
-    tm zone2_start=zone2.tm_start;
-    tm zone1_end=zone1.tm_end;
-    tm zone2_end=zone1.tm_end;
-    time_t first_start = mktime(&zone1_start) * 1000 + zone1.milisecs_start;
-    time_t second_start = mktime(&zone2_start) * 1000 + zone2.milisecs_start;
-    time_t first_end = mktime(&zone1_end) * 1000 + zone1.milisecs_end;
-    time_t second_end = mktime(&zone2_end) * 1000 + zone2.milisecs_end;
-    if(first_start!=second_start){
-        return first_start<second_start;
-    } else if(first_end!=second_end){
-        return first_end<second_end;
+    char start1 [80];
+    char end1 [80];
+    strftime (start1, 80, "%d.%m.%Y %H:%M:%S.",&zone1.tm_start);
+    strftime (end1, 80, "%d.%m.%Y %H:%M:%S.",&zone1.tm_end);
+    std::string buff1_start(start1);
+    std::string buff1_end(end1);
+    buff1_start+=std::to_string(zone1.milisecs_start);
+    buff1_end+=std::to_string(zone1.milisecs_end);
+    char start2 [80];
+    char end2 [80];
+    strftime (start2, 80, "%d.%m.%Y %H:%M:%S.",&zone2.tm_start);
+    strftime (end2, 80, "%d.%m.%Y %H:%M:%S.",&zone2.tm_end);
+    std::string buff2_start(start2);
+    std::string buff2_end(end2);
+    buff2_start+=std::to_string(zone2.milisecs_start);
+    buff2_end+=std::to_string(zone2.milisecs_end);
+    if(buff1_start!=buff2_start){
+        return buff1_start<buff2_start;
+    } else if(buff1_end!=buff2_end){
+        return buff1_end<buff2_end;
     }else{
         return false;
     }
@@ -99,3 +108,22 @@ double TableProletRF::get_tank_size(SATELLITE_TYPE type){
     } else
         return 0.0;
 }
+
+bool TableZRV::ZRVComporator(const proletZRV::ZRV& zone1,const proletZRV::ZRV& zone2){
+    return zone1.duration>zone2.duration;
+}
+
+std::vector<proletZRV::ZRV> TableZRV::SortZRV(std::vector<proletZRV::ZRV>tableZRV){
+    std::sort(tableZRV.begin(),tableZRV.end(),&TableZRV::ZRVComporator);
+    return tableZRV;
+}
+
+//void TableProletRF::analyze_task(std::vector<TimeZoneRF>&ProletRF){
+//    for(auto sat: ProletRF){
+//        if(sat.task ==2){
+
+//        }else if(sat.task==0){
+
+//        }
+//    }
+//}

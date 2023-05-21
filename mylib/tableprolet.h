@@ -56,6 +56,7 @@ public:
     std::vector<TimeZoneRF> SortTable(std::vector<TimeZoneRF> ProletRF);
     double get_bitrate(SATELLITE_TYPE type);
     double get_tank_size(SATELLITE_TYPE type);
+    void analyze_task(std::vector<TimeZoneRF>& ProletRF);
 
 private:
     std::vector <TimeZoneRF> m_prolety_nad_RF;
@@ -78,7 +79,8 @@ class TableZRV
 {
 public:
     TableZRV();
-
+    static bool ZRVComporator(const proletZRV::ZRV& zone1,const proletZRV::ZRV& zone2);
+    std::vector<proletZRV::ZRV> SortZRV(std::vector<proletZRV::ZRV> tableZRV);
 private:
 
 };
