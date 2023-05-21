@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['end_5ftime_39',['end_time',['../struct_mylib_1_1_time.html#a6a57a564d5c0cd3b3ee7574fc2297968',1,'Mylib::Time::end_time()'],['../struct_mylib_1_1_ans_vector.html#ad1aa3cb1d0a33d5efd3652e56d75279b',1,'Mylib::AnsVector::end_time()']]],
-  ['end_5ftransfer_40',['end_transfer',['../struct_mylib_1_1_time.html#a8be5eeeb6fb9449887994994003bd472',1,'Mylib::Time']]]
+  ['duration_68',['duration',['../structprolet_r_f_1_1_time_zone_r_f.html#a5bc619921390b2903c61b3244f29571c',1,'proletRF::TimeZoneRF::duration()'],['../structprolet_z_r_v_1_1_z_r_v.html#a22dd98313072ca4c4d955e24fa919cff',1,'proletZRV::ZRV::duration()']]]
 ];

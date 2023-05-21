@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['work_5ftime_23',['work_time',['../struct_mylib_1_1_time.html#aef22a1b3d9f79b9d11a05b76eec845ff',1,'Mylib::Time']]]
+  ['readinputdata_24',['readInputData',['../class_mylib.html#a7331e6f09351097919df12c6cc168cf9',1,'Mylib']]],
+  ['readzrv_25',['readZRV',['../class_mylib.html#afd0dc866cb87f7f7a41cb65429ecfd4f',1,'Mylib']]]
 ];

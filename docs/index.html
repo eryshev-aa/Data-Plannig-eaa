@@ -20,8 +20,10 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Planer
+   &#160;<span id="projectnumber">1.0</span>
    </div>
    <div id="projectbrief">12. Сервис планирования передачи данных от космических аппаратов на земные станции</div>
   </td>
@@ -66,8 +68,49 @@ $(function() {
 <div class="title">Planer </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> Планировщик передачи данных от КА на станции </p>
-</div></div><!-- PageDoc -->
+<div class="textblock"><p><a class="anchor" id="md_README"></a> Планировщик передачи данных от КА на станции</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Входные данные</h1>
+<ol type="1">
+<li>Файлы с пролетами спутников над РФ</li>
+<li>Файлы с зонами радиовидимости</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Как использовать</h1>
+<ol type="1">
+<li>Подключите библиотеку <code>mylib</code> к Вашему проекту</li>
+<li>Укажите абсолютные пути к папкам с фходными файлами</li>
+<li>Поочередно вызовите следующие методы:</li>
+</ol>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<p>Пример: </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">#include &lt;mylib.h&gt;</div>
+<div class="line">#include &lt;finddatafilenames.h&gt;</div>
+<div class="line"> </div>
+<div class="line">#include &lt;iostream&gt;</div>
+<div class="line"> </div>
+<div class="line">using namespace std;</div>
+<div class="line"> </div>
+<div class="line">int main(int argc, char *argv[]) {</div>
+<div class="line">    QCoreApplication a(argc, argv);</div>
+<div class="line"> </div>
+<div class="line">    string dirRF  = &quot;/home/user/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/&quot;;</div>
+<div class="line">    string dirZRV = &quot;/home/user/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/&quot;;</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">    Mylib lib;</div>
+<div class="line">    lib.readInputData(dirRF,dirZRV);</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; &quot;Finish!&quot; &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    a.exit();</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

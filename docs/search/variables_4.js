@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['max_5fstart_5ftime_42',['max_start_time',['../struct_mylib_1_1_time.html#a92b04cf9ba725c2f31f8b6be57252d7a',1,'Mylib::Time']]]
+  ['filled_5finf_71',['filled_inf',['../structprolet_r_f_1_1_satellite.html#aa3219a21cb4901eb81c9699bc871a101',1,'proletRF::Satellite']]],
+  ['filled_5finf_5fpercent_72',['filled_inf_percent',['../structprolet_r_f_1_1_satellite.html#aefeee7d1a1f69f835c9177b2adcdd784',1,'proletRF::Satellite']]]
 ];

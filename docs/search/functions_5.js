@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['sendready_35',['sendReady',['../class_mylib.html#aa52e63496324c016fd1ca39e9958190f',1,'Mylib']]],
-  ['servicesatellite_36',['ServiceSatellite',['../class_mylib.html#aa35ecd989635c2101abf94088310f8da',1,'Mylib']]]
+  ['sendready_63',['sendReady',['../class_mylib.html#aa52e63496324c016fd1ca39e9958190f',1,'Mylib']]],
+  ['servicesatellite_64',['ServiceSatellite',['../class_mylib.html#a1eb51d7818aa363a1f0bcaf81834c72b',1,'Mylib']]]
 ];

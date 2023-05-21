@@ -9,6 +9,8 @@
 #include <iostream>
 #include <algorithm>
 
+#include "tableprolet.h"
+
 #include <QFile>
 
 using namespace std;
@@ -24,7 +26,7 @@ public:
      */
     Mylib();
 
-    /*! \fn bool readInputData(string dirRF, string dirZRV);
+    /*! \fn bool readInputData(string dirRF, string dirZRV)
         \brief Чтение входных данных из файлов с пролетами над РФ и фалов с ЗРВ
         \param [in] dirRF абсолютный путь к папке с файлами пролетов над РФ
         \param [in] dirZRV абсолютный путь к папке с файлами с зонами видимости
@@ -32,7 +34,13 @@ public:
     */
     bool readInputData(string dirRF, string dirZRV);
 
-
+    /*! \fn bool planning()
+        \brief Чтение входных данных из файлов с пролетами над РФ и фалов с ЗРВ
+        \param [in] dirRF абсолютный путь к папке с файлами пролетов над РФ
+        \param [in] dirZRV абсолютный путь к папке с файлами с зонами видимости
+        \return false - если возникли проблемы в работе. Иначе - true.
+    */
+    bool planning();
 
     //ниже все старые функции. Пока их не удаляю
     /*! \struct Time
@@ -142,6 +150,11 @@ private:
 
 
 private:
+    vector <proletRF::TimeZoneRF> m_proletyRF;
+    vector <proletZRV::ZRV> m_proletyZRV;
+    vector <proletRF::Satellite> m_sattelites_list;
+
+    //ниже все старое. Пока их не удаляю
     vector <Mylib::Ppi> m_kp = {};
     vector <Mylib::Time> m_segments = {};
 };

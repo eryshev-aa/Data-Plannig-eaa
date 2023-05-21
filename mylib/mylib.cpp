@@ -7,9 +7,10 @@
 #include <QFileInfo>
 
 #include "inputfileshandler.h"
-#include "tableprolet.h"
+
+#include "outputresult.h"
 #include <iostream>
-using namespace proletRF;
+//using namespace proletRF;
 
 Mylib::Mylib()
 {
@@ -17,15 +18,11 @@ Mylib::Mylib()
 }
 
 bool Mylib::readInputData(string dirRF, string dirZRV){
-    vector <proletRF::TimeZoneRF> proletyRF;
-    vector <proletZRV::ZRV> proletyZRV;
-    vector<Satellite> sattelites_list;
-
     InputFileRFHandler in;
-    TableProletRF prol;
-    bool rf = in.make_RF_trace_list(dirRF, proletyRF, sattelites_list);
-    bool zrv = in.make_ZRV_trace_list(dirZRV, proletyZRV);
-    proletyRF=prol.SortTable(proletyRF);
+
+    bool rf = in.make_RF_trace_list(dirRF, m_proletyRF, m_sattelites_list);
+    bool zrv = in.make_ZRV_trace_list(dirZRV, m_proletyZRV);
+
 //    int i=0;
 //    for(const auto& item:proletyRF){
 //        char buffer[80];
@@ -40,6 +37,16 @@ bool Mylib::readInputData(string dirRF, string dirZRV){
         return true;
     } else
         return false;
+}
+
+bool Mylib::planning(){
+    TableProletRF prol;
+    m_proletyRF = prol.SortTable(m_proletyRF);
+
+    OutputResult out("/home/user/ProfIT-Data-Plannig/result.txt");
+    out.makeProletRFFile("/home/user/ProfIT-Data-Plannig/proletRF.txt",m_proletyRF);
+
+    return true;
 }
 
 

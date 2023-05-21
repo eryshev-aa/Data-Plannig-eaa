@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['kp_8',['kp',['../struct_mylib_1_1_ppi.html#aa66e62691e1f178b762b3c1e9866d3cb',1,'Mylib::Ppi::kp()'],['../struct_mylib_1_1_ans_vector.html#ab90497d6bdf45e03e661472200609959',1,'Mylib::AnsVector::kp()']]]
+  ['filled_5finf_10',['filled_inf',['../structprolet_r_f_1_1_satellite.html#aa3219a21cb4901eb81c9699bc871a101',1,'proletRF::Satellite']]],
+  ['filled_5finf_5fpercent_11',['filled_inf_percent',['../structprolet_r_f_1_1_satellite.html#aefeee7d1a1f69f835c9177b2adcdd784',1,'proletRF::Satellite']]]
 ];

@@ -11,12 +11,14 @@ CONFIG += c++17
 SOURCES += \
     inputfileshandler.cpp \
     mylib.cpp \
+    outputresult.cpp \
     tableprolet.cpp
 
 HEADERS += \
     inputfileshandler.h \
     mylib_global.h \
     mylib.h \
+    outputresult.h \
     tableprolet.h
 
 # Default rules for deployment.
