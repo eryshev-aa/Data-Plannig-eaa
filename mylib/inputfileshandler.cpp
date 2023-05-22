@@ -1,7 +1,7 @@
 #include "inputfileshandler.h"
 
 #include <fstream>
-//#include <filesystem>
+//#include <filesystem> //getFileNamesInDir_FS // gcc
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -121,6 +121,14 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     tz_current.tm_end = tm;
                     tz_current.milisecs_end = std::stoi(rf_trace_end_time.substr(21,3));
 
+                    if ((tz_current.tm_end.tm_hour >= 18 && tz_current.tm_end.tm_min >= 0 && tz_current.tm_end.tm_sec >= 0) ||
+                        (tz_current.tm_start.tm_hour < 9 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0)) {
+                        //tz_current.task = SATELLITE_TASK::UPLOAD;
+                        continue;
+                    } else {
+                        tz_current.task = SATELLITE_TASK::WAIT;
+                    }
+
                     string rf_trace_duration_str = line.substr(91,7);
                     size_t ptr = -1;
                     double rf_trace_duration = std::stod(rf_trace_duration_str, &ptr);
@@ -130,12 +138,7 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     }
                     tz_current.duration = rf_trace_duration;
 
-                    if ((tz_current.tm_end.tm_hour >= 18 && tz_current.tm_end.tm_min >= 0 && tz_current.tm_end.tm_sec >= 0) ||
-                        (tz_current.tm_start.tm_hour < 9 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0)) {
-                        tz_current.task = SATELLITE_TASK::UPLOAD;
-                    } else {
-                        tz_current.task = SATELLITE_TASK::WAIT;
-                    }
+
 
                     rf_trace_list.push_back(tz_current);
 //                    if (vitok != 0) {

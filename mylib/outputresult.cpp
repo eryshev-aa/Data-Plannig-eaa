@@ -53,8 +53,8 @@ void OutputResult::makeProletRFFile(std::string out_file_name, std::vector <prol
     char end [80];
 
     //fout << " Access  *sat_n   *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur     * vit * task" << std::endl;
-    fout << " Access  *sat_n   *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur     * task" << std::endl;
-    fout << "--------------------------------------------------------------------------------------" << std::endl;
+    fout << " Access  *sat_n   *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur" << std::endl;
+    fout << "---------------------------------------------------------------------------" << std::endl;
     fout << std::flush;
 
     for (auto entry: prolet)
@@ -68,8 +68,7 @@ void OutputResult::makeProletRFFile(std::string out_file_name, std::vector <prol
              << entry.satellite << "   "
              << start << makeOutputStringMsec(entry.milisecs_start) << "   "
              << end << makeOutputStringMsec(entry.milisecs_end) << "   "
-             << std::setw(7) << std::fixed << std::right << entry.duration << "   "
-             << as_integer(entry.task)
+             << std::setw(7) << std::fixed << std::right << entry.duration
              << std::endl;
 
         access ++;

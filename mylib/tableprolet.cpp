@@ -132,13 +132,13 @@ void TableProletRF::analyze_task(std::vector<TimeZoneRF> &ProletRF){
     //std::vector<TimeZoneRF> Prolet = ProletRF;
     int vitok = ProletRF.at(0).vitok;
 
-    for(auto cur_sat: ProletRF){
-        if (cur_sat.task == SATELLITE_TASK::UPLOAD){
-            makeTZforVitok(ProletRF,cur_sat.satellite, cur_sat.vitok);
-        } else if(cur_sat.task == SATELLITE_TASK::WAIT){
+//    for(auto cur_sat: ProletRF){
+//        if (cur_sat.task == SATELLITE_TASK::UPLOAD){
+//            makeTZforVitok(ProletRF,cur_sat.satellite, cur_sat.vitok);
+//        } else if(cur_sat.task == SATELLITE_TASK::WAIT){
 
-        }
-    }
+//        }
+//    }
 }
 
 std::vector<TimeZoneRF> TableProletRF::proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok) {
@@ -182,7 +182,7 @@ proletRF::TimeZoneRF TableProletRF::makeTZforVitok(std::vector<TimeZoneRF> Prole
             int b = 0;
         }
     }
-
+    return resTZ;
 }
 
 
