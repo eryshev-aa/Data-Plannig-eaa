@@ -168,6 +168,47 @@ double TableZRV::shooting(int sat_number, double duration, std::vector<proletRF:
     }
     return res;
 }
+//поиск между двух зрв если flag==1 , то входит начало пограничного ЗРВ(строго) а если
+// flag==2 то входит от конца первого зрв до начала второго зрв(строго)
+std::vector<proletZRV::ZRV> TableZRV::find_between_two(std::vector<proletZRV::ZRV>table_zrv, const proletZRV::ZRV zone1, const proletZRV::ZRV zone2, int flag){
+    std::vector<proletZRV::ZRV> result;
+    result.reserve(1);
+    char start1 [80];
+    char end1 [80];
+    strftime (start1, 80, "%d.%m.%Y %H:%M:%S.", &zone1.tm_start);
+    strftime (end1, 80, "%d.%m.%Y %H:%M:%S.", &zone1.tm_end);
+    std::string buff1_start(start1);
+    std::string buff1_end(end1);
+    buff1_start += std::to_string(zone1.milisecs_start);
+    buff1_end += std::to_string(zone1.milisecs_end);
+    char start2 [80];
+    char end2 [80];
+    strftime (start2, 80, "%d.%m.%Y %H:%M:%S.", &zone2.tm_start);
+    strftime (end2, 80, "%d.%m.%Y %H:%M:%S.", &zone2.tm_end);
+    std::string buff2_start(start2);
+    std::string buff2_end(end2);
+    buff2_start += std::to_string(zone2.milisecs_start);
+    buff2_end += std::to_string(zone2.milisecs_end);
+    for(const auto& tmpZRV:table_zrv){
+        char start3 [80];
+        char end3 [80];
+        strftime (start3, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_start);
+        strftime (end3, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_end);
+        std::string buff3_start(start3);
+        std::string buff3_end(end3);
+        buff3_start += std::to_string(tmpZRV.milisecs_start);
+        buff3_end += std::to_string(tmpZRV.milisecs_end);
+        //входит начало пограничного ЗРВ
+        if(buff3_start>buff1_end && buff3_start<buff2_end && buff3_end<buff2_end && flag==2){
+            result.push_back(tmpZRV);
+        }
+        //входит от конца первого зрв до начала второго зрв
+        if(buff3_start>buff1_end && buff3_start<buff2_start && buff3_end<buff2_start && flag==1){
+            result.push_back(tmpZRV);
+        }
+    }
+    return result;
+}
 
 void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<ZRV> &zrv_list , std::vector<proletRF::Satellite> &satelllites){
     for(auto cur_sat: proletyRF){
