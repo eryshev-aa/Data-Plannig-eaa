@@ -119,8 +119,34 @@ double TableProletRF::get_tank_size(SATELLITE_TYPE type){
         return 0.0;
 }
 
+// компоратор для сравнения двух структур таблицы ZRV
 bool TableZRV::ZRVComporator(const proletZRV::ZRV& zone1,const proletZRV::ZRV& zone2){
-    return zone1.duration > zone2.duration;
+    //return zone1.duration > zone2.duration;
+    char start1 [80];
+    char end1 [80];
+    strftime (start1, 80, "%d.%m.%Y %H:%M:%S.", &zone1.tm_start);
+    strftime (end1, 80, "%d.%m.%Y %H:%M:%S.", &zone1.tm_end);
+    std::string buff1_start(start1);
+    std::string buff1_end(end1);
+    buff1_start += std::to_string(zone1.milisecs_start);
+    buff1_end += std::to_string(zone1.milisecs_end);
+
+    char start2 [80];
+    char end2 [80];
+    strftime (start2, 80, "%d.%m.%Y %H:%M:%S.", &zone2.tm_start);
+    strftime (end2, 80, "%d.%m.%Y %H:%M:%S.", &zone2.tm_end);
+    std::string buff2_start(start2);
+    std::string buff2_end(end2);
+    buff2_start += std::to_string(zone2.milisecs_start);
+    buff2_end += std::to_string(zone2.milisecs_end);
+
+    if (buff1_start != buff2_start){
+        return buff1_start < buff2_start;
+    } else if(buff1_end != buff2_end){
+        return buff1_end < buff2_end;
+    } else{
+        return false;
+    }
 }
 
 std::vector<proletZRV::ZRV> TableZRV::SortZRV(std::vector<proletZRV::ZRV> tableZRV){
