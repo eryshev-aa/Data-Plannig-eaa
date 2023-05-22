@@ -157,6 +157,7 @@ std::vector<TimeZoneRF> TableProletRF::proletyNaVitke(std::vector<TimeZoneRF> &P
 //если на витке несколько пролетов, то сделать начало от перовго, а конец от последнего.
 proletRF::TimeZoneRF TableProletRF::makeTZforVitok(std::vector<TimeZoneRF> ProletRF, int sat, int vitok){
     int id;
+    int tmp=0;
     TimeZoneRF resTZ;
 
     for(auto cur_prolet: ProletRF){
@@ -164,12 +165,18 @@ proletRF::TimeZoneRF TableProletRF::makeTZforVitok(std::vector<TimeZoneRF> Prole
             return (cur_prolet.satellite == sat) ;
         };
 
-        auto it = std::find_if(std::begin(ProletRF) + 1, std::end(ProletRF), pred);
+        std::cout<< cur_prolet.satellite << " " << sat << " tmp=" << tmp << std::endl;
+        auto it = std::find_if(std::begin(ProletRF) + tmp, std::end(ProletRF), pred);
         if (it != std::end(ProletRF)) {
 
             //if ()
-            id = std::distance(std::begin(ProletRF), it);
-            std::cout<< id << std::endl;
+            id = std::distance(std::begin(ProletRF) + tmp, it);
+            //std::cout<< id << std::endl;
+            tmp = tmp + id;
+            if(id==0){
+                tmp+=1;
+            }
+            std::cout<<ProletRF.at(id).duration<< std::endl;
         } else {
             //std::cout<<"h"<<std::endl;
             int b = 0;

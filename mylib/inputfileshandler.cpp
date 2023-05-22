@@ -124,7 +124,7 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     string rf_trace_duration_str = line.substr(91,7);
                     size_t ptr = -1;
                     double rf_trace_duration = std::stod(rf_trace_duration_str, &ptr);
-                    if (ptr = 3) {
+                    if (ptr == 3) {
                         std::replace(rf_trace_duration_str.begin(), rf_trace_duration_str.end(), '.', ','); // у меня в Линукс почему-то работает на "," а не на "."
                         rf_trace_duration = std::stod(rf_trace_duration_str);
                     }
