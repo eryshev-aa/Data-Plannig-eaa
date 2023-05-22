@@ -1,7 +1,7 @@
 # Output results
 result.txt
 proletRF.txt
-ZRV.txt
+zrv.txt
 
 # Prerequisites
 *.d
