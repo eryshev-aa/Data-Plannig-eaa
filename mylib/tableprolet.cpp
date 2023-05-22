@@ -159,12 +159,20 @@ double TableZRV::get_current_tank_size(int sat_number, std::vector<proletRF::Sat
 
 double TableZRV::shooting(int sat_number, double duration, std::vector<proletRF::Satellite> &satellites) {
     double res = -1.0;
+    int i = 0;
     for(auto sat: satellites){
         if (sat.satellite == sat_number) {
-            sat.filled_inf += duration * sat.shooting_speed;
-            sat.filled_inf_percent = sat.tank / sat.filled_inf;
-            res = sat.filled_inf_percent;
+            satellites.at(i).filled_inf += duration * sat.shooting_speed;
+            satellites.at(i).filled_inf_percent = satellites.at(i).filled_inf / satellites.at(i).tank;
+            if (satellites.at(i).filled_inf_percent > 1.0) { //если переполнили при фото, то выставляем ровно полный бак
+                TableProletRF t;
+                satellites.at(i).filled_inf = t.get_tank_size(satellites.at(i).type);
+                satellites.at(i).filled_inf_percent = 1.0;
+            }
+            res = satellites.at(i).filled_inf_percent;
+            break;
         }
+        i++;
     }
     return res;
 }
@@ -212,11 +220,11 @@ std::vector<proletZRV::ZRV> find_between_two(std::vector<proletZRV::ZRV>table_zr
 
 void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<ZRV> &zrv_list , std::vector<proletRF::Satellite> &satelllites){
     for(auto cur_sat: proletyRF){
-        if (get_current_tank_size(cur_sat.satellite, satelllites) > 60.0) {
+        if (get_current_tank_size(cur_sat.satellite, satelllites) > 0.60) {
             int a = 0;
         } else {
             int b = 0;
-            std::cout << shooting(cur_sat.satellite, cur_sat.duration, satelllites) << std::endl;
+            std::cout  << "sat#" << cur_sat.satellite << " photo="<< shooting(cur_sat.satellite, cur_sat.duration, satelllites) << std::endl;
         }
     }
 //    }
