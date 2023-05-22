@@ -1,9 +1,10 @@
 #include "inputfileshandler.h"
 
 #include <fstream>
-#include <filesystem>
+//#include <filesystem>
 #include <iostream>
 #include <string>
+#include <iomanip>
 #include <algorithm>
 
 InputFileRFHandler::InputFileRFHandler()
@@ -11,15 +12,15 @@ InputFileRFHandler::InputFileRFHandler()
 
 }
 
-vector <string> InputFileRFHandler::getFileNamesInDir_FS(string dirName){
-    vector <string> result;
+//vector <string> InputFileRFHandler::getFileNamesInDir_FS(string dirName){
+//    vector <string> result;
 
-    for (const auto & entry : std::filesystem::directory_iterator(dirName)) {
-        result.push_back(entry.path());
-    }
+//    for (const auto & entry : std::filesystem::directory_iterator(dirName)) {
+//        result.push_back(entry.path());
+//    }
 
-    return result;
-}
+//    return result;
+//}
 
 vector <string> InputFileRFHandler::getFileNamesInDir_QDir(string dirName){
     vector <string> result;
@@ -168,7 +169,8 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
 
 bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list) {
     //return true;
-    vector <string> files = getFileNamesInDir_FS(dirPath);
+    //vector <string> files = getFileNamesInDir_FS(dirPath);
+    vector <string> files = getFileNamesInDir_QDir(dirPath);
     string line;
     string ppi;
     proletZRV::ZRV zrv_current;

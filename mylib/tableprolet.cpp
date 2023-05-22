@@ -134,7 +134,7 @@ void TableProletRF::analyze_task(std::vector<TimeZoneRF> &ProletRF){
 
     for(auto cur_sat: ProletRF){
         if (cur_sat.task == SATELLITE_TASK::UPLOAD){
-
+            makeTZforVitok(ProletRF,cur_sat.satellite, cur_sat.vitok);
         } else if(cur_sat.task == SATELLITE_TASK::WAIT){
 
         }
@@ -159,21 +159,23 @@ proletRF::TimeZoneRF TableProletRF::makeTZforVitok(std::vector<TimeZoneRF> Prole
     int id;
     TimeZoneRF resTZ;
 
-//    for(auto cur_prolet: ProletRF){
-//        auto pred = [cur_prolet](const TimeZoneRF & item) {
-//            return item.satellite == sat;
-//        };
+    for(auto cur_prolet: ProletRF){
+        auto pred = [cur_prolet, sat](const TimeZoneRF & item) {
+            return (cur_prolet.satellite == sat) ;
+        };
 
-//        auto it = std::find_if(std::begin(ProletRF) + 1, std::end(ProletRF), pred);
-//        if (it != std::end(ProletRF)) {
-//            //if ()
-//            id = std::distance(std::begin(ProletRF), it);
-//        } else {
-//            int b = 0;
-//        }
-//    }
+        auto it = std::find_if(std::begin(ProletRF) + 1, std::end(ProletRF), pred);
+        if (it != std::end(ProletRF)) {
 
-    return resTZ;
+            //if ()
+            id = std::distance(std::begin(ProletRF), it);
+            std::cout<< id << std::endl;
+        } else {
+            //std::cout<<"h"<<std::endl;
+            int b = 0;
+        }
+    }
+
 }
 
 

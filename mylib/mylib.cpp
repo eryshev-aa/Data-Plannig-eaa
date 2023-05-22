@@ -43,9 +43,13 @@ bool Mylib::planning(){
     TableProletRF prol;
     m_proletyRF = prol.SortTable(m_proletyRF);
 
-    OutputResult out("/home/user/qt_projects/ProfIT-Data-Plannig/result.txt");
-    out.makeProletRFFile("/home/user/qt_projects/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
-    out.makeZRVFile("/home/user/qt_projects/ProfIT-Data-Plannig/ZRV.txt", m_proletyZRV);
+//    OutputResult out("/home/user/qt_projects/ProfIT-Data-Plannig/result.txt");
+//    out.makeProletRFFile("/home/user/qt_projects/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
+//    out.makeZRVFile("/home/user/qt_projects/ProfIT-Data-Plannig/ZRV.txt", m_proletyZRV);
+
+    OutputResult out("C:/Users/tad.INAV/Documents/ProfIT-Data-Plannig/result.txt");
+    out.makeProletRFFile("C:/Users/tad.INAV/Documents/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
+    out.makeZRVFile("C:/Users/tad.INAV/Documents/ProfIT-Data-Plannig/ZRV.txt", m_proletyZRV);
 
     prol.analyze_task(m_proletyRF);
 
