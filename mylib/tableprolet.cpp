@@ -15,14 +15,6 @@ TableZRV::TableZRV()
 
 }
 
-double TableProletRF::TimeDifferenceInSec(TimeZoneRF zone1, TimeZoneRF zone2) {
-    time_t first = mktime(&(zone1.tm_start)) * 1000 + zone1.milisecs_start;
-    time_t second = mktime(&(zone2.tm_start)) * 1000 + zone2.milisecs_start;
-    double differ = (first - second) / 1000;
-
-    return differ;
-}
-
 double TableProletRF::TimeDifference(TimeZoneRF zone) {
     time_t first = mktime(&(zone.tm_end)) * 1000 + zone.milisecs_end;
     time_t second = mktime(&(zone.tm_start)) * 1000 + zone.milisecs_start;
@@ -154,31 +146,37 @@ std::vector<proletZRV::ZRV> TableZRV::SortZRV(std::vector<proletZRV::ZRV> tableZ
     return tableZRV;
 }
 
-void TableProletRF::analyze_task(std::vector<TimeZoneRF> &ProletRF){
-    //std::vector<TimeZoneRF> Prolet = ProletRF;
-    int vitok = ProletRF.at(0).vitok;
+double TableZRV::get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites) {
+    double res = -1.0;
+    for(auto sat: satellites){
+        if (sat.satellite == sat_number) {
+            res = sat.filled_inf_percent;
+        }
+    }
+    return res;
+}
 
-//    for(auto cur_sat: ProletRF){
-//        if (cur_sat.task == SATELLITE_TASK::UPLOAD){
-//            makeTZforVitok(ProletRF,cur_sat.satellite, cur_sat.vitok);
-//        } else if(cur_sat.task == SATELLITE_TASK::WAIT){
+void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<ZRV> &zrv_list , std::vector<proletRF::Satellite> &satelllites){
+    for(auto cur_sat: proletyRF){
+        if (get_current_tank_size(cur_sat.satellite, satelllites) > 60.0) {
 
-//        }
+        }
+    }
 //    }
 }
 
-std::vector<TimeZoneRF> TableProletRF::proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok) {
-    std::vector<TimeZoneRF> res;
+//std::vector<TimeZoneRF> TableProletRF::proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok) {
+//    std::vector<TimeZoneRF> res;
 
-    for(auto cur_prolet: ProletRF){
-        if (cur_prolet.vitok == vitok)
-        {
-            res.push_back(cur_prolet);
-        }
-    }
+//    for(auto cur_prolet: ProletRF){
+//        if (cur_prolet.vitok == vitok)
+//        {
+//            res.push_back(cur_prolet);
+//        }
+//    }
 
-    return res;
-}
+//    return res;
+//}
 
 //если на витке несколько пролетов, то сделать начало от перовго, а конец от последнего.
 proletRF::TimeZoneRF TableProletRF::makeTZforVitok(std::vector<TimeZoneRF> ProletRF, int sat, int vitok){

@@ -48,7 +48,6 @@ class TableProletRF
 public:
     TableProletRF();
 
-    double TimeDifferenceInSec(TimeZoneRF zone1, TimeZoneRF zone2);
     double TimeDifference(TimeZoneRF zone);
     double TimeDifference30(TimeZoneRF zone1, TimeZoneRF zone2);
     void IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list);
@@ -57,14 +56,14 @@ public:
     double get_bitrate(SATELLITE_TYPE type);
     double get_tank_size(SATELLITE_TYPE type);
 
-    void analyze_task(std::vector<TimeZoneRF> &ProletRF);
+
 
 private:
     static bool Comparator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
     static bool ZoneComporator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
 
     void upload(std::vector<TimeZoneRF> &ProletRF);
-    std::vector<TimeZoneRF> proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok);
+    //std::vector<TimeZoneRF> proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok);
     proletRF::TimeZoneRF makeTZforVitok(std::vector<TimeZoneRF> ProletRF, int sat, int vitok);
 
     std::vector <TimeZoneRF> m_prolety_nad_RF;
@@ -99,6 +98,10 @@ public:
     TableZRV();
     static bool ZRVComporator(const proletZRV::ZRV& zone1,const proletZRV::ZRV& zone2);
     std::vector<proletZRV::ZRV> SortZRV(std::vector<proletZRV::ZRV> tableZRV);
+
+    double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
+
+    void analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satelllites);
 private:
 
 };
