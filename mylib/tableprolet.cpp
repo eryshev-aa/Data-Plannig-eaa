@@ -151,6 +151,19 @@ double TableZRV::get_current_tank_size(int sat_number, std::vector<proletRF::Sat
     for(auto sat: satellites){
         if (sat.satellite == sat_number) {
             res = sat.filled_inf_percent;
+            break;
+        }
+    }
+    return res;
+}
+
+double TableZRV::shooting(int sat_number, double duration, std::vector<proletRF::Satellite> &satellites) {
+    double res = -1.0;
+    for(auto sat: satellites){
+        if (sat.satellite == sat_number) {
+            sat.filled_inf += duration * sat.shooting_speed;
+            sat.filled_inf_percent = sat.tank / sat.filled_inf;
+            res = sat.filled_inf_percent;
         }
     }
     return res;
@@ -159,7 +172,10 @@ double TableZRV::get_current_tank_size(int sat_number, std::vector<proletRF::Sat
 void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<ZRV> &zrv_list , std::vector<proletRF::Satellite> &satelllites){
     for(auto cur_sat: proletyRF){
         if (get_current_tank_size(cur_sat.satellite, satelllites) > 60.0) {
-
+            int a = 0;
+        } else {
+            int b = 0;
+            std::cout << shooting(cur_sat.satellite, cur_sat.duration, satelllites) << std::endl;
         }
     }
 //    }

@@ -37,10 +37,11 @@ enum class SATELLITE_TYPE {
 struct Satellite{
     int satellite; ///< КА
     SATELLITE_TYPE type; ///< тип КА
-    int filled_inf; ///< объем заполненной памяти в Гбит
+    double filled_inf; ///< объем заполненной памяти в Гбит
     double filled_inf_percent; ///< объем заполненной памяти в %
-    int tank; ///< размер памяти в Гбит
-    int bitrate; ///< скорость передечи в Гбит/с
+    double tank; ///< размер памяти в Гбит
+    double bitrate; ///< скорость передечи в Гбит/с
+    int shooting_speed = 4; ///< скорость заполенеия изображениями в Гбит/с
 };
 
 class TableProletRF
@@ -100,6 +101,8 @@ public:
     std::vector<proletZRV::ZRV> SortZRV(std::vector<proletZRV::ZRV> tableZRV);
 
     double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
+
+    double shooting(int sat_number, double duration, std::vector<proletRF::Satellite> &satellites);
 
     void analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satelllites);
 private:
