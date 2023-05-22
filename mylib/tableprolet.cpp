@@ -170,7 +170,7 @@ double TableZRV::shooting(int sat_number, double duration, std::vector<proletRF:
 }
 //поиск между двух зрв если flag==1 , то входит начало пограничного ЗРВ(строго) а если
 // flag==2 то входит от конца первого зрв до начала второго зрв(строго)
-std::vector<proletZRV::ZRV> TableZRV::find_between_two(std::vector<proletZRV::ZRV>table_zrv, const proletZRV::ZRV zone1, const proletZRV::ZRV zone2, int flag){
+std::vector<proletZRV::ZRV> find_between_two(std::vector<proletZRV::ZRV>table_zrv, const proletZRV::ZRV zone1, const proletZRV::ZRV zone2, int flag){
     std::vector<proletZRV::ZRV> result;
     result.reserve(1);
     char start1 [80];
