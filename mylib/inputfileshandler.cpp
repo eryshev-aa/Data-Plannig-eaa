@@ -47,8 +47,8 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
     //vector <string> files = getFileNamesInDir_FS(dirPath); //gcc: filesistem
     vector <string> files = getFileNamesInDir_QDir(dirPath); //gcc+MinGW: QDir
     string line;
-    int vitok = 0;
-    proletRF::TimeZoneRF tz_current, tz_previos;
+//    int vitok = 0;
+    proletRF::TimeZoneRF tz_current/*, tz_previos*/;
     proletRF::Satellite satellite;
 
     for (const auto& entry : files) {
@@ -58,7 +58,7 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
         if (in_RF_file.is_open())
         {
             getline(in_RF_file, line);
-            std::vector<TimeZoneRF> rf_trace_vitok_list;
+            //std::vector<TimeZoneRF> rf_trace_vitok_list;
             TableProletRF prolet;
             while (std::getline(in_RF_file, line))
             {
@@ -72,13 +72,13 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     (line.find("Total Duration") != std::string::npos) ||           // Но может их не просто так дали...?
                     (line.find("Global Statistics") != std::string::npos) ||
                     (line[0] == '\0')) {
-                    if (vitok != 0) {
-                        prolet.IsUpload(rf_trace_vitok_list);
-                        for (auto vitok: rf_trace_vitok_list) {
-                            rf_trace_list.push_back(vitok);
-                        }
-                        rf_trace_vitok_list.clear();
-                    }
+//                    if (vitok != 0) {
+//                        prolet.IsUpload(rf_trace_vitok_list);
+//                        for (auto vitok: rf_trace_vitok_list) {
+//                            rf_trace_list.push_back(vitok);
+//                        }
+//                        rf_trace_vitok_list.clear();
+//                    }
                     continue;
                 } else if (line.find("Russia-To-KinoSat_") != std::string::npos) {
                     int sat_number = std::stoi(line.substr(18,6));  // получаем номер КА
@@ -90,14 +90,14 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     satellite.tank = prolet.get_tank_size(SATELLITE_TYPE::KINOSPUTNIK);
                     sattelites_list.push_back(satellite);
                     tz_current.satellite = sat_number;
-                    if (vitok != 0) {
-                        prolet.IsUpload(rf_trace_vitok_list);
-                        for (auto vitok: rf_trace_vitok_list) {
-                            rf_trace_list.push_back(vitok);
-                        }
-                        rf_trace_vitok_list.clear();
-                    }
-                    vitok = 0;
+//                    if (vitok != 0) {
+//                        prolet.IsUpload(rf_trace_vitok_list);
+//                        for (auto vitok: rf_trace_vitok_list) {
+//                            rf_trace_list.push_back(vitok);
+//                        }
+//                        rf_trace_vitok_list.clear();
+//                    }
+//                    vitok = 0;
                 } else {
                     string rf_trace_start_time = line.substr(28,24);
                     string start = rf_trace_start_time.substr(0,20);
@@ -129,31 +129,39 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     }
                     tz_current.duration = rf_trace_duration;
 
-                    if (vitok != 0) {
-                        // нужно сравнить с концом предыдущего пролета
-                        double dif = prolet.TimeDifference30(tz_current,tz_previos);
-                        if (dif > 1800.0) {
-                            prolet.IsUpload(rf_trace_vitok_list);
-                            for (auto vitok: rf_trace_vitok_list) {
-                                rf_trace_list.push_back(vitok);
-                            }
-                            vitok++;
-                            tz_current.vitok = vitok;
-                            rf_trace_vitok_list.clear();
-                            rf_trace_vitok_list.push_back(tz_current);
-                        } else {
-                            tz_current.vitok = vitok;
-                            rf_trace_vitok_list.push_back(tz_current);
-                        }
-                        //
-
-                        tz_previos = tz_current;
-                    } else { //vitok = 0
-                        vitok ++;
-                        tz_current.vitok = vitok;
-                        rf_trace_vitok_list.push_back(tz_current);
-                        tz_previos = tz_current;
+                    if ((tz_current.tm_end.tm_hour >= 18 && tz_current.tm_end.tm_min >= 0 && tz_current.tm_end.tm_sec >= 0) ||
+                        (tz_current.tm_start.tm_hour < 9 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0)) {
+                        tz_current.task = SATELLITE_TASK::UPLOAD;
+                    } else {
+                        tz_current.task = SATELLITE_TASK::WAIT;
                     }
+
+                    rf_trace_list.push_back(tz_current);
+//                    if (vitok != 0) {
+//                        // нужно сравнить с концом предыдущего пролета
+//                        double dif = prolet.TimeDifference30(tz_current,tz_previos);
+//                        if (dif > 1800.0) {
+//                            prolet.IsUpload(rf_trace_vitok_list);
+//                            for (auto vitok: rf_trace_vitok_list) {
+//                                rf_trace_list.push_back(vitok);
+//                            }
+//                            vitok++;
+//                            tz_current.vitok = vitok;
+//                            rf_trace_vitok_list.clear();
+//                            rf_trace_vitok_list.push_back(tz_current);
+//                        } else {
+//                            tz_current.vitok = vitok;
+//                            rf_trace_vitok_list.push_back(tz_current);
+//                        }
+//                        //
+
+//                        tz_previos = tz_current;
+//                    } else { //vitok = 0
+//                        vitok ++;
+//                        tz_current.vitok = vitok;
+//                        rf_trace_vitok_list.push_back(tz_current);
+//                        tz_previos = tz_current;
+//                    }
                 }
             }
         } else
