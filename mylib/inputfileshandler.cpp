@@ -153,7 +153,6 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                         tz_current.vitok = vitok;
                         rf_trace_vitok_list.push_back(tz_current);
                         tz_previos = tz_current;
-                        //rf_trace_list.push_back(tz_current);
                     }
                 }
             }

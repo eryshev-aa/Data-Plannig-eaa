@@ -19,16 +19,18 @@ class OutputResult
 {
 public:
     OutputResult(std::string out_file_name);
-    bool makeResultFile();
+    void makeResultFile(std::vector<proletZRV::AnswerData> answerData);
 
 
     //методы для проверки промежуточных действий
     void makeProletRFFile(std::string out_file_name, std::vector <proletRF::TimeZoneRF> prolet);
+    void makeZRVFile(std::string out_file_name, std::vector <proletZRV::ZRV> zrv);
 
 private:
     std::string m_out_file_name;
 
     std::string makeOutputStringMsec(int msec);
+    double TimeDifference(proletZRV::AnswerData zone);
 };
 
 #endif // OUTPUTRESULT_H

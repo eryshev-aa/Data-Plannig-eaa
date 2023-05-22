@@ -15,7 +15,7 @@ TableZRV::TableZRV()
 
 }
 
-double TableProletRF::TimeDifference(TimeZoneRF zone1, TimeZoneRF zone2){
+double TableProletRF::TimeDifferenceInSec(TimeZoneRF zone1, TimeZoneRF zone2) {
     time_t first = mktime(&(zone1.tm_start)) * 1000 + zone1.milisecs_start;
     time_t second = mktime(&(zone2.tm_start)) * 1000 + zone2.milisecs_start;
     double differ = (first - second) / 1000;
@@ -23,8 +23,16 @@ double TableProletRF::TimeDifference(TimeZoneRF zone1, TimeZoneRF zone2){
     return differ;
 }
 
+double TableProletRF::TimeDifference(TimeZoneRF zone) {
+    time_t first = mktime(&(zone.tm_end)) * 1000 + zone.milisecs_end;
+    time_t second = mktime(&(zone.tm_start)) * 1000 + zone.milisecs_start;
+    double differ = (first - second);
+
+    return differ;
+}
+
 //добавил себе отдельно функцию, потому что мне нужно вычитать из начала конец.
-double TableProletRF::TimeDifference30(TimeZoneRF zone1, TimeZoneRF zone2){
+double TableProletRF::TimeDifference30(TimeZoneRF zone1, TimeZoneRF zone2) {
     time_t first = mktime(&zone1.tm_start) * 1000 + zone1.milisecs_start;
     time_t second = mktime(&zone2.tm_end) * 1000 + zone2.milisecs_end;
     double differ = (first - second);
@@ -52,35 +60,37 @@ void TableProletRF::IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list) {
 }
 
 // компоратор для сравнения двух структур таблицы "пролет"
-bool TableProletRF::Comparator(const TimeZoneRF& zone1,const  TimeZoneRF& zone2){
+bool TableProletRF::Comparator(const TimeZoneRF &zone1, const  TimeZoneRF &zone2) {
     char start1 [80];
     char end1 [80];
-    strftime (start1, 80, "%d.%m.%Y %H:%M:%S.",&zone1.tm_start);
-    strftime (end1, 80, "%d.%m.%Y %H:%M:%S.",&zone1.tm_end);
+    strftime (start1, 80, "%d.%m.%Y %H:%M:%S.", &zone1.tm_start);
+    strftime (end1, 80, "%d.%m.%Y %H:%M:%S.", &zone1.tm_end);
     std::string buff1_start(start1);
     std::string buff1_end(end1);
-    buff1_start+=std::to_string(zone1.milisecs_start);
-    buff1_end+=std::to_string(zone1.milisecs_end);
+    buff1_start += std::to_string(zone1.milisecs_start);
+    buff1_end += std::to_string(zone1.milisecs_end);
+
     char start2 [80];
     char end2 [80];
-    strftime (start2, 80, "%d.%m.%Y %H:%M:%S.",&zone2.tm_start);
-    strftime (end2, 80, "%d.%m.%Y %H:%M:%S.",&zone2.tm_end);
+    strftime (start2, 80, "%d.%m.%Y %H:%M:%S.", &zone2.tm_start);
+    strftime (end2, 80, "%d.%m.%Y %H:%M:%S.", &zone2.tm_end);
     std::string buff2_start(start2);
     std::string buff2_end(end2);
-    buff2_start+=std::to_string(zone2.milisecs_start);
-    buff2_end+=std::to_string(zone2.milisecs_end);
-    if(buff1_start!=buff2_start){
-        return buff1_start<buff2_start;
-    } else if(buff1_end!=buff2_end){
-        return buff1_end<buff2_end;
-    }else{
+    buff2_start += std::to_string(zone2.milisecs_start);
+    buff2_end += std::to_string(zone2.milisecs_end);
+
+    if (buff1_start != buff2_start){
+        return buff1_start < buff2_start;
+    } else if(buff1_end != buff2_end){
+        return buff1_end < buff2_end;
+    } else{
         return false;
     }
 }
 
 // компоратор для сортировки по витку
-bool TableProletRF::ZoneComporator(const TimeZoneRF& zone1,const TimeZoneRF& zone2){
-    return zone1.vitok<zone2.vitok;
+bool TableProletRF::ZoneComporator(const TimeZoneRF& zone1, const TimeZoneRF& zone2){
+    return zone1.vitok < zone2.vitok;
 }
 
 //функция в которой происходит сортировка таблицы
@@ -110,20 +120,63 @@ double TableProletRF::get_tank_size(SATELLITE_TYPE type){
 }
 
 bool TableZRV::ZRVComporator(const proletZRV::ZRV& zone1,const proletZRV::ZRV& zone2){
-    return zone1.duration>zone2.duration;
+    return zone1.duration > zone2.duration;
 }
 
-std::vector<proletZRV::ZRV> TableZRV::SortZRV(std::vector<proletZRV::ZRV>tableZRV){
-    std::sort(tableZRV.begin(),tableZRV.end(),&TableZRV::ZRVComporator);
+std::vector<proletZRV::ZRV> TableZRV::SortZRV(std::vector<proletZRV::ZRV> tableZRV){
+    std::sort(tableZRV.begin(), tableZRV.end(), &TableZRV::ZRVComporator);
     return tableZRV;
 }
 
-//void TableProletRF::analyze_task(std::vector<TimeZoneRF>&ProletRF){
-//    for(auto sat: ProletRF){
-//        if(sat.task ==2){
+void TableProletRF::analyze_task(std::vector<TimeZoneRF> &ProletRF){
+    //std::vector<TimeZoneRF> Prolet = ProletRF;
+    int vitok = ProletRF.at(0).vitok;
 
-//        }else if(sat.task==0){
+    for(auto cur_sat: ProletRF){
+        if (cur_sat.task == SATELLITE_TASK::UPLOAD){
 
+        } else if(cur_sat.task == SATELLITE_TASK::WAIT){
+
+        }
+    }
+}
+
+std::vector<TimeZoneRF> TableProletRF::proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok) {
+    std::vector<TimeZoneRF> res;
+
+    for(auto cur_prolet: ProletRF){
+        if (cur_prolet.vitok == vitok)
+        {
+            res.push_back(cur_prolet);
+        }
+    }
+
+    return res;
+}
+
+//если на витке несколько пролетов, то сделать начало от перовго, а конец от последнего.
+proletRF::TimeZoneRF TableProletRF::makeTZforVitok(std::vector<TimeZoneRF> ProletRF, int sat, int vitok){
+    int id;
+    TimeZoneRF resTZ;
+
+//    for(auto cur_prolet: ProletRF){
+//        auto pred = [cur_prolet](const TimeZoneRF & item) {
+//            return item.satellite == sat;
+//        };
+
+//        auto it = std::find_if(std::begin(ProletRF) + 1, std::end(ProletRF), pred);
+//        if (it != std::end(ProletRF)) {
+//            //if ()
+//            id = std::distance(std::begin(ProletRF), it);
+//        } else {
+//            int b = 0;
 //        }
 //    }
-//}
+
+    return resTZ;
+}
+
+
+void TableProletRF::upload(std::vector<TimeZoneRF> &ProletRF){
+
+}

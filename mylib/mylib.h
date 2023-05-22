@@ -153,6 +153,7 @@ private:
     vector <proletRF::TimeZoneRF> m_proletyRF;
     vector <proletZRV::ZRV> m_proletyZRV;
     vector <proletRF::Satellite> m_sattelites_list;
+    vector <proletZRV::AnswerData> m_answer;
 
     //ниже все старое. Пока их не удаляю
     vector <Mylib::Ppi> m_kp = {};

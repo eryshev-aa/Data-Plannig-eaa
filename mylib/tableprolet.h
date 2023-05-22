@@ -27,7 +27,7 @@ struct TimeZoneRF{
 };
 
 /*!
-   * \brief Набор типов спетников
+   * \brief Набор типов спутников
    */
 enum class SATELLITE_TYPE {
     KINOSPUTNIK = 0, ///< Киноспутник
@@ -48,17 +48,25 @@ class TableProletRF
 public:
     TableProletRF();
 
-    double TimeDifference(TimeZoneRF zone1, TimeZoneRF zone2);
+    double TimeDifferenceInSec(TimeZoneRF zone1, TimeZoneRF zone2);
+    double TimeDifference(TimeZoneRF zone);
     double TimeDifference30(TimeZoneRF zone1, TimeZoneRF zone2);
     void IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list);
-    static bool Comparator(const TimeZoneRF& zone1,const TimeZoneRF& zone2);
-    static bool ZoneComporator(const TimeZoneRF& zone1,const TimeZoneRF& zone2);
+
     std::vector<TimeZoneRF> SortTable(std::vector<TimeZoneRF> ProletRF);
     double get_bitrate(SATELLITE_TYPE type);
     double get_tank_size(SATELLITE_TYPE type);
-    void analyze_task(std::vector<TimeZoneRF>& ProletRF);
+
+    void analyze_task(std::vector<TimeZoneRF> &ProletRF);
 
 private:
+    static bool Comparator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
+    static bool ZoneComporator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
+
+    void upload(std::vector<TimeZoneRF> &ProletRF);
+    std::vector<TimeZoneRF> proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok);
+    proletRF::TimeZoneRF makeTZforVitok(std::vector<TimeZoneRF> ProletRF, int sat, int vitok);
+
     std::vector <TimeZoneRF> m_prolety_nad_RF;
 };
 }
@@ -82,8 +90,8 @@ struct AnswerData{
     int milisecs_end; ///< миллисекунды начала ЗРВ
     int satellite; ///< КА
     std::string ppi; ///< пункт приема информации (ППИ/НС)
-    int transfered_inf; ///< объем переданной памяти в Гбит
-}
+    double transfered_inf; ///< объем переданной памяти в Гбит
+};
 
 class TableZRV
 {

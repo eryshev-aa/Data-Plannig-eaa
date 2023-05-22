@@ -9,14 +9,38 @@ OutputResult::OutputResult(std::string out_file_name)
     m_out_file_name = out_file_name;
 }
 
-bool OutputResult::makeResultFile(){
+void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData){
+    int  access = 1;
     std::ofstream fout;
 
     fout.open(m_out_file_name);
+    time_t t;
+    char start [80];
+    char end [80];
+
+    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Data(Gbit)" << std::endl;
+    fout << "--------------------------------------------------------------------------------------------" << std::endl;
+    fout << std::flush;
+
+    for (auto answer: answerData)
+    {
+        time (&t);
+        strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_start);
+        strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_end);
+
+        fout << std::setw(6) << std::setprecision(3) << std::right;
+        fout << access << "   "
+             << start << makeOutputStringMsec(answer.milisecs_start) << "   "
+             << end << makeOutputStringMsec(answer.milisecs_end) << "   "
+             << std::setw(7) << std::fixed << std::right << TimeDifference(answer)
+             << answer.satellite << "   "
+             << answer.transfered_inf
+             << std::endl;
+
+        access ++;
+    }
 
     fout.close();
-
-    return true;
 }
 
 void OutputResult::makeProletRFFile(std::string out_file_name, std::vector <proletRF::TimeZoneRF> prolet){
@@ -27,8 +51,6 @@ void OutputResult::makeProletRFFile(std::string out_file_name, std::vector <prol
     time_t t;
     char start [80];
     char end [80];
-    std::string milisecs_start_out;
-    std::string milisecs_end_out;
 
     fout << " Access  *sat_n   *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur     * vit * task" << std::endl;
     fout << "--------------------------------------------------------------------------------------------" << std::endl;
@@ -56,6 +78,40 @@ void OutputResult::makeProletRFFile(std::string out_file_name, std::vector <prol
     fout.close();
 }
 
+void OutputResult::makeZRVFile(std::string out_file_name, std::vector <proletZRV::ZRV> zrv){
+    int  access = 1;
+    std::ofstream fout;
+
+    fout.open(out_file_name);
+    time_t t;
+    char start [80];
+    char end [80];
+
+    fout << " Access  *sat_n   *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur    *PPI       " << std::endl;
+    fout << "------------------------------------------------------------------------------------------" << std::endl;
+    fout << std::flush;
+
+    for (auto current_zrv: zrv)
+    {
+        time (&t);
+        strftime (start, 80, "%d.%m.%Y %H:%M:%S.",&current_zrv.tm_start);
+        strftime (end, 80, "%d.%m.%Y %H:%M:%S.",&current_zrv.tm_end);
+
+        fout << std::setw(6) << std::setprecision(3) << std::right;
+        fout << access << "   "
+             << current_zrv.satellite << "   "
+             << start << makeOutputStringMsec(current_zrv.milisecs_start) << "   "
+             << end << makeOutputStringMsec(current_zrv.milisecs_end) << "   "
+             << std::setw(7) << std::fixed << std::right << current_zrv.duration << "   "
+             << std::setw(10) << std::left << current_zrv.ppi
+             << std::endl;
+
+        access ++;
+    }
+
+    fout.close();
+}
+
 std::string OutputResult::makeOutputStringMsec(int msec) {
     std::string  res;
 
@@ -70,4 +126,12 @@ std::string OutputResult::makeOutputStringMsec(int msec) {
     }
 
     return res;
+}
+
+double OutputResult::TimeDifference(proletZRV::AnswerData zone) {
+    time_t first = mktime(&(zone.tm_end)) * 1000 + zone.milisecs_end;
+    time_t second = mktime(&(zone.tm_start)) * 1000 + zone.milisecs_start;
+    double differ = (first - second);
+
+    return differ / 1000;
 }
