@@ -102,8 +102,9 @@ public:
 
     double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
     double shooting(int sat_number, double duration, std::vector<proletRF::Satellite> &satellites);
-    std::vector<proletZRV::ZRV> find_between_two(std::vector<proletZRV::ZRV>TableZRV, const proletZRV::ZRV first, const proletZRV::ZRV second);
+    std::vector<proletZRV::ZRV> find_between_two(std::vector<proletZRV::ZRV>TableZRV, const proletZRV::ZRV& first, const proletZRV::ZRV& second, int flag);
     void analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satelllites);
+    proletZRV::ZRV find_before(std::vector<proletZRV::ZRV> proletyZRV, proletRF::TimeZoneRF current);
 private:
 
 };

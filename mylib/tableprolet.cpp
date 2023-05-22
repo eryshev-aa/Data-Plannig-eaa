@@ -178,7 +178,7 @@ double TableZRV::shooting(int sat_number, double duration, std::vector<proletRF:
 }
 //поиск между двух зрв если flag==1 , то входит начало пограничного ЗРВ(строго) а если
 // flag==2 то входит от конца первого зрв до начала второго зрв(строго)
-std::vector<proletZRV::ZRV> find_between_two(std::vector<proletZRV::ZRV>table_zrv, const proletZRV::ZRV zone1, const proletZRV::ZRV zone2, int flag){
+std::vector<proletZRV::ZRV> find_between_two(std::vector<proletZRV::ZRV>table_zrv, const proletZRV::ZRV& zone1, const proletZRV::ZRV& zone2, int flag){
     std::vector<proletZRV::ZRV> result;
     result.reserve(1);
     char start1 [80];
@@ -221,13 +221,49 @@ std::vector<proletZRV::ZRV> find_between_two(std::vector<proletZRV::ZRV>table_zr
 void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<ZRV> &zrv_list , std::vector<proletRF::Satellite> &satelllites){
     for(auto cur_sat: proletyRF){
         if (get_current_tank_size(cur_sat.satellite, satelllites) > 0.60) {
-            int a = 0;
+            proletZRV::ZRV before =find_before(zrv_list,cur_sat);
+            proletZRV::ZRV now;
+            now.milisecs_end=cur_sat.milisecs_end;
+            now.milisecs_start=cur_sat.milisecs_start;
+            now.satellite=cur_sat.satellite;
+            now.tm_end=cur_sat.tm_end;
+            now.tm_start=cur_sat.tm_start;
+            now.duration=cur_sat.duration;
+            int f =1;
+            std::vector<proletZRV::ZRV> prolety = find_between_two(zrv_list,before,now,f);
         } else {
             int b = 0;
             std::cout  << "sat#" << cur_sat.satellite << " photo="<< shooting(cur_sat.satellite, cur_sat.duration, satelllites) << std::endl;
         }
     }
 //    }
+}
+
+proletZRV::ZRV TableZRV::find_before(std::vector<proletZRV::ZRV> proletyZRV, proletRF::TimeZoneRF current){
+    char start1 [80];
+    char end1 [80];
+    proletZRV::ZRV result;
+    strftime (start1, 80, "%d.%m.%Y %H:%M:%S.", &current.tm_start);
+    strftime (end1, 80, "%d.%m.%Y %H:%M:%S.", &current.tm_end);
+    std::string buff1_start(start1);
+    std::string buff1_end(end1);
+    buff1_start += std::to_string(current.milisecs_start);
+    buff1_end += std::to_string(current.milisecs_end);
+    for(const auto& prolet:proletyZRV){
+        char start2 [80];
+        char end2 [80];
+        strftime (start2, 80, "%d.%m.%Y %H:%M:%S.", &prolet.tm_start);
+        strftime (end2, 80, "%d.%m.%Y %H:%M:%S.", &prolet.tm_end);
+        std::string buff2_start(start2);
+        std::string buff2_end(end2);
+        buff2_start += std::to_string(prolet.milisecs_start);
+        buff2_end += std::to_string(prolet.milisecs_end);
+        if(buff2_end<buff1_start && buff2_start<buff1_start && prolet.satellite==current.satellite){
+            result = prolet;
+            break;
+        }
+    }
+    return result;
 }
 
 //std::vector<TimeZoneRF> TableProletRF::proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok) {
