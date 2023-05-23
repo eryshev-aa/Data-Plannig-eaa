@@ -215,8 +215,24 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
     std::string prolet2_end(end2);
     prolet2_start += std::to_string(prolet2.milisecs_start);
     prolet2_end += std::to_string(prolet2.milisecs_end);
+    std::copy_if(table_zrv.begin(), table_zrv.end(), std::back_inserter(result),[prolet1,prolet2,prolet1_start,prolet1_end,prolet2_start,prolet2_end,flag](proletZRV::ZRV tmpZRV){
+        char start3 [80];
+        char end3 [80];
+        strftime (start3, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_start);
+        strftime (end3, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_end);
+        std::string zrv_start(start3);
+        std::string zrv_end(end3);
+        zrv_start += std::to_string(tmpZRV.milisecs_start);
+        zrv_end += std::to_string(tmpZRV.milisecs_end);
+        if (prolet2.satellite == tmpZRV.satellite) {
+            //входит от конца первого пролета до начала второго пролета
+            if (flag==1) return zrv_start > prolet1_end && zrv_start < prolet2_start && zrv_end < prolet2_start;
+            if(flag==2) return zrv_start > prolet1_end && zrv_start < prolet2_end && flag==2;
 
-    for(const auto& tmpZRV: table_zrv){
+        }
+        return false;
+    });
+    /*for(const auto& tmpZRV: table_zrv){
         char start3 [80];
         char end3 [80];
         strftime (start3, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_start);
@@ -235,7 +251,7 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
                 result.push_back(tmpZRV);
             }
         }
-    }
+    }*/
     return result;
 }
 
