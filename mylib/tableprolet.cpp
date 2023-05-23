@@ -225,47 +225,60 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
     return result;
 }
 
-void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites, std::vector<AnswerData> &answer){
-    //std::vector<proletZRV::AnswerData> answer;
+void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites,std::vector<proletZRV::AnswerData>& answer){
     for(auto cur_sat: proletyRF){
         if (get_current_tank_size(cur_sat.satellite, satellites) > 0.60) {
             proletRF::TimeZoneRF before = find_before(satellites, cur_sat.satellite);
             std::vector<proletZRV::ZRV> zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_sat, 1); //вектор всех возможных подходящих ЗРВ между пролетами этого КА
-            if (zrv.empty()) {
-                zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_sat, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервал
+            if (!zrv.empty()) {
+                for (auto zrv_between: zrv) { // для каждой ЗРВ между пролетами проверяем пересечения с другими КА на этом ППИ
+                    if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
+//                        char start [80];
+//                        char end [80];
+//                        strftime (start, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_start);
+//                        strftime (end, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_end);
+//                        std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << " " << start << " = " << end << std::endl;
+                        upload(cur_sat, zrv_between, satellites, answer);
+                        break; //если нашли ЗРВ, которая не пересекается или у нас самый заполненный бак, то сбрасываем на этой ЗРВ и выходим из пролета.
+                    }
+                }
+                //не нашли подходящей ЗРВ (потому что все пересекаются с более заполнеными КА), расширяем интервал поика, пробуем найти там
+                zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_sat, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервале
                 if (!zrv.empty()) { //если нашли ЗРВ
                     for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
-                        if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-                            std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
+                        if (cross_zrv_check(satellites, zrv_between, zrv_list)) { // нашли ЗРВ, на которой будем сбрасывать
+//                            char start [80];
+//                            char end [80];
+//                            strftime (start, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_start);
+//                            strftime (end, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_end);
+//                            std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << " " << start << " = " << end << std::endl;
+                            upload(cur_sat, zrv_between, satellites, answer);
                             break;
                         }
                     }
                 }
             } else {
-                int zrv_between_count = 0;
-                for (auto zrv_between: zrv) { // для каждой ЗРВ между пролетами проверяем пересечения с другими КА на этом ППИ
-                    if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-                        //std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
-                        upload(cur_sat, zrv_between, satellites, answer);
-                        break;
-                    }
-                    zrv_between_count++;
-                }
-                if (zrv_between_count == std::size(zrv)) { //не нашли подходящей ЗРВ (потому что все пересекаются с более заполнеными КА), расширяем интервал поика, пробуем найти там
-                    zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_sat, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервале
-                    if (!zrv.empty()) { //если нашли ЗРВ
-                        for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
-                            if (cross_zrv_check(satellites, zrv_between, zrv_list)) { // нашли ЗРВ, на которой будем сбрасывать
-                                //std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
-                                upload(cur_sat, zrv_between, satellites, answer);
-                            }
+                zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_sat, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервал
+                if (!zrv.empty()) { //если нашли ЗРВ
+                    for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
+                        if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
+//                            char start [80];
+//                            char end [80];
+//                            strftime (start, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_start);
+//                            strftime (end, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_end);
+//                            std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << " " << start << " = " << end << std::endl;
+                            upload(cur_sat, zrv_between, satellites, answer);
+                            break;
                         }
                     }
                 }
             }
         } else {
-            int b = 0;
-            //std::cout  << "sat#" << cur_sat.satellite << " photo="<< shooting(cur_sat, cur_sat.duration, satellites) << std::endl;
+//            char start [80];
+//            char end [80];
+//            strftime (start, 80, "%d.%m.%Y %H:%M:%S", &cur_sat.tm_start);
+//            strftime (end, 80, "%d.%m.%Y %H:%M:%S", &cur_sat.tm_end);
+//            std::cout  << "sat#" << cur_sat.satellite << " photo="<< shooting(cur_sat, cur_sat.duration, satellites) << " " << start << " - " << end << std::endl;
             shooting(cur_sat, cur_sat.duration, satellites);
         }
     }
