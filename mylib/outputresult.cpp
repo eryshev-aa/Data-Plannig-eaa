@@ -18,11 +18,11 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     char start [80];
     char end [80];
 
-    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Data(Gbit)" << std::endl;
-    fout << "--------------------------------------------------------------------------------------------" << std::endl;
+    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * NS * Data(Gbit) * Duration" << std::endl;
+    fout << "------------------------------------------------------------------------------------------------------------" << std::endl;
     fout << std::flush;
 
-    for (auto answer: answerData)
+    for (const auto &answer: answerData)
     {
         time (&t);
         strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_start);
@@ -34,7 +34,9 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
              << end << makeOutputStringMsec(answer.milisecs_end) << "   "
              << std::setw(7) << std::fixed << std::right << TimeDifference(answer)
              << answer.satellite << "   "
-             << answer.transfered_inf
+             << answer.ppi << "   "
+             << answer.transfered_inf << "   "
+             << answer.duration
              << std::endl;
 
         access ++;

@@ -225,8 +225,7 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
     return result;
 }
 
-void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites){
-    std::vector<proletZRV::AnswerData> answer;
+void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites,std::vector<proletZRV::AnswerData>& answer){
     for(auto cur_sat: proletyRF){
         if (get_current_tank_size(cur_sat.satellite, satellites) > 0.60) {
             proletRF::TimeZoneRF before = find_before(satellites, cur_sat.satellite);
