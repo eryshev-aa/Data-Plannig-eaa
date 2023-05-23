@@ -42,6 +42,7 @@ struct Satellite{
     double tank; ///< размер памяти в Гбит
     double bitrate; ///< скорость передечи в Гбит/с
     int shooting_speed = 4; ///< скорость заполенеия изображениями в Гбит/с
+    TimeZoneRF last_prolet; ///< пролет
 };
 
 class TableProletRF
@@ -63,9 +64,8 @@ private:
     static bool Comparator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
     static bool ZoneComporator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
 
-    void upload(std::vector<TimeZoneRF> &ProletRF);
     //std::vector<TimeZoneRF> proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok);
-    proletRF::TimeZoneRF makeTZforVitok(std::vector<TimeZoneRF> ProletRF, int sat, int vitok);
+    //proletRF::TimeZoneRF makeTZforVitok(std::vector<TimeZoneRF> ProletRF, int sat, int vitok);
 
     std::vector <TimeZoneRF> m_prolety_nad_RF;
 };
@@ -100,13 +100,15 @@ public:
     static bool ZRVComporator(const proletZRV::ZRV& zone1,const proletZRV::ZRV& zone2);
     std::vector<proletZRV::ZRV> SortZRV(std::vector<proletZRV::ZRV> tableZRV);
 
-    double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
-    double shooting(int sat_number, double duration, std::vector<proletRF::Satellite> &satellites);
-    std::vector<proletZRV::ZRV> find_between_two(std::vector<proletZRV::ZRV>TableZRV, const proletZRV::ZRV& first, const proletZRV::ZRV& second, int flag);
-    void analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satelllites);
-    proletZRV::ZRV find_before(std::vector<proletZRV::ZRV> proletyZRV, proletRF::TimeZoneRF current);
-private:
+    void analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites);
 
+private:
+    proletRF::TimeZoneRF find_before(std::vector<proletRF::Satellite> satellites, int curr_sat);
+    std::vector<proletZRV::ZRV> find_ZRV_between_2_prolet(std::vector<proletZRV::ZRV> TableZRV, const proletRF::TimeZoneRF &prolet1, const proletRF::TimeZoneRF &prolet2, int flag);
+    double shooting(proletRF::TimeZoneRF prolet, double duration, std::vector<proletRF::Satellite> &satellites);
+    void upload(std::vector<proletRF::TimeZoneRF> &ProletRF);
+    double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
+    bool cross_zrv_check(std::vector<proletRF::Satellite> satellites, proletZRV::ZRV target_zrv, std::vector<proletZRV::ZRV> table_zrv);
 };
 }
 #endif // TABLEPROLET_H
