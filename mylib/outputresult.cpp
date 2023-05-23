@@ -18,8 +18,8 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     char start [80];
     char end [80];
 
-    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * NS * Data(Gbit) * Duration" << std::endl;
-    fout << "------------------------------------------------------------------------------------------------------------" << std::endl;
+    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)   *sat_n      * NS(PPI)   *Data(Gbit)    *RF" << std::endl;
+    fout << "------------------------------------------------------------------------------------------------------------------" << std::endl;
     fout << std::flush;
 
     for (const auto &answer: answerData)

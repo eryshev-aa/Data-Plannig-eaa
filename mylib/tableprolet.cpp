@@ -258,6 +258,7 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
 
 void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites,std::vector<proletZRV::AnswerData>& answer){
     int length = answer.size();
+    int counterRF = 0;
     for(auto cur_sat: proletyRF){
         if (get_current_tank_size(cur_sat.satellite, satellites) > 0.60) {
             proletRF::TimeZoneRF before = find_before(satellites, cur_sat.satellite);
@@ -299,9 +300,10 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
             shooting(cur_sat, cur_sat.duration, satellites);
         }
         if (answer.size()>length){
-            makeResultFile(answer,answer.size());
+            makeResultFile(answer,answer.size(), counterRF);
             length=answer.size();
         }
+        counterRF++;
     }
 }
 
@@ -428,11 +430,11 @@ std::string TableZRV::makeOutputStringMsec(int msec) {
     return res;
 }
 
-void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos){
+void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos, int counterRF){
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("/home/anton/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+    fout.open("/home/user/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];
     char end [80];
@@ -451,11 +453,11 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
         fout << access << "   "
              << start << makeOutputStringMsec(answerData[i].milisecs_start) << "   "
              << end << makeOutputStringMsec(answerData[i].milisecs_end) << "   "
-             << std::setw(7) << std::fixed << std::right << TimeDifferenceAAA(answerData[i])
-             << answerData[i].satellite << "   "
-             << answerData[i].ppi << "   "
+             << std::setw(7) << std::fixed << std::right << answerData[i].duration << "   "
+             << std::setw(7) << answerData[i].satellite << "   "
+             << std::setw(12) << answerData[i].ppi << "   "
              << answerData[i].transfered_inf << "   "
-             << answerData[i].duration
+             << std::setw(7) << std::right << counterRF
              << std::endl;
 
         access ++;

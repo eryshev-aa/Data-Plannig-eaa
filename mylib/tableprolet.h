@@ -112,7 +112,7 @@ private:
     bool cross_zrv_check(std::vector<proletRF::Satellite> satellites, proletZRV::ZRV target_zrv, std::vector<proletZRV::ZRV> table_zrv);
 
     std::string makeOutputStringMsec(int msec);
-    void makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos);
+    void makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos, int counterRF);
     double TimeDifferenceAAA(proletZRV::AnswerData zone);
 };
 }
