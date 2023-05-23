@@ -19,7 +19,7 @@ public:
     InputFileRFHandler();
 
     bool make_proletRF(string dirPath, vector<TimeZoneRF> &rf_trace_list, vector<Satellite> &sattelites_list);
-    bool make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list);
+    bool make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list, string min_time);
 
 private:
     //vector <string> getFileNamesInDir_FS(string dirName); //gcc: filesistem
