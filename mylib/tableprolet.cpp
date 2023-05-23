@@ -245,7 +245,8 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
                 int zrv_between_count = 0;
                 for (auto zrv_between: zrv) { // для каждой ЗРВ между пролетами проверяем пересечения с другими КА на этом ППИ
                     if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-                        std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
+                        //std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
+                        upload(cur_sat, zrv_between, satellites, answer);
                         break;
                     }
                     zrv_between_count++;
@@ -255,7 +256,8 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
                     if (!zrv.empty()) { //если нашли ЗРВ
                         for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
                             if (cross_zrv_check(satellites, zrv_between, zrv_list)) { // нашли ЗРВ, на которой будем сбрасывать
-                                std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
+                                //std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
+                                upload(cur_sat, zrv_between, satellites, answer);
                             }
                         }
                     }
@@ -263,7 +265,8 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
             }
         } else {
             int b = 0;
-            std::cout  << "sat#" << cur_sat.satellite << " photo="<< shooting(cur_sat, cur_sat.duration, satellites) << std::endl;
+            //std::cout  << "sat#" << cur_sat.satellite << " photo="<< shooting(cur_sat, cur_sat.duration, satellites) << std::endl;
+            shooting(cur_sat, cur_sat.duration, satellites);
         }
     }
 }
