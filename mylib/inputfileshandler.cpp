@@ -182,7 +182,7 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
     return true;
 }
 
-bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list) {
+bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list, string min_time) {
     //return true;
     //vector <string> files = getFileNamesInDir_FS(dirPath);
     vector <string> files = getFileNamesInDir_QDir(dirPath);
@@ -228,26 +228,35 @@ bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_tr
                     zrv_current.tm_start = tm;
                     zrv_current.milisecs_start = std::stoi(zrv_start_time.substr(21,3));
 
-                    string zrv_end_time   = line.substr(56,24);
-                    string end = zrv_end_time.substr(0,20);
-                    if (end[0] == ' ') {
-                        end[0] = '0';
-                    }
-                    istringstream inTime2(end);
-                    inTime2 >> get_time(&tm,"%d %b %Y %H:%M:%S");
-                    zrv_current.tm_end = tm;
-                    zrv_current.milisecs_end = std::stoi(zrv_end_time.substr(21,3));
+                    char start_time_buff [80];
+                    strftime (start_time_buff, 80, "%d.%m.%Y %H:%M:%S.", &tm);
+                    std::string start_time(start_time_buff);
+                    start_time += std::to_string(zrv_current.milisecs_start);
 
-                    string zrv_duration_str = line.substr(91,7);
-                    size_t ptr = -1;
-                    double zrv_duration   = std::stod(zrv_duration_str, &ptr);
-                    if (ptr == 3) {
-                        std::replace(zrv_duration_str.begin(), zrv_duration_str.end(), '.', ','); // у меня в Линукс почему-то работает на "," а не на "."
-                        zrv_duration = std::stod(zrv_duration_str);
-                    }
-                    zrv_current.duration = zrv_duration;
+                    if(start_time>=min_time){
+                        string zrv_end_time   = line.substr(56,24);
+                        string end = zrv_end_time.substr(0,20);
+                        if (end[0] == ' ') {
+                            end[0] = '0';
+                        }
+                        istringstream inTime2(end);
+                        inTime2 >> get_time(&tm,"%d %b %Y %H:%M:%S");
+                        zrv_current.tm_end = tm;
+                        zrv_current.milisecs_end = std::stoi(zrv_end_time.substr(21,3));
 
-                    zrv_trace_list.push_back(zrv_current);
+                        string zrv_duration_str = line.substr(91,7);
+                        size_t ptr = -1;
+                        double zrv_duration   = std::stod(zrv_duration_str, &ptr);
+                        if (ptr == 3) {
+                            std::replace(zrv_duration_str.begin(), zrv_duration_str.end(), '.', ','); // у меня в Линукс почему-то работает на "," а не на "."
+                            zrv_duration = std::stod(zrv_duration_str);
+                        }
+                        zrv_current.duration = zrv_duration;
+
+                        zrv_trace_list.push_back(zrv_current);
+                    }else{
+                        continue;
+                    }
                     //std::cout << zrv_start_time << "==" << zrv_end_time << "==" << zrv_duration << std::endl;
                 }
             }

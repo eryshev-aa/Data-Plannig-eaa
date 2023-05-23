@@ -21,7 +21,13 @@ bool Mylib::readInputData(string dirRF, string dirZRV){
     InputFileRFHandler in;
 
     bool rf = in.make_proletRF(dirRF, m_proletyRF, m_sattelites_list);
-    bool zrv = in.make_ZRV_trace_list(dirZRV, m_proletyZRV);
+    TableProletRF prol;
+    m_proletyRF = prol.SortTable(m_proletyRF);
+    char start_min_buff [80];
+    strftime (start_min_buff, 80, "%d.%m.%Y %H:%M:%S.", &m_proletyRF[0].tm_start);
+    std::string min_start(start_min_buff);
+    min_start += std::to_string(m_proletyRF[0].milisecs_start);
+    bool zrv = in.make_ZRV_trace_list(dirZRV, m_proletyZRV, min_start);
 
     if (rf && zrv) {
         return true;
@@ -32,9 +38,6 @@ bool Mylib::readInputData(string dirRF, string dirZRV){
 bool Mylib::planning(){
     double time_spent = 0.0;
     clock_t begin = clock();
-
-    TableProletRF prol;
-    m_proletyRF = prol.SortTable(m_proletyRF);
 
     TableZRV zrv;
     m_proletyZRV = zrv.SortZRV(m_proletyZRV);
