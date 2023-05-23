@@ -106,7 +106,7 @@ private:
     proletRF::TimeZoneRF find_before(std::vector<proletRF::Satellite> satellites, int curr_sat);
     std::vector<proletZRV::ZRV> find_ZRV_between_2_prolet(std::vector<proletZRV::ZRV> TableZRV, const proletRF::TimeZoneRF &prolet1, const proletRF::TimeZoneRF &prolet2, int flag);
     double shooting(proletRF::TimeZoneRF prolet, double duration, std::vector<proletRF::Satellite> &satellites);
-    void upload(std::vector<proletRF::TimeZoneRF> &ProletRF);
+    double upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::vector<proletRF::Satellite> &satellites, std::pair<std::vector<proletZRV::AnswerData>, double>&answer);
     double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
     bool cross_zrv_check(std::vector<proletRF::Satellite> satellites, proletZRV::ZRV target_zrv, std::vector<proletZRV::ZRV> table_zrv);
 };

@@ -225,7 +225,7 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
     return result;
 }
 
-void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites){
+void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites){
     for(auto cur_sat: proletyRF){
         if (get_current_tank_size(cur_sat.satellite, satellites) > 0.60) {
             proletRF::TimeZoneRF before = find_before(satellites, cur_sat.satellite);
@@ -265,8 +265,40 @@ proletRF::TimeZoneRF TableZRV::find_before(std::vector<Satellite> satellites, in
     return res;
 }
 
-void TableZRV::upload(std::vector<proletRF::TimeZoneRF> &ProletRF){
-
+double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::vector<proletRF::Satellite> &satellites, std::pair<std::vector<proletZRV::AnswerData>, double>&answer){
+    double res = 1.0;
+    int i = 0;
+    for(auto sat: satellites){
+        if (sat.satellite == prolet.satellite) {
+            double to_send = zrv.duration * sat.bitrate;
+            if(to_send > satellites.at(i).filled_inf){
+                to_send = to_send - (to_send - satellites.at(i).filled_inf);
+            }
+            satellites.at(i).filled_inf -= zrv.duration * sat.bitrate;
+            answer.second+=to_send;
+            satellites.at(i).filled_inf_percent = satellites.at(i).filled_inf / satellites.at(i).tank;
+//            if (satellites.at(i).filled_inf_percent < 0.0) { //если ушли в минус при сбросе, то выставляем полностью пустой бак
+//                TableProletRF t;
+//                satellites.at(i).filled_inf = t.get_tank_size(satellites.at(i).type);
+//                satellites.at(i).filled_inf_percent = 1.0;
+//            } кажись убежал от этого
+            satellites.at(i).last_prolet = prolet;
+            satellites.at(i).last_prolet.task = SATELLITE_TASK::UPLOAD;
+            res = satellites.at(i).filled_inf_percent;
+            AnswerData ans;
+            ans.milisecs_end=zrv.milisecs_end;
+            ans.milisecs_start=zrv.milisecs_start;
+            ans.ppi=zrv.ppi;
+            ans.satellite=sat.satellite;
+            ans.tm_end=zrv.tm_end;
+            ans.tm_start=zrv.tm_start;
+            ans.transfered_inf= to_send;
+            answer.first.push_back(ans);
+            break;
+        }
+        i++;
+    }
+    return res;
 }
 
 bool TableZRV::cross_zrv_check(std::vector<proletRF::Satellite> satellites, proletZRV::ZRV target_zrv, std::vector<ZRV> table_zrv) {
