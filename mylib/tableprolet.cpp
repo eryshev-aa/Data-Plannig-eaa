@@ -226,16 +226,17 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
 }
 
 void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites){
+    std::vector<proletZRV::AnswerData> answer;
     for(auto cur_sat: proletyRF){
         if (get_current_tank_size(cur_sat.satellite, satellites) > 0.60) {
             proletRF::TimeZoneRF before = find_before(satellites, cur_sat.satellite);
             std::vector<proletZRV::ZRV> zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_sat, 1); //вектор всех возможных подходящих ЗРВ между пролетами этого КА
             if (zrv.empty()) {
-                zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_sat, 2); //вектор всех возможных подходящих ЗРВ
+                zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_sat, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервал
                 if (!zrv.empty()) { //если нашли ЗРВ
                     for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
                         if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-                            std::cout  << "sat#" << cur_sat.satellite << " upload="<< zrv_between.duration << std::endl;
+                            std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
                             break;
                         }
                     }
@@ -244,7 +245,7 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
                 int zrv_between_count = 0;
                 for (auto zrv_between: zrv) { // для каждой ЗРВ между пролетами проверяем пересечения с другими КА на этом ППИ
                     if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-                        std::cout  << "sat#" << cur_sat.satellite << " upload="<< zrv_between.duration << std::endl;
+                        std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
                         break;
                     }
                     zrv_between_count++;
@@ -254,7 +255,7 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
                     if (!zrv.empty()) { //если нашли ЗРВ
                         for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
                             if (cross_zrv_check(satellites, zrv_between, zrv_list)) { // нашли ЗРВ, на которой будем сбрасывать
-                                std::cout  << "sat#" << cur_sat.satellite << " upload="<< zrv_between.duration << std::endl;
+                                std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << std::endl;
                             }
                         }
                     }
@@ -278,7 +279,7 @@ proletRF::TimeZoneRF TableZRV::find_before(std::vector<Satellite> satellites, in
     return res;
 }
 
-double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::vector<proletRF::Satellite> &satellites, std::pair<std::vector<proletZRV::AnswerData>, double>&answer){
+double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::vector<proletRF::Satellite> &satellites, std::vector<proletZRV::AnswerData> &answer){
     double res = 1.0;
     int i = 0;
     for(auto sat: satellites){
@@ -287,8 +288,7 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
             if(to_send > satellites.at(i).filled_inf){
                 to_send = to_send - (to_send - satellites.at(i).filled_inf);
             }
-            satellites.at(i).filled_inf -= zrv.duration * sat.bitrate;
-            answer.second+=to_send;
+            satellites.at(i).filled_inf -= to_send;
             satellites.at(i).filled_inf_percent = satellites.at(i).filled_inf / satellites.at(i).tank;
 //            if (satellites.at(i).filled_inf_percent < 0.0) { //если ушли в минус при сбросе, то выставляем полностью пустой бак
 //                TableProletRF t;
@@ -299,14 +299,15 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
             satellites.at(i).last_prolet.task = SATELLITE_TASK::UPLOAD;
             res = satellites.at(i).filled_inf_percent;
             AnswerData ans;
-            ans.milisecs_end=zrv.milisecs_end;
-            ans.milisecs_start=zrv.milisecs_start;
-            ans.ppi=zrv.ppi;
-            ans.satellite=sat.satellite;
-            ans.tm_end=zrv.tm_end;
-            ans.tm_start=zrv.tm_start;
-            ans.transfered_inf= to_send;
-            answer.first.push_back(ans);
+            ans.milisecs_end = zrv.milisecs_end;
+            ans.milisecs_start = zrv.milisecs_start;
+            ans.ppi = zrv.ppi;
+            ans.satellite = sat.satellite;
+            ans.duration = zrv.duration;
+            ans.tm_end = zrv.tm_end;
+            ans.tm_start = zrv.tm_start;
+            ans.transfered_inf = to_send;
+            answer.push_back(ans);
             break;
         }
         i++;

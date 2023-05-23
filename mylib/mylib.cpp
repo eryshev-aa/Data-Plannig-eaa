@@ -20,7 +20,7 @@ Mylib::Mylib()
 bool Mylib::readInputData(string dirRF, string dirZRV){
     InputFileRFHandler in;
 
-    bool rf = in.make_RF_trace_list(dirRF, m_proletyRF, m_sattelites_list);
+    bool rf = in.make_proletRF(dirRF, m_proletyRF, m_sattelites_list);
     bool zrv = in.make_ZRV_trace_list(dirZRV, m_proletyZRV);
 
     if (rf && zrv) {

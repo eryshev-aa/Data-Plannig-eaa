@@ -43,7 +43,7 @@ vector <string> InputFileRFHandler::getFileNamesInDir_QDir(string dirName){
     return result;
 }
 
-bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::TimeZoneRF> &rf_trace_list, vector<Satellite> &sattelites_list) {
+bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZoneRF> &rf_trace_list, vector<Satellite> &sattelites_list) {
     //return true;
     //vector <string> files = getFileNamesInDir_FS(dirPath); //gcc: filesistem
     vector <string> files = getFileNamesInDir_QDir(dirPath); //gcc+MinGW: QDir
@@ -86,9 +86,13 @@ bool InputFileRFHandler::make_RF_trace_list(string dirPath, vector<proletRF::Tim
                     satellite.satellite = sat_number;
                     satellite.filled_inf = 0;
                     satellite.filled_inf_percent = 0.0;
-                    satellite.type = SATELLITE_TYPE::KINOSPUTNIK;
-                    satellite.bitrate = prolet.get_bitrate(SATELLITE_TYPE::KINOSPUTNIK);
-                    satellite.tank = prolet.get_tank_size(SATELLITE_TYPE::KINOSPUTNIK);
+                    if (sat_number > 110100 && sat_number <= 110510) {
+                        satellite.type = SATELLITE_TYPE::KINOSPUTNIK;
+                    } else if (sat_number > 110600 && sat_number <= 112010) {
+                        satellite.type = SATELLITE_TYPE::ZORKIY;
+                    }
+                    satellite.bitrate = prolet.get_bitrate(satellite.type);
+                    satellite.tank = prolet.get_tank_size(satellite.type);
                     sattelites_list.push_back(satellite);
                     tz_current.satellite = sat_number;
 //                    if (vitok != 0) {
@@ -237,7 +241,7 @@ bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_tr
                     string zrv_duration_str = line.substr(91,7);
                     size_t ptr = -1;
                     double zrv_duration   = std::stod(zrv_duration_str, &ptr);
-                    if (ptr = 3) {
+                    if (ptr == 3) {
                         std::replace(zrv_duration_str.begin(), zrv_duration_str.end(), '.', ','); // у меня в Линукс почему-то работает на "," а не на "."
                         zrv_duration = std::stod(zrv_duration_str);
                     }
