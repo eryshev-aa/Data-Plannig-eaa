@@ -2,6 +2,12 @@
 #include <time.h>
 #include <algorithm>
 #include <iostream>
+
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+
 using namespace proletRF;
 using namespace proletZRV;
 
@@ -21,6 +27,14 @@ double TableProletRF::TimeDifference(TimeZoneRF zone) {
     double differ = (first - second);
 
     return differ;
+}
+
+double TableZRV::TimeDifferenceAAA(proletZRV::AnswerData zone) {
+    time_t first = mktime(&(zone.tm_end)) * 1000 + zone.milisecs_end;
+    time_t second = mktime(&(zone.tm_start)) * 1000 + zone.milisecs_start;
+    double differ = (first - second);
+
+    return differ / 1000;
 }
 
 //добавил себе отдельно функцию, потому что мне нужно вычитать из начала конец.
@@ -281,6 +295,7 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
 //            std::cout  << "sat#" << cur_sat.satellite << " photo="<< shooting(cur_sat, cur_sat.duration, satellites) << " " << start << " - " << end << std::endl;
             shooting(cur_sat, cur_sat.duration, satellites);
         }
+        //makeResultFile(answer);
     }
 }
 
@@ -312,6 +327,8 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
 //                satellites.at(i).filled_inf_percent = 1.0;
 //            } кажись убежал от этого
             satellites.at(i).last_prolet = prolet;
+            satellites.at(i).last_prolet.milisecs_end = zrv.milisecs_end;
+            satellites.at(i).last_prolet.tm_end = zrv.tm_end;
             satellites.at(i).last_prolet.task = SATELLITE_TASK::UPLOAD;
             res = satellites.at(i).filled_inf_percent;
             AnswerData ans;
@@ -387,6 +404,58 @@ bool TableZRV::cross_zrv_check(std::vector<proletRF::Satellite> satellites, prol
     } else {
         return false;
     }
+}
+
+std::string TableZRV::makeOutputStringMsec(int msec) {
+    std::string  res;
+
+    if (msec == 0) {
+        res = "000";
+    } else if (msec > 0 && msec < 10) {
+        res = "00" + std::to_string(msec);
+    } else if (msec > 9 && msec < 100) {
+        res = "0" + std::to_string(msec);
+    } else {
+        res = std::to_string(msec);
+    }
+
+    return res;
+}
+
+void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData){
+    int  access = 1;
+    std::ofstream fout;
+
+    fout.open("/home/user/qt_projects/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+    time_t t;
+    char start [80];
+    char end [80];
+
+//    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * NS * Data(Gbit) * Duration" << std::endl;
+//    fout << "------------------------------------------------------------------------------------------------------------" << std::endl;
+//    fout << std::flush;
+
+    for (const auto &answer: answerData)
+    {
+        time (&t);
+        strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_start);
+        strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_end);
+
+        fout << std::setw(6) << std::setprecision(3) << std::right;
+        fout << access << "   "
+             << start << makeOutputStringMsec(answer.milisecs_start) << "   "
+             << end << makeOutputStringMsec(answer.milisecs_end) << "   "
+             << std::setw(7) << std::fixed << std::right << TimeDifferenceAAA(answer)
+             << answer.satellite << "   "
+             << answer.ppi << "   "
+             << answer.transfered_inf << "   "
+             << answer.duration
+             << std::endl;
+
+        access ++;
+    }
+
+    fout.close();
 }
 
 //std::vector<TimeZoneRF> TableProletRF::proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok) {

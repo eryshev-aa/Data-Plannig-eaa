@@ -110,6 +110,10 @@ private:
     double upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::vector<proletRF::Satellite> &satellites, std::vector<AnswerData> &answer);
     double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
     bool cross_zrv_check(std::vector<proletRF::Satellite> satellites, proletZRV::ZRV target_zrv, std::vector<proletZRV::ZRV> table_zrv);
+
+    std::string makeOutputStringMsec(int msec);
+    void makeResultFile(std::vector <proletZRV::AnswerData> answerData);
+    double TimeDifferenceAAA(proletZRV::AnswerData zone);
 };
 }
 #endif // TABLEPROLET_H
