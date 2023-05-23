@@ -227,11 +227,12 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
         if (prolet2.satellite == tmpZRV.satellite) {
             //входит от конца первого пролета до начала второго пролета
             if (flag==1) return zrv_start > prolet1_end && zrv_start < prolet2_start && zrv_end < prolet2_start;
-            if(flag==2) return zrv_start > prolet1_end && zrv_start < prolet2_end && flag==2;
+            if (flag==2) return zrv_start > prolet1_end && zrv_start < prolet2_end;
 
         }
         return false;
     });
+
     /*for(const auto& tmpZRV: table_zrv){
         char start3 [80];
         char end3 [80];
@@ -438,11 +439,11 @@ std::string TableZRV::makeOutputStringMsec(int msec) {
     return res;
 }
 
-void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData){
-    int  access = 1;
+void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos){
+    int  access = pos;
     std::ofstream fout;
 
-    fout.open("/home/user/qt_projects/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+    fout.open("/home/anton/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];
     char end [80];
@@ -451,21 +452,21 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData){
 //    fout << "------------------------------------------------------------------------------------------------------------" << std::endl;
 //    fout << std::flush;
 
-    for (const auto &answer: answerData)
+    for (auto i=pos-1;i<sizeof(answerData);i++)
     {
         time (&t);
-        strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_start);
-        strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_end);
+        strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answerData[i].tm_start);
+        strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &answerData[i].tm_end);
 
         fout << std::setw(6) << std::setprecision(3) << std::right;
         fout << access << "   "
-             << start << makeOutputStringMsec(answer.milisecs_start) << "   "
-             << end << makeOutputStringMsec(answer.milisecs_end) << "   "
-             << std::setw(7) << std::fixed << std::right << TimeDifferenceAAA(answer)
-             << answer.satellite << "   "
-             << answer.ppi << "   "
-             << answer.transfered_inf << "   "
-             << answer.duration
+             << start << makeOutputStringMsec(answerData[i].milisecs_start) << "   "
+             << end << makeOutputStringMsec(answerData[i].milisecs_end) << "   "
+             << std::setw(7) << std::fixed << std::right << TimeDifferenceAAA(answerData[i])
+             << answerData[i].satellite << "   "
+             << answerData[i].ppi << "   "
+             << answerData[i].transfered_inf << "   "
+             << answerData[i].duration
              << std::endl;
 
         access ++;
