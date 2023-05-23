@@ -257,6 +257,7 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
 }
 
 void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites,std::vector<proletZRV::AnswerData>& answer){
+    int length = answer.size();
     for(auto cur_sat: proletyRF){
         if (get_current_tank_size(cur_sat.satellite, satellites) > 0.60) {
             proletRF::TimeZoneRF before = find_before(satellites, cur_sat.satellite);
@@ -264,11 +265,6 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
             if (!zrv.empty()) {
                 for (auto zrv_between: zrv) { // для каждой ЗРВ между пролетами проверяем пересечения с другими КА на этом ППИ
                     if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-//                        char start [80];
-//                        char end [80];
-//                        strftime (start, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_start);
-//                        strftime (end, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_end);
-//                        std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << " " << start << " = " << end << std::endl;
                         upload(cur_sat, zrv_between, satellites, answer);
                         break; //если нашли ЗРВ, которая не пересекается или у нас самый заполненный бак, то сбрасываем на этой ЗРВ и выходим из пролета.
                     }
@@ -278,11 +274,6 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
                 if (!zrv.empty()) { //если нашли ЗРВ
                     for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
                         if (cross_zrv_check(satellites, zrv_between, zrv_list)) { // нашли ЗРВ, на которой будем сбрасывать
-//                            char start [80];
-//                            char end [80];
-//                            strftime (start, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_start);
-//                            strftime (end, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_end);
-//                            std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << " " << start << " = " << end << std::endl;
                             upload(cur_sat, zrv_between, satellites, answer);
                             break;
                         }
@@ -293,11 +284,6 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
                 if (!zrv.empty()) { //если нашли ЗРВ
                     for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
                         if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-//                            char start [80];
-//                            char end [80];
-//                            strftime (start, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_start);
-//                            strftime (end, 80, "%d.%m.%Y %H:%M:%S", &zrv_between.tm_end);
-//                            std::cout  << "sat#" << cur_sat.satellite << " upload="<< upload(cur_sat, zrv_between, satellites, answer) << " " << start << " = " << end << std::endl;
                             upload(cur_sat, zrv_between, satellites, answer);
                             break;
                         }
@@ -312,7 +298,10 @@ void TableZRV::analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::v
 //            std::cout  << "sat#" << cur_sat.satellite << " photo="<< shooting(cur_sat, cur_sat.duration, satellites) << " " << start << " - " << end << std::endl;
             shooting(cur_sat, cur_sat.duration, satellites);
         }
-        //makeResultFile(answer);
+        if (answer.size()>length){
+            makeResultFile(answer,answer.size());
+            length=answer.size();
+        }
     }
 }
 
@@ -452,7 +441,7 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
 //    fout << "------------------------------------------------------------------------------------------------------------" << std::endl;
 //    fout << std::flush;
 
-    for (auto i=pos-1;i<sizeof(answerData);i++)
+    for (auto i=pos-1;i<answerData.size();i++)
     {
         time (&t);
         strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answerData[i].tm_start);
