@@ -102,7 +102,7 @@ public:
     std::vector<proletZRV::ZRV> SortZRV(std::vector<proletZRV::ZRV> tableZRV);
 
     void analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites, std::vector <proletZRV::AnswerData> &answer);
-
+    void analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites, std::vector <proletZRV::AnswerData> &answer);
 private:
     proletRF::TimeZoneRF find_before(std::vector<proletRF::Satellite> satellites, int curr_sat);
     std::vector<proletZRV::ZRV> find_ZRV_between_2_prolet(std::vector<proletZRV::ZRV> TableZRV, const proletRF::TimeZoneRF &prolet1, const proletRF::TimeZoneRF &prolet2, int flag);

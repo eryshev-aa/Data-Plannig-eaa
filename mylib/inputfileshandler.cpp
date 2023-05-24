@@ -126,6 +126,7 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
                     tz_current.milisecs_end = std::stoi(rf_trace_end_time.substr(21,3));
 
                     if ((tz_current.tm_end.tm_hour >= 18 && tz_current.tm_end.tm_min >= 0 && tz_current.tm_end.tm_sec >= 0) ||
+                        (tz_current.tm_start.tm_hour >= 18 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0) ||
                         (tz_current.tm_start.tm_hour < 9 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0)) {
                         //tz_current.task = SATELLITE_TASK::UPLOAD;
                         continue;
