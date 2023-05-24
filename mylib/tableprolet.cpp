@@ -479,7 +479,8 @@ int TableZRV::find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<prole
         strftime(tmpZRV_end1,80, "%d.%m.%Y %H:%M:%S.", &zrv.tm_end);
         std::string tmpZRV_end(tmpZRV_end1);
         tmpZRV_end+=std::to_string(zrv.milisecs_end);
-        return(prolet.satellite==zrv.satellite)&&(tmpZRV_end < prolet_end);
+        bool isDelete = (prolet.satellite==zrv.satellite)&&(tmpZRV_end < prolet_end);
+        return isDelete;
     }),table_zrv.end());
     //2.удалить все ЗРВ prolet.satellite до итератора last_before
 //    if(last_before!=table_zrv.rend()){
