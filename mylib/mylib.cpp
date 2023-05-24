@@ -43,13 +43,13 @@ bool Mylib::planning(){
     TableZRV zrv;
     m_proletyZRV = zrv.SortZRV(m_proletyZRV);
 
-//    OutputResult out("/home/user/ProfIT-Data-Plannig/result.txt");
-//    out.makeProletRFFile("/home/user/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
-//    out.makeZRVFile("/home/user/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
+    OutputResult out("/home/user/ProfIT-Data-Plannig/result.txt");
+    out.makeProletRFFile("/home/user/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
+    out.makeZRVFile("/home/user/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
 
-    OutputResult out("/home/anton/ProfIT-Data-Plannig/result.txt");
-    out.makeProletRFFile("/home/anton/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
-    out.makeZRVFile("/home/anton/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
+//    OutputResult out("/home/anton/ProfIT-Data-Plannig/result.txt");
+//    out.makeProletRFFile("/home/anton/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
+//    out.makeZRVFile("/home/anton/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
 
     out.makeResultFile(m_answer);
 

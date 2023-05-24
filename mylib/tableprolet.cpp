@@ -470,19 +470,20 @@ int TableZRV::find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<prole
     double time_spent =0.0;
     clock_t begin = clock();
     char prolet_end1[80];
-    strftime(prolet_end1,80,"%d.%m.%Y %H:%M:%S", &prolet.tm_end);
+    strftime(prolet_end1,80,"%d.%m.%Y %H:%M:%S.", &prolet.tm_end);
     std::string prolet_end(prolet_end1);
     prolet_end+=std::to_string(prolet.milisecs_end);
     //1.поиск итератора на последний ЗРВ у которого tm_end<table_zrv
     auto last_before=std::find_if(table_zrv.rbegin(), table_zrv.rend(),[&](const proletZRV::ZRV&zrv){
         char tmpZRV_end1[80];
-        strftime(tmpZRV_end1,80, "%d.%m.%Y %H:%M:%S", &zrv.tm_end);
+        strftime(tmpZRV_end1,80, "%d.%m.%Y %H:%M:%S.", &zrv.tm_end);
         std::string tmpZRV_end(tmpZRV_end1);
         tmpZRV_end+=std::to_string(zrv.milisecs_end);
         return(prolet.satellite==zrv.satellite)&&(tmpZRV_end < prolet_end);
     });
     //2.удалить все ЗРВ prolet.satellite до итератора last_before
     if(last_before!=table_zrv.rend()){
+        auto aaa = last_before.base();
         table_zrv.erase(table_zrv.begin(),last_before.base());
     }
     clock_t end =clock();
@@ -574,8 +575,8 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
     int  access = pos;
     std::ofstream fout;
 
-//    fout.open("/home/user/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
-    fout.open("/home/anton/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+    fout.open("/home/user/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+//    fout.open("/home/anton/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];
     char end [80];
