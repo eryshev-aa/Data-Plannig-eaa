@@ -23,6 +23,7 @@ bool Mylib::readInputData(string dirRF, string dirZRV){
     bool rf = in.make_proletRF(dirRF, m_proletyRF, m_sattelites_list);
     TableProletRF prol;
     m_proletyRF = prol.SortTable(m_proletyRF);
+
     char start_min_buff [80];
     strftime (start_min_buff, 80, "%d.%m.%Y %H:%M:%S.", &m_proletyRF[0].tm_start);
     std::string min_start(start_min_buff);
