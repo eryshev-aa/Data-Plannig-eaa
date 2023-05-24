@@ -474,17 +474,28 @@ int TableZRV::find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<prole
     std::string prolet_end(prolet_end1);
     prolet_end+=std::to_string(prolet.milisecs_end);
     //1.поиск итератора на последний ЗРВ у которого tm_end<table_zrv
-    auto last_before=std::find_if(table_zrv.rbegin(), table_zrv.rend(),[&](const proletZRV::ZRV&zrv){
+    table_zrv.erase(std::remove_if(table_zrv.begin(),table_zrv.end(),[&](const proletZRV::ZRV&zrv){
         char tmpZRV_end1[80];
         strftime(tmpZRV_end1,80, "%d.%m.%Y %H:%M:%S", &zrv.tm_end);
         std::string tmpZRV_end(tmpZRV_end1);
         tmpZRV_end+=std::to_string(zrv.milisecs_end);
         return(prolet.satellite==zrv.satellite)&&(tmpZRV_end < prolet_end);
-    });
-    //2.удалить все ЗРВ prolet.satellite до итератора last_before
-    if(last_before!=table_zrv.rend()){
-        table_zrv.erase(table_zrv.begin(),last_before.base());
-    }
+    }),table_zrv.end());
+//    auto last_before=std::find_if(table_zrv.rbegin(), table_zrv.rend(),[&](const proletZRV::ZRV&zrv){
+//        char tmpZRV_end1[80];
+//        strftime(tmpZRV_end1,80, "%d.%m.%Y %H:%M:%S", &zrv.tm_end);
+//        std::string tmpZRV_end(tmpZRV_end1);
+//        tmpZRV_end+=std::to_string(zrv.milisecs_end);
+//        return(prolet.satellite==zrv.satellite)&&(tmpZRV_end < prolet_end);
+//    });
+//    //2.удалить все ЗРВ prolet.satellite до итератора last_before
+//    if(last_before!=table_zrv.rend()){
+//        last_before=last_before.base;
+//        table_zrv.erase(std::remove_if(table_zrv.begin,last_before.base(), [&](const proletZRV::ZRV&zrv){
+//            return zrv.satellite==prolet.satellite;
+//        }),last_before);
+//        //table_zrv.erase(table_zrv.begin(),last_before.base());
+//    }
     clock_t end =clock();
     time_spent+=(double)(end-begin)/CLOCKS_PER_SEC;
     std::cout<<std::setprecision(9)<<"find_ZRV_for_delete time is "<<time_spent << " sec. "
