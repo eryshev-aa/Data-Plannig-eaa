@@ -331,10 +331,10 @@ void TableZRV::analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, st
     bool finish_checks = false;
 
     for(auto cur_prolet: proletyRF){
-        finish_checks = false;
-        if (cur_prolet.satellite == 110101) {
+        if (counterRF == 802) { //после этого пролета крашится
             int a = 0;
         }
+        finish_checks = false;
         if (get_current_tank_size(cur_prolet.satellite, satellites) > 0.60) {
             while (get_current_tank_size(cur_prolet.satellite, satellites) > 0.60) { //пока в баке более 60% пытаемся найти ЗРВ для сброса и сбросить
                 if (finish_checks) break;
@@ -399,7 +399,7 @@ void TableZRV::analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, st
             }
         } else {
             shooting(cur_prolet, cur_prolet.duration, satellites);
-            int a = find_ZRV_for_delete(cur_prolet, zrv_list);
+            //int a = find_ZRV_for_delete(cur_prolet, zrv_list);
         }
 
         if (answer.size()>length){
@@ -466,54 +466,55 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
     return res;
 }
 
-int TableZRV::find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<proletZRV::ZRV> table_zrv) {
-    std::vector<proletZRV::ZRV> prolet_cross_zrv_list;
-    prolet_cross_zrv_list.reserve(1);
-
+int TableZRV::find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<proletZRV::ZRV> &table_zrv) {
     double time_spent = 0.0;
     clock_t begin = clock();
 
-    char prolet_start1 [80];
     char prolet_end1 [80];
-    strftime (prolet_start1, 80, "%d.%m.%Y %H:%M:%S.", &prolet.tm_start);
     strftime (prolet_end1, 80, "%d.%m.%Y %H:%M:%S.", &prolet.tm_end);
-    std::string prolet_start(prolet_start1);
     std::string prolet_end(prolet_end1);
-    prolet_start += std::to_string(prolet.milisecs_start);
     prolet_end += std::to_string(prolet.milisecs_end);
 
-    std::copy_if(table_zrv.begin(), table_zrv.end(), std::back_inserter(prolet_cross_zrv_list),[prolet, prolet_start1,prolet_end1,prolet_start,prolet_end](proletZRV::ZRV tmpZRV){
+    //Нужно удалить из table_zrv те, у которых tm_end < table_zrv для конкретного prolet.satellite
+    //1. найти индекс последей ЗРВ для prolet.satellite у которой tm_end < table_zrv
+    int index = 0;
+    std::vector<int> ind;
+    for (auto zrv: table_zrv) {
         char tmpZRV_start1 [80];
         char tmpZRV_end1 [80];
-        strftime (tmpZRV_start1, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_start);
-        strftime (tmpZRV_end1, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_end);
+        strftime (tmpZRV_start1, 80, "%d.%m.%Y %H:%M:%S.", &zrv.tm_start);
+        strftime (tmpZRV_end1, 80, "%d.%m.%Y %H:%M:%S.", &zrv.tm_end);
         std::string tmpZRV_start(tmpZRV_start1);
         std::string tmpZRV_end(tmpZRV_end1);
-        tmpZRV_start += std::to_string(tmpZRV.milisecs_start);
-        tmpZRV_end += std::to_string(tmpZRV.milisecs_end);
-
-        if (tmpZRV.satellite == prolet.satellite) {
-            return tmpZRV_end < prolet_end; //заканчивается раньше начала или начинается позже конца, т.е. не пересекается совсем
+        tmpZRV_start += std::to_string(zrv.milisecs_start);
+        tmpZRV_end += std::to_string(zrv.milisecs_end);
+        if ((prolet.satellite == zrv.satellite) && (tmpZRV_end < prolet_end)) {
+            index++;
+            ind.push_back(index);
+            continue;
         }
-        return false;
-    });
+        if ((prolet.satellite == zrv.satellite) && (tmpZRV_start > prolet_end)) {
+            break;
+        }
+        index ++;
+    }
 
-    if (!prolet_cross_zrv_list.empty()) {
-        auto it = prolet_cross_zrv_list.at(prolet_cross_zrv_list.size() - 1);
-        int a = 0;
-        //        for (auto it = table_zrv.begin(); it != table_zrv.end(); it++) {
-//            if (*it == std::find()) {
-//                indices.push_back(std::distance(v.begin(), it));
-//            }
-//        }
+    //удалить из table_zrv все ЗРВ prolet.satellite до позиции index
+    for (int i = 0; i < index; i++) {
+        if (table_zrv.at(i).satellite == prolet.satellite) {
+            table_zrv.erase(table_zrv.begin() + index);
+            // так нельзя, потому что после удаления, нужные элементы изменят свою позицию на -1
+            // a позиция index не изменится.
+
+        }
     }
 
     clock_t end = clock();
     time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
     // вычислить прошедшее время, найдя разницу (end - begin)
-    std::cout << std::setprecision(9) << "find_ZRV_between_2_prolet time is " << time_spent << " sec. "
-              << std::fixed << "zrv_count = " << prolet_cross_zrv_list.size() << std::endl;
-    return prolet_cross_zrv_list.size();
+    std::cout << std::setprecision(9) << "find_ZRV_for_delete time is " << time_spent << " sec. "
+              << std::fixed << "table_zrv.size = " << table_zrv.size() << std::endl;
+    return 1;
 }
 
 bool TableZRV::cross_zrv_check(std::vector<proletRF::Satellite> satellites, proletZRV::ZRV target_zrv, std::vector<ZRV> table_zrv) {
@@ -598,7 +599,7 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("/home/user/qt_projects/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+    fout.open("/home/user/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];
     char end [80];
