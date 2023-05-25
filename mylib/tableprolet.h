@@ -110,8 +110,8 @@ private:
     void find_ZRV_for_delete_after_shooting(proletRF::TimeZoneRF prolet, std::vector<ZRV> &table_zrv);
     void find_ZRV_for_delete_after_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);
     void find_ZRV_for_delete_after_prolet(proletRF::Satellite satellite, std::vector<ZRV> &table_zrv);
-    void makeResult_for_upload();
-    void makeResult_for_shoot();
+    void makeResult_for_upload(int pos);
+    void makeResult_for_shoot(int pos);
     std::string makeOutputStringMsec(int msec);
     void makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos, int counterRF);
 

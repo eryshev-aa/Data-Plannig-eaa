@@ -244,22 +244,22 @@ void TableZRV::analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, st
                     proletZRV::ZRV using_zrv;
                     if (get_current_tank_size(cur_prolet.satellite, satellites) == 1.0) { // если у текущего КА полный бак, то забираем эту ЗРВ под срос
                         upload(cur_prolet, zrv.at(0), satellites, answer);
-                        //if(m_upload_data.size()%100==0){makeResult_for_upload();}
+                        //if(m_upload_data.size()%100==0){makeResult_for_upload(m_upload_data%100);}
                         find_ZRV_for_delete_after_upload(zrv.at(0), zrv_list);
                         if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            //if(m_shoot_data.size()%100==0){makeResult_for_shoot();}
+                            //if(m_shoot_data.size()%100==0){makeResult_for_shoot(m_shoot_data%100);}
                         }
                         finish_checks = true;
                         continue; // break;
                     }
                     if (cross_zrv_check_new(satellites, zrv, zrv_list, using_zrv)) { // если бак не полный, смотрим у кого бак более заполнен
                         upload(cur_prolet, using_zrv, satellites, answer); // если у нас или вообще нет пересечений с другими КА, то мы збрасываем
-                        //if(m_shoot_data.size()%100==0){makeResult_for_shoot();}
+                        //if(m_shoot_data.size()%100==0){makeResult_for_shoot(m_shoot_data%100);}
                         find_ZRV_for_delete_after_upload(using_zrv, zrv_list);
                         if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            //if(m_shoot_data.size()%100==0){makeResult_for_shoot();}
+                            //if(m_shoot_data.size()%100==0){makeResult_for_shoot(m_shoot_data%100);}
                         }
                         finish_checks = true;
                         break;
@@ -268,19 +268,19 @@ void TableZRV::analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, st
                         if (!zrv.empty()) { //если нашли ЗРВ
                             if (cross_zrv_check_new(satellites, zrv, zrv_list, using_zrv)) {
                                 upload(cur_prolet, using_zrv, satellites, answer);
-                                //if(m_upload_data.size()%100==0){makeResult_for_upload();}
+                                //if(m_upload_data.size()%100==0){makeResult_for_upload(m_upload_data%100);}
                                 find_ZRV_for_delete_after_upload(using_zrv, zrv_list);
                                 //finish_checks = true;
                                 break;
                             } else { // если и в расширенном интервале все занято, то просто снимаем
                                 shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                                //if(m_shoot_data.size()%100==0){makeResult_for_shoot();}
+                                //if(m_shoot_data.size()%100==0){makeResult_for_shoot(m_shoot_data%100);}
                                 finish_checks = true;
                                 break;
                             }
                         } else {
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            //if(m_shoot_data.size()%100==0){makeResult_for_shoot();}
+                            //if(m_shoot_data.size()%100==0){makeResult_for_shoot(m_shoot_data%100);}
                             finish_checks = true;
                             break;
                         }
@@ -291,26 +291,26 @@ void TableZRV::analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, st
                         proletZRV::ZRV using_zrv;
                         if (get_current_tank_size(cur_prolet.satellite, satellites) == 1.0) {
                             upload(cur_prolet, zrv.at(0), satellites, answer);
-                            //if(m_upload_data.size()%100==0){makeResult_for_upload();}
+                            //if(m_upload_data.size()%100==0){makeResult_for_upload(m_upload_data%100);}
                             find_ZRV_for_delete_after_upload(zrv.at(0), zrv_list);
                             finish_checks = true;
                             break;
                         }
                         if (cross_zrv_check_new(satellites, zrv, zrv_list, using_zrv)) {
                             upload(cur_prolet, using_zrv, satellites, answer);
-                            //if(m_upload_data.size()%100==0){makeResult_for_upload();}
+                            //if(m_upload_data.size()%100==0){makeResult_for_upload(m_upload_data%100);}
                             find_ZRV_for_delete_after_upload(using_zrv, zrv_list);
                             finish_checks = true;
                             break;
                         } else {
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            //if(m_shoot_data.size()%100==0){makeResult_for_shoot();}
+                            //if(m_shoot_data.size()%100==0){makeResult_for_shoot(m_shoot_data%100);}
                             finish_checks = true;
                             break;
                         }
                     } else {
                         shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                        //if(m_shoot_data.size()%100==0){makeResult_for_shoot();}
+                        //if(m_shoot_data.size()%100==0){makeResult_for_shoot(m_shoot_data%100);}
                         finish_checks = true;
                         break;
                     }
@@ -576,6 +576,82 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
         access ++;
     }
 
+    //fout << "Total upload: " << std::setw(9) << std::setprecision(3) << std::right << m_total_upload << std::endl;
+    fout.close();
+}
+
+void TableZRV::makeResult_for_shoot(int pos){
+    int  access = pos;
+    std::ofstream fout;
+
+    fout.open("/home/user/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out | std::fstream::app);
+//    fout.open("/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out | std::fstream::app);
+    time_t t;
+    char start [80];
+    char end [80];
+    if(m_shoot_data.size()==100){
+        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Filled inf." << std::endl;
+        fout << "--------------------------------------------------------------------------------------------" << std::endl;
+    }
+
+    pos=pos>100?pos*100:pos;
+    for (auto i = pos - 1; i < m_shoot_data.size(); i++)
+    {
+        time (&t);
+        strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &m_shoot_data[i].tm_start);
+        strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &m_shoot_data[i].tm_end);
+
+        fout << std::setw(6) << std::setprecision(3) << std::right;
+        fout << access << "   "
+             << start << makeOutputStringMsec(m_shoot_data[i].milisecs_start) << "   "
+             << end << makeOutputStringMsec(m_shoot_data[i].milisecs_end) << "   "
+             << std::setw(7) << std::fixed << std::right << m_shoot_data[i].duration << "   "
+             << std::setw(7) << m_shoot_data[i].satellite << "   "
+             << std::setw(12)<< m_shoot_data[i].transfered_inf << "   "
+             << std::endl;
+
+        access ++;
+    }
+
+    fout.close();
+}
+
+void TableZRV::makeResult_for_upload(int pos){
+    int  access = pos;
+    std::ofstream fout;
+
+    fout.open("/home/user/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out | std::fstream::app);
+//    fout.open("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out | std::fstream::app);
+    time_t t;
+    char start [80];
+    char end [80];
+    if(m_upload_data.size()==100){
+        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * ppi  * Filled inf." << std::endl;
+        fout << "-----------------------------------------------------------------------------------------------------" << std::endl;
+    }
+    //m_total_upload += answerData.at(0).transfered_inf;
+
+    pos=pos>100?pos*100:pos;
+
+    for (auto i = pos - 1; i < m_upload_data.size(); i++)
+    {
+        time (&t);
+        strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &m_upload_data[i].tm_start);
+        strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &m_upload_data[i].tm_end);
+
+        fout << std::setw(6) << std::setprecision(3) << std::right;
+        fout << access << "   "
+             << start << makeOutputStringMsec(m_upload_data[i].milisecs_start) << "   "
+             << end << makeOutputStringMsec(m_upload_data[i].milisecs_end) << "   "
+             << std::setw(7) << std::fixed << std::right << m_upload_data[i].duration << "   "
+             << std::setw(7) << m_upload_data[i].satellite << "   "
+             << std::setw(12) << m_upload_data[i].ppi << "   "
+             << std::right << m_upload_data[i].transfered_inf << "   "
+             <<  std::endl;
+
+        access ++;
+    }
+    fout<<"All uploaded data for now: "<<m_total_upload<<std::endl;
     //fout << "Total upload: " << std::setw(9) << std::setprecision(3) << std::right << m_total_upload << std::endl;
     fout.close();
 }
