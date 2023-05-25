@@ -44,12 +44,11 @@ vector <string> InputFileRFHandler::getFileNamesInDir_QDir(string dirName){
 }
 
 bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZoneRF> &rf_trace_list, vector<Satellite> &sattelites_list) {
-    //return true;
     //vector <string> files = getFileNamesInDir_FS(dirPath); //gcc: filesistem
     vector <string> files = getFileNamesInDir_QDir(dirPath); //gcc+MinGW: QDir
     string line;
-//    int vitok = 0;
-    proletRF::TimeZoneRF tz_current/*, tz_previos*/;
+
+    proletRF::TimeZoneRF tz_current;
     proletRF::Satellite satellite;
 
     for (const auto& entry : files) {
@@ -59,7 +58,6 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
         if (in_RF_file.is_open())
         {
             getline(in_RF_file, line);
-            //std::vector<TimeZoneRF> rf_trace_vitok_list;
             TableProletRF prolet;
             while (std::getline(in_RF_file, line))
             {
@@ -73,13 +71,7 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
                     (line.find("Total Duration") != std::string::npos) ||           // Но может их не просто так дали...?
                     (line.find("Global Statistics") != std::string::npos) ||
                     (line[0] == '\0')) {
-//                    if (vitok != 0) {
-//                        prolet.IsUpload(rf_trace_vitok_list);
-//                        for (auto vitok: rf_trace_vitok_list) {
-//                            rf_trace_list.push_back(vitok);
-//                        }
-//                        rf_trace_vitok_list.clear();
-//                    }
+
                     continue;
                 } else if (line.find("Russia-To-KinoSat_") != std::string::npos) {
                     int sat_number = std::stoi(line.substr(18,6));  // получаем номер КА
@@ -95,14 +87,6 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
                     satellite.tank = prolet.get_tank_size(satellite.type);
                     sattelites_list.push_back(satellite);
                     tz_current.satellite = sat_number;
-//                    if (vitok != 0) {
-//                        prolet.IsUpload(rf_trace_vitok_list);
-//                        for (auto vitok: rf_trace_vitok_list) {
-//                            rf_trace_list.push_back(vitok);
-//                        }
-//                        rf_trace_vitok_list.clear();
-//                    }
-//                    vitok = 0;
                 } else {
                     string rf_trace_start_time = line.substr(28,24);
                     string start = rf_trace_start_time.substr(0,20);
@@ -128,7 +112,6 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
                     if ((tz_current.tm_end.tm_hour >= 18 && tz_current.tm_end.tm_min >= 0 && tz_current.tm_end.tm_sec >= 0) ||
                         (tz_current.tm_start.tm_hour >= 18 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0) ||
                         (tz_current.tm_start.tm_hour < 9 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0)) {
-                        //tz_current.task = SATELLITE_TASK::UPLOAD;
                         continue;
                     } else {
                         tz_current.task = SATELLITE_TASK::WAIT;
@@ -142,35 +125,7 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
                         rf_trace_duration = std::stod(rf_trace_duration_str);
                     }
                     tz_current.duration = rf_trace_duration;
-
-
-
                     rf_trace_list.push_back(tz_current);
-//                    if (vitok != 0) {
-//                        // нужно сравнить с концом предыдущего пролета
-//                        double dif = prolet.TimeDifference30(tz_current,tz_previos);
-//                        if (dif > 1800.0) {
-//                            prolet.IsUpload(rf_trace_vitok_list);
-//                            for (auto vitok: rf_trace_vitok_list) {
-//                                rf_trace_list.push_back(vitok);
-//                            }
-//                            vitok++;
-//                            tz_current.vitok = vitok;
-//                            rf_trace_vitok_list.clear();
-//                            rf_trace_vitok_list.push_back(tz_current);
-//                        } else {
-//                            tz_current.vitok = vitok;
-//                            rf_trace_vitok_list.push_back(tz_current);
-//                        }
-//                        //
-
-//                        tz_previos = tz_current;
-//                    } else { //vitok = 0
-//                        vitok ++;
-//                        tz_current.vitok = vitok;
-//                        rf_trace_vitok_list.push_back(tz_current);
-//                        tz_previos = tz_current;
-//                    }
                 }
             }
         } else
@@ -204,9 +159,6 @@ bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_tr
                 if (line.find("Facility-") != std::string::npos) {
                     ppi = line.substr(line.find('-') + 1,50);
                     ppi = ppi.substr(0,ppi.find('-'));
-                    if (ppi == ""){
-                        int a = 0;
-                    }
                     zrv_current.ppi = ppi;
                 } else if (line.find(ppi + "-To-") != std::string::npos) {
                     int sat_number = std::stoi(line.substr(line.find('_') + 1,6));  // получаем номер КА

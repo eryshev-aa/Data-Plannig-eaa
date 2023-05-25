@@ -50,11 +50,10 @@ class TableProletRF
 public:
     TableProletRF();
 
-    double TimeDifference(TimeZoneRF zone);
-    double TimeDifference30(TimeZoneRF zone1, TimeZoneRF zone2);
-    void IsUpload(std::vector<TimeZoneRF> &rf_trace_vitok_list);
-
     std::vector<TimeZoneRF> SortTable(std::vector<TimeZoneRF> ProletRF);
+
+    double TimeDifference(TimeZoneRF zone);
+
     double get_bitrate(SATELLITE_TYPE type);
     double get_tank_size(SATELLITE_TYPE type);
 
@@ -63,9 +62,6 @@ public:
 private:
     static bool Comparator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
     static bool ZoneComporator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
-
-    //std::vector<TimeZoneRF> proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok);
-    //proletRF::TimeZoneRF makeTZforVitok(std::vector<TimeZoneRF> ProletRF, int sat, int vitok);
 
     std::vector <TimeZoneRF> m_prolety_nad_RF;
 };
@@ -101,7 +97,6 @@ public:
     static bool ZRVComporator(const proletZRV::ZRV& zone1,const proletZRV::ZRV& zone2);
     std::vector<proletZRV::ZRV> SortZRV(std::vector<proletZRV::ZRV> tableZRV);
 
-    void analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites, std::vector <proletZRV::AnswerData> &answer);
     void analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites, std::vector <proletZRV::AnswerData> &answer);
 private:
     proletRF::TimeZoneRF find_before(std::vector<proletRF::Satellite> satellites, int curr_sat);
@@ -109,7 +104,6 @@ private:
     double shooting(proletRF::TimeZoneRF prolet, double duration, std::vector<proletRF::Satellite> &satellites);
     double upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::vector<proletRF::Satellite> &satellites, std::vector<AnswerData> &answer);
     double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
-    bool cross_zrv_check(std::vector<proletRF::Satellite> satellites, proletZRV::ZRV target_zrv, std::vector<proletZRV::ZRV> table_zrv);
 
     bool cross_zrv_check_new(std::vector<proletRF::Satellite> satellites, std::vector<proletZRV::ZRV>, std::vector<proletZRV::ZRV> table_zrv, proletZRV::ZRV &using_zrv);
 
@@ -117,7 +111,6 @@ private:
 
     std::string makeOutputStringMsec(int msec);
     void makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos, int counterRF);
-    double TimeDifferenceAAA(proletZRV::AnswerData zone);
 };
 }
 #endif // TABLEPROLET_H
