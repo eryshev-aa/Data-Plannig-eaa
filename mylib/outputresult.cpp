@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 #include <iomanip>
 
 OutputResult::OutputResult(std::string out_file_name)
@@ -12,33 +13,61 @@ OutputResult::OutputResult(std::string out_file_name)
 void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData){
     int  access = 1;
     std::ofstream fout;
-
-    fout.open(m_out_file_name);
+    std::string current_path=m_out_file_name+"Facility-"+answerData[0].ppi+".txt";
+    fout.open(current_path);
+    std::string current_ppi=answerData[0].ppi;
+    std::vector <std::string> put_ppi;
+    put_ppi.reserve(1);
+    put_ppi.push_back(current_ppi);
     time_t t;
     char start [80];
     char end [80];
 
-    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)   *sat_n      * NS(PPI)   *Data(Gbit)    *RF" << std::endl;
-    fout << "------------------------------------------------------------------------------------------------------------------" << std::endl;
+    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Data(Gbit)" << std::endl;
+    fout << "--------------------------------------------------------------------------------------------" << std::endl;
     fout << std::flush;
 
-    for (const auto &answer: answerData)
+    for (auto answer: answerData)
     {
-        time (&t);
-        strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_start);
-        strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_end);
+        if(answer.ppi!=current_ppi){
+            current_path=m_out_file_name+"Facility-"+answer.ppi+".txt";
+            current_ppi=answer.ppi;
+            fout.open(current_path, std::fstream::app);
+            auto it =std::find_if(put_ppi.begin(),put_ppi.end(), [&current_ppi](const std::string& a){
+                return a==current_ppi;
+            });
+            if(it==put_ppi.end()){
+                put_ppi.push_back(current_ppi);
+                fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Data(Gbit)" << std::endl;
+                fout << "--------------------------------------------------------------------------------------------" << std::endl;
+                fout << std::flush;
+            }
+            time (&t);
+            strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_start);
+            strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_end);
 
-        fout << std::setw(6) << std::setprecision(3) << std::right;
-        fout << access << "   "
-             << start << makeOutputStringMsec(answer.milisecs_start) << "   "
-             << end << makeOutputStringMsec(answer.milisecs_end) << "   "
-             << std::setw(7) << std::fixed << std::right << TimeDifference(answer)
-             << answer.satellite << "   "
-             << answer.ppi << "   "
-             << answer.transfered_inf << "   "
-             << answer.duration
-             << std::endl;
+            fout << std::setw(6) << std::setprecision(3) << std::right;
+            fout << access << "   "
+                 << start << makeOutputStringMsec(answer.milisecs_start) << "   "
+                 << end << makeOutputStringMsec(answer.milisecs_end) << "   "
+                 << std::setw(7) << std::fixed << std::right << TimeDifference(answer)
+                 << answer.satellite << "   "
+                 << answer.transfered_inf
+                 << std::endl;
+        }else{
+            time (&t);
+            strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_start);
+            strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_end);
 
+            fout << std::setw(6) << std::setprecision(3) << std::right;
+            fout << access << "   "
+                << start << makeOutputStringMsec(answer.milisecs_start) << "   "
+                << end << makeOutputStringMsec(answer.milisecs_end) << "   "
+                << std::setw(7) << std::fixed << std::right << TimeDifference(answer)
+                << answer.satellite << "   "
+                << answer.transfered_inf
+                << std::endl;
+        }
         access ++;
     }
 
