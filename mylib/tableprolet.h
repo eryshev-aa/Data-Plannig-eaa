@@ -107,10 +107,14 @@ private:
 
     bool cross_zrv_check_new(std::vector<proletRF::Satellite> satellites, std::vector<proletZRV::ZRV>, std::vector<proletZRV::ZRV> table_zrv, proletZRV::ZRV &using_zrv);
 
-    void find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<ZRV> &table_zrv);
+    void find_ZRV_for_delete_after_shooting(proletRF::TimeZoneRF prolet, std::vector<ZRV> &table_zrv);
+    void find_ZRV_for_delete_after_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);
+    void find_ZRV_for_delete_after_prolet(proletRF::TimeZoneRF prolet, std::vector<ZRV> &table_zrv);
 
     std::string makeOutputStringMsec(int msec);
     void makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos, int counterRF);
+
+    double m_total_upload = 0.0;
 };
 }
 #endif // TABLEPROLET_H

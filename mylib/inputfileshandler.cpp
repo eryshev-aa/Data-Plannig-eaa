@@ -109,13 +109,13 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
                     tz_current.tm_end = tm;
                     tz_current.milisecs_end = std::stoi(rf_trace_end_time.substr(21,3));
 
-                    if ((tz_current.tm_end.tm_hour >= 18 && tz_current.tm_end.tm_min >= 0 && tz_current.tm_end.tm_sec >= 0) ||
-                        (tz_current.tm_start.tm_hour >= 18 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0) ||
-                        (tz_current.tm_start.tm_hour < 9 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0)) {
-                        continue;
-                    } else {
+//                    if ((tz_current.tm_end.tm_hour >= 18 && tz_current.tm_end.tm_min >= 0 && tz_current.tm_end.tm_sec >= 0) ||
+//                        (tz_current.tm_start.tm_hour >= 18 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0) ||
+//                        (tz_current.tm_start.tm_hour < 9 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0)) {
+//                        continue;
+//                    } else {
                         tz_current.task = SATELLITE_TASK::WAIT;
-                    }
+//                    }
 
                     string rf_trace_duration_str = line.substr(91,7);
                     size_t ptr = -1;
