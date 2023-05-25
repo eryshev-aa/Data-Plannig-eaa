@@ -204,6 +204,9 @@ bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_tr
                 if (line.find("Facility-") != std::string::npos) {
                     ppi = line.substr(line.find('-') + 1,50);
                     ppi = ppi.substr(0,ppi.find('-'));
+                    if (ppi == ""){
+                        int a = 0;
+                    }
                     zrv_current.ppi = ppi;
                 } else if (line.find(ppi + "-To-") != std::string::npos) {
                     int sat_number = std::stoi(line.substr(line.find('_') + 1,6));  // получаем номер КА

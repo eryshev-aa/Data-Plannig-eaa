@@ -111,8 +111,9 @@ private:
     double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
     bool cross_zrv_check(std::vector<proletRF::Satellite> satellites, proletZRV::ZRV target_zrv, std::vector<proletZRV::ZRV> table_zrv);
 
+    bool cross_zrv_check_new(std::vector<proletRF::Satellite> satellites, std::vector<proletZRV::ZRV>, std::vector<proletZRV::ZRV> table_zrv, proletZRV::ZRV &using_zrv);
 
-    int find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<ZRV> &table_zrv);
+    void find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<ZRV> &table_zrv);
 
     std::string makeOutputStringMsec(int msec);
     void makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos, int counterRF);

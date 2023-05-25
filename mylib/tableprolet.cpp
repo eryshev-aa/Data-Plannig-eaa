@@ -201,9 +201,8 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
     std::vector<proletZRV::ZRV> result;
     result.reserve(1);
 
-    double time_spent = 0.0;
-    clock_t begin = clock();
-
+    //double time_spent = 0.0;
+    //clock_t begin = clock();
 
     char start1 [80];
     char end1 [80];
@@ -241,31 +240,11 @@ std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<prol
         return false;
     });
 
-    /*for(const auto& tmpZRV: table_zrv){
-        char start3 [80];
-        char end3 [80];
-        strftime (start3, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_start);
-        strftime (end3, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_end);
-        std::string zrv_start(start3);
-        std::string zrv_end(end3);
-        zrv_start += std::to_string(tmpZRV.milisecs_start);
-        zrv_end += std::to_string(tmpZRV.milisecs_end);
-        if (prolet2.satellite == tmpZRV.satellite) {
-            //входит от конца первого пролета до начала второго пролета
-            if(zrv_start > prolet1_end && zrv_start < prolet2_start && zrv_end < prolet2_start && flag==1){
-                result.push_back(tmpZRV);
-            }
-            //входит от конца первого пролета и начало ЗРВ раньше конца 2-го пролета
-            if(zrv_start > prolet1_end && zrv_start < prolet2_end && flag==2){
-                result.push_back(tmpZRV);
-            }
-        }
-    }*/
-    clock_t end = clock();
-    time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
-    // вычислить прошедшее время, найдя разницу (end - begin)
-    std::cout << std::setprecision(9) << "find_ZRV_between_2_prolet time is " << time_spent << " sec. "
-              << std::fixed << "zrv_count = " << result.size() << std::endl;
+//    clock_t end = clock();
+//    time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+//    // вычислить прошедшее время, найдя разницу (end - begin)
+//    std::cout << std::setprecision(9) << "find_ZRV_between_2_prolet time is " << time_spent << " sec. "
+//              << std::fixed << "zrv_count = " << result.size() << std::endl;
     return result;
 }
 
@@ -325,13 +304,10 @@ void TableZRV::analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, st
     int length = answer.size();
     int counterRF = 0;
 
-    double time_spent = 0.0;
-    clock_t begin = clock();
-
     bool finish_checks = false;
 
     for(auto cur_prolet: proletyRF){
-        if (counterRF == 802) { //после этого пролета крашится
+        if (counterRF == 802 || counterRF == 257 || counterRF == 262) { //после этого пролета крашится
             int a = 0;
         }
         finish_checks = false;
@@ -339,56 +315,57 @@ void TableZRV::analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, st
             while (get_current_tank_size(cur_prolet.satellite, satellites) > 0.60) { //пока в баке более 60% пытаемся найти ЗРВ для сброса и сбросить
                 if (finish_checks) break;
                 proletRF::TimeZoneRF before = find_before(satellites, cur_prolet.satellite); // находим время окончания прошлого пролета или время окончаня прошлого сброса
-                std::vector<proletZRV::ZRV> zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 1); //вектор всех возможных подходящих ЗРВ между пролетами этого КА
+                std::vector<proletZRV::ZRV> zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 1); //вектор всех возможных подходящих ЗРВ строго между пролетами этого КА
                 if (!zrv.empty()) {
-                    for (auto zrv_between: zrv) { // для каждой ЗРВ между пролетами проверяем пересечения с другими КА на этом ППИ
-                        if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-                            upload(cur_prolet, zrv_between, satellites, answer);
-                            if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) {
-                                shooting(cur_prolet, cur_prolet.duration, satellites);
-                            }
-                            finish_checks = true;
-                            break; //если нашли ЗРВ, которая не пересекается или у нас самый заполненный бак, то сбрасываем на этой ЗРВ и выходим из пролета.
-                        } else {
-                            zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервал
-                            if (!zrv.empty()) { //если нашли ЗРВ
-                                for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
-                                    if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-                                        upload(cur_prolet, zrv_between, satellites, answer);                                        
-                                        finish_checks = true;
-                                        break;
-                                    } else {
-                                        shooting(cur_prolet, cur_prolet.duration, satellites);
-                                        finish_checks = true;
-                                        break;
-                                    }
-                                }
-                            } else {
+                    proletZRV::ZRV using_zrv;
+                    if (get_current_tank_size(cur_prolet.satellite, satellites) == 1.0) { // если у текущего КА полный бак, то забираем эту ЗРВ под срос
+                        upload(cur_prolet, zrv.at(0), satellites, answer);
+                        //finish_checks = true;
+                        break;
+                    }
+                    if (cross_zrv_check_new(satellites, zrv, zrv_list, using_zrv)) { // если бак не полный, смотрим у кого бак более заполнен
+                        upload(cur_prolet, using_zrv, satellites, answer); // если у нас или вообще нет пересечений с другими КА, то мы збрасываем
+                        if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
+                            shooting(cur_prolet, cur_prolet.duration, satellites);
+                        }
+                        finish_checks = true;
+                        break;
+                    } else { // если не удалось найти ЗРВ, т.к. на всех пересечениях у дгурих КА больше данных в баке
+                        zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервал
+                        if (!zrv.empty()) { //если нашли ЗРВ
+                            if (cross_zrv_check_new(satellites, zrv, zrv_list, using_zrv)) {
+                                upload(cur_prolet, using_zrv, satellites, answer);
+                                //finish_checks = true;
+                                break;
+                            } else { // если и в расширенном интервале все занято, то просто снимаем
                                 shooting(cur_prolet, cur_prolet.duration, satellites);
                                 finish_checks = true;
                                 break;
                             }
+                        } else {
+                            shooting(cur_prolet, cur_prolet.duration, satellites);
+                            finish_checks = true;
+                            break;
                         }
                     }
-                } else {
-                    zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервал
+                } else { //если не нашли, то расширяем интервао до коца пролета
+                    zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервале
                     if (!zrv.empty()) { //если нашли ЗРВ
-                        for (auto zrv_between: zrv) { // для каждой найденной ЗРВ // if full tank
-                            if (get_current_tank_size(cur_prolet.satellite, satellites) == 1.0) {
-                                upload(cur_prolet, zrv_between, satellites, answer);
-                                finish_checks = true;
-                                break;
-                            } else {
-                                if (cross_zrv_check(satellites, zrv_between, zrv_list)) {
-                                    upload(cur_prolet, zrv_between, satellites, answer);
-                                    finish_checks = true;
-                                    break;
-                                } else {
-                                    shooting(cur_prolet, cur_prolet.duration, satellites);
-                                    finish_checks = true;
-                                    break;
-                                }
-                            }
+                        //for (auto zrv_between: zrv) { // для каждой найденной ЗРВ
+                        proletZRV::ZRV using_zrv;
+                        if (get_current_tank_size(cur_prolet.satellite, satellites) == 1.0) {
+                            upload(cur_prolet, zrv.at(0), satellites, answer);
+                            finish_checks = true;
+                            break;
+                        }
+                        if (cross_zrv_check_new(satellites, zrv, zrv_list, using_zrv)) {
+                            upload(cur_prolet, using_zrv, satellites, answer);
+                            finish_checks = true;
+                            break;
+                        } else {
+                            shooting(cur_prolet, cur_prolet.duration, satellites);
+                            finish_checks = true;
+                            break;
                         }
                     } else {
                         shooting(cur_prolet, cur_prolet.duration, satellites);
@@ -408,10 +385,6 @@ void TableZRV::analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, st
         }
         counterRF++;
     }
-    clock_t end = clock();
-    time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
-    std::cout << std::setprecision(9) << "analyze_task_new time is " << time_spent << " sec. "
-              << std::fixed << "counterRF = " << counterRF << std::endl;
 }
 
 proletRF::TimeZoneRF TableZRV::find_before(std::vector<Satellite> satellites, int curr_sat){
@@ -429,8 +402,8 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
     double res = 1.0;
     int i = 0;
 
-    double time_spent = 0.0;
-    clock_t begin = clock();
+//    double time_spent = 0.0;
+//    clock_t begin = clock();
 
     for(auto sat: satellites){
         if (sat.satellite == prolet.satellite) {
@@ -459,16 +432,17 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
         }
         i++;
     }
-    clock_t end = clock();
-    time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
-    // вычислить прошедшее время, найдя разницу (end - begin)
-    std::cout << std::setprecision(9) << "upload time is " << time_spent << " sec. " << std::endl;
+//    clock_t end = clock();
+//    time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+//    // вычислить прошедшее время, найдя разницу (end - begin)
+//    std::cout << std::setprecision(9) << "upload time is " << time_spent << " sec. " << std::endl;
     return res;
 }
 
-int TableZRV::find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<proletZRV::ZRV> &table_zrv) {
+void TableZRV::find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<proletZRV::ZRV> &table_zrv) {
     double time_spent =0.0;
     clock_t begin = clock();
+
     char prolet_end1[80];
     strftime(prolet_end1,80,"%d.%m.%Y %H:%M:%S.", &prolet.tm_end);
     std::string prolet_end(prolet_end1);
@@ -482,34 +456,77 @@ int TableZRV::find_ZRV_for_delete(proletRF::TimeZoneRF prolet, std::vector<prole
         bool isDelete = (prolet.satellite==zrv.satellite)&&(tmpZRV_end < prolet_end);
         return isDelete;
     }),table_zrv.end());
-    //2.удалить все ЗРВ prolet.satellite до итератора last_before
-//    if(last_before!=table_zrv.rend()){
-//        auto aaa = last_before.base();
-//        table_zrv.erase(table_zrv.begin(),last_before.base());
-//    }
-
-
-//    auto last_before=std::find_if(table_zrv.rbegin(), table_zrv.rend(),[&](const proletZRV::ZRV&zrv){
-//        char tmpZRV_end1[80];
-//        strftime(tmpZRV_end1,80, "%d.%m.%Y %H:%M:%S", &zrv.tm_end);
-//        std::string tmpZRV_end(tmpZRV_end1);
-//        tmpZRV_end+=std::to_string(zrv.milisecs_end);
-//        return(prolet.satellite==zrv.satellite)&&(tmpZRV_end < prolet_end);
-//    });
-//    //2.удалить все ЗРВ prolet.satellite до итератора last_before
-//    if(last_before!=table_zrv.rend()){
-//        last_before=last_before.base;
-//        table_zrv.erase(std::remove_if(table_zrv.begin,last_before.base(), [&](const proletZRV::ZRV&zrv){
-//            return zrv.satellite==prolet.satellite;
-//        }),last_before);
-//        //table_zrv.erase(table_zrv.begin(),last_before.base());
-//    }
 
     clock_t end =clock();
     time_spent+=(double)(end-begin)/CLOCKS_PER_SEC;
     std::cout<<std::setprecision(9)<<"find_ZRV_for_delete time is "<<time_spent << " sec. "
             << std::fixed << "table_zrv.size = " << table_zrv.size() << std::endl;
-    return 1;
+}
+
+bool TableZRV::cross_zrv_check_new(std::vector<proletRF::Satellite> satellites, std::vector<proletZRV::ZRV> target_zrv, std::vector<ZRV> table_zrv, proletZRV::ZRV &using_zrv) {
+    int result = 0;
+    std::vector<proletZRV::ZRV> cross_zrv_list;
+    cross_zrv_list.reserve(1);
+
+//    double time_spent = 0.0;
+//    clock_t begin = clock();
+
+    for (auto cur_target_zrv: target_zrv) {
+        char target_zrv_start1 [80];
+        char target_zrv_end1 [80];
+        strftime (target_zrv_start1, 80, "%d.%m.%Y %H:%M:%S.", &cur_target_zrv.tm_start);
+        strftime (target_zrv_end1, 80, "%d.%m.%Y %H:%M:%S.", &cur_target_zrv.tm_end);
+        std::string target_zrv_start(target_zrv_start1);
+        std::string target_zrv_end(target_zrv_end1);
+        target_zrv_start += std::to_string(cur_target_zrv.milisecs_start);
+        target_zrv_end += std::to_string(cur_target_zrv.milisecs_end);
+
+        std::copy_if(table_zrv.begin(), table_zrv.end(), std::back_inserter(cross_zrv_list),[cur_target_zrv, target_zrv_start1,target_zrv_end1,target_zrv_start,target_zrv_end](proletZRV::ZRV tmpZRV){
+            char tmpZRV_start1 [80];
+            char tmpZRV_end1 [80];
+            strftime (tmpZRV_start1, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_start);
+            strftime (tmpZRV_end1, 80, "%d.%m.%Y %H:%M:%S.", &tmpZRV.tm_end);
+            std::string tmpZRV_start(tmpZRV_start1);
+            std::string tmpZRV_end(tmpZRV_end1);
+            tmpZRV_start += std::to_string(tmpZRV.milisecs_start);
+            tmpZRV_end += std::to_string(tmpZRV.milisecs_end);
+
+            if ((tmpZRV.ppi == cur_target_zrv.ppi) && (tmpZRV.satellite != cur_target_zrv.satellite)) {
+                return !(tmpZRV_end < target_zrv_start || tmpZRV_start > target_zrv_end); //заканчивается раньше начала или начинается позже конца, т.е. не пересекается совсем
+            }
+            return false;
+        });
+
+        //    clock_t end = clock();
+        //    time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+        //    // вычислить прошедшее время, найдя разницу (end - begin)
+        //    std::cout << std::setprecision(9) << "cross_zrv_check time is " << time_spent << " sec. "
+        //              << std::fixed << "zrv_count = " << table_zrv.size() << std::endl;
+
+        if (!cross_zrv_list.empty()) {
+            for(const auto& tmpZRV: cross_zrv_list){
+                double target_ka_tank = get_current_tank_size(cur_target_zrv.satellite, satellites);
+                double tmp_ka_tank = get_current_tank_size(tmpZRV.satellite, satellites);
+                if (target_ka_tank == 1.0) {
+                    using_zrv = tmpZRV;
+                    return true;
+                } else if (target_ka_tank >= tmp_ka_tank) {
+                    using_zrv = cur_target_zrv;
+                    result ++;
+                } else { // если у другого КА бак более заполнен
+                    break;
+                }
+            }
+        } else {
+            return true;
+        }
+    }
+
+    if (result > 0 ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool TableZRV::cross_zrv_check(std::vector<proletRF::Satellite> satellites, proletZRV::ZRV target_zrv, std::vector<ZRV> table_zrv) {
@@ -517,8 +534,8 @@ bool TableZRV::cross_zrv_check(std::vector<proletRF::Satellite> satellites, prol
     std::vector<proletZRV::ZRV> cross_zrv_list;
     cross_zrv_list.reserve(1);
 
-    double time_spent = 0.0;
-    clock_t begin = clock();
+//    double time_spent = 0.0;
+//    clock_t begin = clock();
 
     char target_zrv_start1 [80];
     char target_zrv_end1 [80];
@@ -545,11 +562,11 @@ bool TableZRV::cross_zrv_check(std::vector<proletRF::Satellite> satellites, prol
         return false;
     });
 
-    clock_t end = clock();
-    time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
-    // вычислить прошедшее время, найдя разницу (end - begin)
-    std::cout << std::setprecision(9) << "cross_zrv_check time is " << time_spent << " sec. "
-              << std::fixed << "zrv_count = " << table_zrv.size() << std::endl;
+//    clock_t end = clock();
+//    time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+//    // вычислить прошедшее время, найдя разницу (end - begin)
+//    std::cout << std::setprecision(9) << "cross_zrv_check time is " << time_spent << " sec. "
+//              << std::fixed << "zrv_count = " << table_zrv.size() << std::endl;
 
     if (!cross_zrv_list.empty()) {
         for(const auto& tmpZRV: cross_zrv_list){
@@ -594,7 +611,7 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("/home/user/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+    fout.open("/home/user/qt_projects/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
 //    fout.open("/home/anton/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];
@@ -626,50 +643,3 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
 
     fout.close();
 }
-
-//std::vector<TimeZoneRF> TableProletRF::proletyNaVitke(std::vector<TimeZoneRF> &ProletRF, int vitok) {
-//    std::vector<TimeZoneRF> res;
-
-//    for(auto cur_prolet: ProletRF){
-//        if (cur_prolet.vitok == vitok)
-//        {
-//            res.push_back(cur_prolet);
-//        }
-//    }
-
-//    return res;
-//}
-
-//если на витке несколько пролетов, то сделать начало от перовго, а конец от последнего.
-//proletRF::TimeZoneRF TableProletRF::makeTZforVitok(std::vector<TimeZoneRF> ProletRF, int sat, int vitok){
-//    int id;
-//    int tmp=0;
-//    TimeZoneRF resTZ;
-
-//    for(auto cur_prolet: ProletRF){
-//        auto pred = [cur_prolet, sat](const TimeZoneRF & item) {
-//            return (cur_prolet.satellite == sat) ;
-//        };
-
-//        std::cout<< cur_prolet.satellite << " " << sat << " tmp=" << tmp << std::endl;
-//        auto it = std::find_if(std::begin(ProletRF) + tmp, std::end(ProletRF), pred);
-//        if (it != std::end(ProletRF)) {
-
-//            //if ()
-//            id = std::distance(std::begin(ProletRF) + tmp, it);
-//            //std::cout<< id << std::endl;
-//            tmp = tmp + id;
-//            if(id==0){
-//                tmp+=1;
-//            }
-//            std::cout<<ProletRF.at(id).duration<< std::endl;
-//        } else {
-//            //std::cout<<"h"<<std::endl;
-//            int b = 0;
-//        }
-//    }
-//    return resTZ;
-//}
-
-
-
