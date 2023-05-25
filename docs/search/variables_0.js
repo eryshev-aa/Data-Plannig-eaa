@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['agreed_65',['agreed',['../struct_mylib_1_1_ppi.html#a32be2249f6610b076c960a586efae9ad',1,'Mylib::Ppi']]]
+  ['bitrate_41',['bitrate',['../structprolet_r_f_1_1_satellite.html#ab57bdaa0772f9b5955afb66d26015caf',1,'proletRF::Satellite']]]
 ];

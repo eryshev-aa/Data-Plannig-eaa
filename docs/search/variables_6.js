@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['max_5fstart_5ftime_74',['max_start_time',['../struct_mylib_1_1_time.html#a92b04cf9ba725c2f31f8b6be57252d7a',1,'Mylib::Time']]],
-  ['milisecs_5fend_75',['milisecs_end',['../structprolet_r_f_1_1_time_zone_r_f.html#aac8a744f8e66a8d31f995570a78f3949',1,'proletRF::TimeZoneRF::milisecs_end()'],['../structprolet_z_r_v_1_1_z_r_v.html#a46da746f75d95e73fea398e9cc773eb9',1,'proletZRV::ZRV::milisecs_end()']]],
-  ['milisecs_5fstart_76',['milisecs_start',['../structprolet_r_f_1_1_time_zone_r_f.html#a07c223b8c28c27dc69481c5c49ff513c',1,'proletRF::TimeZoneRF::milisecs_start()'],['../structprolet_z_r_v_1_1_z_r_v.html#ac5728bc7eced4a70fe9ecde7a8e76ef0',1,'proletZRV::ZRV::milisecs_start()']]]
+  ['satellite_49',['satellite',['../structprolet_r_f_1_1_time_zone_r_f.html#a41c894b6d34d5c6ed3b616e0766a6364',1,'proletRF::TimeZoneRF::satellite()'],['../structprolet_r_f_1_1_satellite.html#a412cc0653ed72c0b218d37da38b6ae63',1,'proletRF::Satellite::satellite()'],['../structprolet_z_r_v_1_1_z_r_v.html#ae54c663c8d68a9d51d2ea4f9932ffd6f',1,'proletZRV::ZRV::satellite()'],['../structprolet_z_r_v_1_1_answer_data.html#abbdada19956f5856ad3bebd7a5dbb32d',1,'proletZRV::AnswerData::satellite()']]],
+  ['shooting_5fspeed_50',['shooting_speed',['../structprolet_r_f_1_1_satellite.html#a7a7041b2506a842762b8f6887343c804',1,'proletRF::Satellite']]]
 ];

@@ -92,11 +92,11 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <a class="code" href="class_input_file_r_f_handler.html">InputFileRFHandler</a>();</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">bool</span> make_RF_trace_list(<span class="keywordtype">string</span> dirPath, vector&lt;TimeZoneRF&gt; &amp;rf_trace_list, vector&lt;Satellite&gt; &amp;sattelites_list);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">bool</span> make_ZRV_trace_list(<span class="keywordtype">string</span> dirPath, vector&lt;ZRV&gt; &amp;zrv_trace_list);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">bool</span> make_proletRF(<span class="keywordtype">string</span> dirPath, vector&lt;TimeZoneRF&gt; &amp;rf_trace_list, vector&lt;Satellite&gt; &amp;sattelites_list);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">bool</span> make_ZRV_trace_list(<span class="keywordtype">string</span> dirPath, vector&lt;ZRV&gt; &amp;zrv_trace_list, <span class="keywordtype">string</span> min_time);</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    vector &lt;string&gt; getFileNamesInDir_FS(<span class="keywordtype">string</span> dirName); <span class="comment">//gcc: filesistem</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="comment">//vector &lt;string&gt; getFileNamesInDir_FS(string dirName); //gcc: filesistem</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    vector &lt;string&gt; getFileNamesInDir_QDir(<span class="keywordtype">string</span> dirName); <span class="comment">//gcc+MinGW: QDir</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;};</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>

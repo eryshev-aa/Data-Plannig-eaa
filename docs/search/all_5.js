@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['filled_5finf_10',['filled_inf',['../structprolet_r_f_1_1_satellite.html#aa3219a21cb4901eb81c9699bc871a101',1,'proletRF::Satellite']]],
-  ['filled_5finf_5fpercent_11',['filled_inf_percent',['../structprolet_r_f_1_1_satellite.html#aefeee7d1a1f69f835c9177b2adcdd784',1,'proletRF::Satellite']]]
+  ['last_5fprolet_6',['last_prolet',['../structprolet_r_f_1_1_satellite.html#a7d9c5722985f1be37e1de7bfb8a959f9',1,'proletRF::Satellite']]]
 ];

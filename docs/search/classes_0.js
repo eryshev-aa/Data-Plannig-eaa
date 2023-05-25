@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ansvector_44',['AnsVector',['../struct_mylib_1_1_ans_vector.html',1,'Mylib']]]
+  ['answerdata_29',['AnswerData',['../structprolet_z_r_v_1_1_answer_data.html',1,'proletZRV']]]
 ];

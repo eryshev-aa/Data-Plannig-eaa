@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['duration_68',['duration',['../structprolet_r_f_1_1_time_zone_r_f.html#a5bc619921390b2903c61b3244f29571c',1,'proletRF::TimeZoneRF::duration()'],['../structprolet_z_r_v_1_1_z_r_v.html#a22dd98313072ca4c4d955e24fa919cff',1,'proletZRV::ZRV::duration()']]]
+  ['filled_5finf_43',['filled_inf',['../structprolet_r_f_1_1_satellite.html#a5a9e13e83401921e2529725450ea6570',1,'proletRF::Satellite']]],
+  ['filled_5finf_5fpercent_44',['filled_inf_percent',['../structprolet_r_f_1_1_satellite.html#aefeee7d1a1f69f835c9177b2adcdd784',1,'proletRF::Satellite']]]
 ];

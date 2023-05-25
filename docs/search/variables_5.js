@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kp_73',['kp',['../struct_mylib_1_1_ppi.html#aa66e62691e1f178b762b3c1e9866d3cb',1,'Mylib::Ppi::kp()'],['../struct_mylib_1_1_ans_vector.html#ab90497d6bdf45e03e661472200609959',1,'Mylib::AnsVector::kp()']]]
+  ['ppi_48',['ppi',['../structprolet_z_r_v_1_1_z_r_v.html#a671ad7467e629656da9173f7f75cddc8',1,'proletZRV::ZRV::ppi()'],['../structprolet_z_r_v_1_1_answer_data.html#ae8dd1b377e19a262b6d0a01ef5afff4e',1,'proletZRV::AnswerData::ppi()']]]
 ];
