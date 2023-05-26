@@ -18,16 +18,15 @@ int main(int argc, char *argv[]) {
     QCoreApplication a(argc, argv);
 
 
-<<<<<<< HEAD
-//    string dirRF  = "/home/user/qt_projects/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
-//    string dirZRV = "/home/user/qt_projects/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
-=======
-    string dirRF  = "/home/user/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
-    string dirZRV = "/home/user/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
->>>>>>> 896afe7161ad737aa80e9503f2a1c22f63065842
+    string dirRF  = "/home/user/qt_projects/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
+    string dirZRV = "/home/user/qt_projects/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
 
-    string dirRF  = "/home/anton/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
-    string dirZRV = "/home/anton/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
+//    string dirRF  = "/home/user/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
+//    string dirZRV = "/home/user/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
+
+
+//    string dirRF  = "/home/anton/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
+//    string dirZRV = "/home/anton/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
 
 //    string dirRF  = "C:/Users/tad.INAV/Documents/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
 //    string dirZRV = "C:/Users/tad.INAV/Documents/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";

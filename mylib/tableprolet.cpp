@@ -233,6 +233,9 @@ void TableZRV::analyze_task_new(std::vector<proletRF::TimeZoneRF> &proletyRF, st
         if (counterRF%50 == 0) {
             std::cout << "Prolet = " << counterRF <<", zrv_list.size = " << zrv_list.size() << std::endl;
         }
+        if (counterRF == 190 || counterRF == 665 || counterRF == 680 || counterRF == 685) {
+            int a = 0;
+        }
         finish_checks = false;
         proletRF::Satellite sat;
         if (get_current_tank_size(cur_prolet.satellite, satellites) > 0.60) {
@@ -510,6 +513,7 @@ bool TableZRV::cross_zrv_check_new(std::vector<proletRF::Satellite> satellites, 
                     using_zrv = cur_target_zrv;
                     result ++;
                 } else { // если у другого КА бак более заполнен
+                    result = 0;
                     break;
                 }
                 if (result == cross_zrv_list.size()) {
@@ -517,6 +521,7 @@ bool TableZRV::cross_zrv_check_new(std::vector<proletRF::Satellite> satellites, 
                 }
             }
         } else {
+            using_zrv = cur_target_zrv;
             return true;
         }
     }
@@ -548,7 +553,7 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("/home/user/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+    fout.open("/home/user/qt_projects/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
 //    fout.open("/home/anton/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];
