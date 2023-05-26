@@ -42,7 +42,20 @@ bool Mylib::planning(){
 
     TableZRV zrv;
     m_proletyZRV = zrv.SortZRV(m_proletyZRV);
+    //создаем файл для промежуточных результатов для фотографии
+    std::ofstream fout;
+    //fout.open("/home/user/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
+    fout.open("/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
+    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Filled inf." << std::endl;
+    fout << "--------------------------------------------------------------------------------------------" << std::endl;
+    fout.close();
 
+    //создаем файл для промежуточных результатов выгруза данных
+    //fout.open("/home/user/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
+    fout.open("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
+    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * ppi  * Filled inf." << std::endl;
+    fout << "-----------------------------------------------------------------------------------------------------" << std::endl;
+    fout.close();
 
     OutputResult out("/home/user/qt_projects/ProfIT-Data-Plannig/result.txt");
     out.makeProletRFFile("/home/user/qt_projects/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);

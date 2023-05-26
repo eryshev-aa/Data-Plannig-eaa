@@ -665,16 +665,11 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
 void TableZRV::makeResult_for_shoot(int pos){
     int  access = pos;
     std::ofstream fout;
-
-    fout.open("/home/user/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out | std::fstream::app);
-//    fout.open("/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out | std::fstream::app);
+    fout.open("/home/user/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::app);
+//    fout.open("/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::app);
     time_t t;
     char start [80];
     char end [80];
-    if(m_shoot_data.size()==100){
-        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Filled inf." << std::endl;
-        fout << "--------------------------------------------------------------------------------------------" << std::endl;
-    }
 
     pos=pos>100?pos*100:pos;
     for (auto i = pos - 1; i < m_shoot_data.size(); i++)
@@ -702,15 +697,11 @@ void TableZRV::makeResult_for_upload(int pos){
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("/home/user/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out | std::fstream::app);
-//    fout.open("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out | std::fstream::app);
+    fout.open("/home/user/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::app);
+//    fout.open("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::app);
     time_t t;
     char start [80];
     char end [80];
-    if(m_upload_data.size()==100){
-        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * ppi  * Filled inf." << std::endl;
-        fout << "-----------------------------------------------------------------------------------------------------" << std::endl;
-    }
     //m_total_upload += answerData.at(0).transfered_inf;
 
     pos=pos>100?pos*100:pos;
