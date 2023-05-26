@@ -371,9 +371,9 @@ void TableZRV::analyze_after_prolet(std::vector<proletZRV::ZRV> &zrv_list, std::
             while (get_current_tank_size(sat.satellite, satellites) > 0.0 && zrv_list.size() != 0) { // опасно, т.к. можем и не спустить бак в 0
                 zrv_prolet.tm_end = zrv_list.at(zrv_list.size() - 1).tm_end;
                 zrv_prolet.milisecs_end = zrv_list.at(zrv_list.size() - 1).milisecs_end;
-                zrv_prolet.satellite = zrv_list.at(zrv_list.size() - 1).satellite;
+                zrv_prolet.satellite = sat.satellite;//zrv_list.at(zrv_list.size() - 1).satellite;
                 std::vector<proletZRV::ZRV> zrv = find_ZRV_between_2_prolet(zrv_list, sat.last_prolet, zrv_prolet, 2); //вектор всех возможных ЗРВ после последнего пролета.
-                if (zrv_list.size() == 0){
+                if (zrv_list.size() == 0 || zrv.size() == 0){
                     sat.last_prolet.tm_end = zrv_list.at(zrv_list.size() - 1).tm_end;
                     sat.last_prolet.milisecs_end = zrv_list.at(zrv_list.size() - 1).milisecs_end;
                     find_ZRV_for_delete_after_prolet(sat, zrv_list);
@@ -385,7 +385,6 @@ void TableZRV::analyze_after_prolet(std::vector<proletZRV::ZRV> &zrv_list, std::
                 if (get_current_tank_size(sat.satellite, satellites) == 1.0) { // если у текущего КА полный бак, то забираем эту ЗРВ под сброс
                     upload(zrv_prolet, zrv.at(0), satellites, answer);
                     find_ZRV_for_delete_after_upload(zrv.at(0), zrv_list);
-                    //                finish_checks = true;
                     if (get_current_tank_size(sat.satellite, satellites) == 0.0) {
                         sat.last_prolet.tm_end = zrv_list.at(zrv_list.size() - 1).tm_end;
                         sat.last_prolet.milisecs_end = zrv_list.at(zrv_list.size() - 1).milisecs_end;
