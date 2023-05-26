@@ -202,7 +202,7 @@ double TableZRV::shooting(proletRF::TimeZoneRF prolet, double duration, std::vec
         i++;
     }
 
-    if(m_shoot_data.size()%m_check_pos_shoot==0){makeResult_for_shoot(m_shoot_data.size()/m_check_pos_shoot);}
+    if(m_shoot_data.size()%m_check_pos_shoot==0){makeResult_for_shoot(m_shoot_data.size());}
 
     return res;
 }
@@ -460,7 +460,7 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
         i++;
     }
 
-    if(m_upload_data.size()%m_check_pos_upload==0){makeResult_for_upload(m_upload_data.size()/m_check_pos_upload);}
+    if(m_upload_data.size()%m_check_pos_upload==0){makeResult_for_upload(m_upload_data.size());}
 
     return res;
 }
@@ -672,7 +672,8 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
 }
 
 void TableZRV::makeResult_for_shoot(int pos){
-    int  access = pos;
+    int  access = pos==m_check_pos_shoot?1:pos-m_check_pos_shoot+1;
+
     std::ofstream fout;
 
     fout.open(m_shoot_path, std::fstream::app);
@@ -683,9 +684,9 @@ void TableZRV::makeResult_for_shoot(int pos){
     time_t t;
     char start [80];
     char end [80];
+    pos = pos==m_check_pos_shoot?0:pos-m_check_pos_shoot;
 
-    pos=pos>m_check_pos_shoot?m_check_pos_shoot*pos:pos;
-    for (auto i = pos - 1; i < m_shoot_data.size(); i++)
+    for (auto i = pos; i < m_shoot_data.size(); i++)
     {
         time (&t);
         strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &m_shoot_data[i].tm_start);
@@ -707,7 +708,7 @@ void TableZRV::makeResult_for_shoot(int pos){
 }
 
 void TableZRV::makeResult_for_upload(int pos){
-    int  access = pos;
+    int  access = pos==m_check_pos_upload?1:pos-m_check_pos_upload+1;
     std::ofstream fout;
 
     fout.open(m_upload_path, std::fstream::app);
@@ -717,9 +718,9 @@ void TableZRV::makeResult_for_upload(int pos){
 
     //m_total_upload += answerData.at(0).transfered_inf;
 
-    pos = pos>m_check_pos_upload?pos*m_check_pos_upload:pos;
+    pos = pos==m_check_pos_upload?0:pos-m_check_pos_upload;
 
-    for (auto i = pos - 1; i < m_upload_data.size(); i++)
+    for (auto i = pos ; i < m_upload_data.size(); i++)
     {
         time (&t);
         strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &m_upload_data[i].tm_start);
