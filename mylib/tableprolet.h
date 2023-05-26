@@ -115,8 +115,8 @@ private:
     void makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos, int counterRF);
 
     double m_total_upload = 0.0;
-    int m_check_pos_upload = 100;
-    int m_check_pos_shoot = 100;
+    int m_check_pos_upload;
+    int m_check_pos_shoot;
     std::string m_shoot_path;
     std::string m_upload_path;
     std::string m_result_path;

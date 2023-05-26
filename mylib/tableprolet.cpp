@@ -23,6 +23,8 @@ TableZRV::TableZRV(std::string upload_path, std::string shoot_path, std::string 
     m_shoot_path=shoot_path;
     m_check_pos_shoot=check_shoot;
     m_result_path=result_path;
+    m_shoot_data.reserve(1);
+    m_upload_data.reserve(1);
 }
 
 double TableProletRF::TimeDifference(TimeZoneRF zone) {
@@ -199,7 +201,7 @@ double TableZRV::shooting(proletRF::TimeZoneRF prolet, double duration, std::vec
         }
         i++;
     }
-    if(m_shoot_data.size()%m_check_pos_shoot==0){makeResult_for_shoot(m_shoot_data.size()%m_check_pos_shoot);}
+    if(m_shoot_data.size()%m_check_pos_shoot==0){makeResult_for_shoot(m_shoot_data.size()/m_check_pos_shoot);}
     return res;
 }
 //поиск между двух зрв если flag==1 , то входит начало пограничного ЗРВ(строго) а если
@@ -455,7 +457,7 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
         }
         i++;
     }
-    if(m_upload_data.size()%m_check_pos_upload==0){makeResult_for_upload(m_upload_data.size()%m_check_pos_upload);}
+    if(m_upload_data.size()%m_check_pos_upload==0){makeResult_for_upload(m_upload_data.size()/m_check_pos_upload);}
     return res;
 }
 
@@ -670,12 +672,14 @@ void TableZRV::makeResult_for_shoot(int pos){
     std::ofstream fout;
 
     fout.open(m_shoot_path, std::fstream::app);
-
+    if(fout.is_open()){
+        int ar=1;
+    }
     time_t t;
     char start [80];
     char end [80];
 
-    pos=pos>m_check_pos_shoot?m_check_pos_shoot*100:pos;
+    pos=pos>m_check_pos_shoot?m_check_pos_shoot*pos:pos;
     for (auto i = pos - 1; i < m_shoot_data.size(); i++)
     {
         time (&t);
