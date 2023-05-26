@@ -175,7 +175,7 @@ double TableZRV::shooting(proletRF::TimeZoneRF prolet, double duration, std::vec
 }
 //поиск между двух зрв если flag==1 , то входит начало пограничного ЗРВ(строго) а если
 // flag==2 то входит от конца первого зрв до начала второго зрв(строго)
-std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<proletZRV::ZRV> table_zrv, const proletRF::TimeZoneRF &prolet1, const proletRF::TimeZoneRF &prolet2, int flag){
+std::vector<proletZRV::ZRV> TableZRV::find_ZRV_between_2_prolet(std::vector<proletZRV::ZRV> table_zrv, const proletRF::TimeZoneRF prolet1, const proletRF::TimeZoneRF &prolet2, int flag){
     std::vector<proletZRV::ZRV> result;
     result.reserve(1);
 
@@ -403,6 +403,8 @@ void TableZRV::analyze_after_prolet(std::vector<proletZRV::ZRV> &zrv_list, std::
                         find_ZRV_for_delete_after_prolet(sat, zrv_list);
                         break;
                     }
+                } else {
+                    delete_1_ZRV_upload(zrv.at(0), zrv_list);
                 }
             }
         } else {
@@ -460,6 +462,41 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
     }
 
     return res;
+}
+
+void TableZRV::delete_1_ZRV_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv) {
+    char cur_zrv_start1[80];
+    char cur_zrv_end1[80];
+    strftime(cur_zrv_start1,80,"%d.%m.%Y %H:%M:%S.", &cur_zrv.tm_start);
+    strftime(cur_zrv_end1,80,"%d.%m.%Y %H:%M:%S.", &cur_zrv.tm_end);
+    std::string cur_zrv_start(cur_zrv_start1);
+    std::string cur_zrv_end(cur_zrv_end1);
+    cur_zrv_start += std::to_string(cur_zrv.milisecs_start);
+    cur_zrv_end += std::to_string(cur_zrv.milisecs_end);
+
+    table_zrv.erase(std::remove_if(table_zrv.begin(),table_zrv.end(),[&](const proletZRV::ZRV&zrv){
+                        char tmpZRV_start1[80];
+                        char tmpZRV_end1[80];
+                        strftime(tmpZRV_start1,80, "%d.%m.%Y %H:%M:%S.", &zrv.tm_start);
+                        strftime(tmpZRV_end1,80, "%d.%m.%Y %H:%M:%S.", &zrv.tm_end);
+                        std::string tmpZRV_start(tmpZRV_start1);
+                        std::string tmpZRV_end(tmpZRV_end1);
+                        tmpZRV_start += std::to_string(zrv.milisecs_start);
+                        tmpZRV_end += std::to_string(zrv.milisecs_end);
+                        bool isDelete = false;
+
+                        if (cur_zrv.satellite != zrv.satellite) {
+                            return isDelete;
+                        }
+
+                        if (cur_zrv.ppi != zrv.ppi) {
+                            return isDelete;
+                        }
+                        if (tmpZRV_end < cur_zrv_start || tmpZRV_start > cur_zrv_end) { //если не пересекается, то и не удаляем
+                            return isDelete;
+                        }
+                        return true;;
+                    }),table_zrv.end());
 }
 
 void TableZRV::find_ZRV_for_delete_after_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv) {
@@ -630,7 +667,7 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("/home/user/qt_projects/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
 //    fout.open("/home/anton/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];
@@ -666,7 +703,7 @@ void TableZRV::makeResult_for_shoot(int pos){
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("/home/user/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out | std::fstream::app);
+    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out | std::fstream::app);
 //    fout.open("/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];
@@ -702,7 +739,7 @@ void TableZRV::makeResult_for_upload(int pos){
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("/home/user/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out | std::fstream::app);
+    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out | std::fstream::app);
 //    fout.open("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];

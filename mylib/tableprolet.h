@@ -100,7 +100,7 @@ public:
     void analyze_task(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites, std::vector <proletZRV::AnswerData> &answer);
 private:
     proletRF::TimeZoneRF find_before(std::vector<proletRF::Satellite> satellites, int curr_sat);
-    std::vector<proletZRV::ZRV> find_ZRV_between_2_prolet(std::vector<proletZRV::ZRV> TableZRV, const proletRF::TimeZoneRF &prolet1, const proletRF::TimeZoneRF &prolet2, int flag);
+    std::vector<proletZRV::ZRV> find_ZRV_between_2_prolet(std::vector<proletZRV::ZRV> TableZRV, const proletRF::TimeZoneRF prolet1, const proletRF::TimeZoneRF &prolet2, int flag);
     double shooting(proletRF::TimeZoneRF prolet, double duration, std::vector<proletRF::Satellite> &satellites, proletRF::Satellite &cur_sat);
     double upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::vector<proletRF::Satellite> &satellites, std::vector<AnswerData> &answer);
     double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
@@ -110,6 +110,7 @@ private:
     void analyze_after_prolet_new(std::vector<proletZRV::ZRV> &zrv_list, std::vector<proletRF::Satellite> &satellites, std::vector <proletZRV::AnswerData> &answer);
     void find_ZRV_for_delete_after_shooting(proletRF::TimeZoneRF prolet, std::vector<ZRV> &table_zrv);
     void find_ZRV_for_delete_after_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);
+    void delete_1_ZRV_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);
     void find_ZRV_for_delete_after_prolet(proletRF::Satellite satellite, std::vector<ZRV> &table_zrv);
     void makeResult_for_upload(int pos);
     void makeResult_for_shoot(int pos);
