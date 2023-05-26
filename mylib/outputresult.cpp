@@ -23,20 +23,20 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     char start [80];
     char end [80];
 
-    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Data(Gbit)" << std::endl;
+    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)  *sat_n   * Data(Gbit)" << std::endl;
     fout << "--------------------------------------------------------------------------------------------" << std::endl;
     fout << std::flush;
 
     for (auto answer: answerData)
     {
-        if(answer.ppi!=current_ppi){
+        if (answer.ppi!=current_ppi) {
             current_path=m_out_file_name+"-Facility-"+answer.ppi+".txt";
             current_ppi=answer.ppi;
             fout.open(current_path, std::fstream::app);
             auto it =std::find_if(put_ppi.begin(),put_ppi.end(), [&current_ppi](const std::string& a){
                 return a==current_ppi;
             });
-            if(it==put_ppi.end()){
+            if (it==put_ppi.end()) {
                 put_ppi.push_back(current_ppi);
                 fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Data(Gbit)" << std::endl;
                 fout << "--------------------------------------------------------------------------------------------" << std::endl;
@@ -54,19 +54,19 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
                  << answer.satellite << "   "
                  << answer.transfered_inf
                  << std::endl;
-        }else{
+        } else {
             time (&t);
             strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_start);
             strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_end);
 
             fout << std::setw(6) << std::setprecision(3) << std::right;
             fout << access << "   "
-                << start << makeOutputStringMsec(answer.milisecs_start) << "   "
-                << end << makeOutputStringMsec(answer.milisecs_end) << "   "
-                << std::setw(7) << std::fixed << std::right << TimeDifference(answer) << "   "
-                << answer.satellite << "   "
-                << answer.transfered_inf
-                << std::endl;
+                 << start << makeOutputStringMsec(answer.milisecs_start) << "   "
+                 << end << makeOutputStringMsec(answer.milisecs_end) << "   "
+                 << std::setw(7) << std::fixed << std::right << TimeDifference(answer) << "   "
+                 << answer.satellite << "   "
+                 << answer.transfered_inf
+                 << std::endl;
         }
         access ++;
     }
@@ -83,7 +83,6 @@ void OutputResult::makeProletRFFile(std::string out_file_name, std::vector <prol
     char start [80];
     char end [80];
 
-    //fout << " Access  *sat_n   *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur     * vit * task" << std::endl;
     fout << " Access  *sat_n   *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur" << std::endl;
     fout << "---------------------------------------------------------------------------" << std::endl;
     fout << std::flush;

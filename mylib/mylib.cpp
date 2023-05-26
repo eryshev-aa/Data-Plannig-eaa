@@ -45,15 +45,15 @@ bool Mylib::planning(){
     //создаем файл для промежуточных результатов для фотографии
     std::ofstream fout;
     //fout.open("/home/user/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
-    fout.open("/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
+    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
     fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Filled inf." << std::endl;
-    fout << "--------------------------------------------------------------------------------------------" << std::endl;
+    fout << "---------------------------------------------------------------------------------------------" << std::endl;
     fout.close();
 
     //создаем файл для промежуточных результатов выгруза данных
     //fout.open("/home/user/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
-    fout.open("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
-    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * ppi  * Filled inf." << std::endl;
+    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
+    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * ppi  * Filled inf. " << std::endl;
     fout << "-----------------------------------------------------------------------------------------------------" << std::endl;
     fout.close();
 
@@ -74,8 +74,9 @@ bool Mylib::planning(){
     out.makeProletRFFile("C:/Users/erysh/Documents/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
     out.makeZRVFile("C:/Users/erysh/Documents/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
 
-    //zrv.analyze_task(m_proletyRF, m_proletyZRV, m_sattelites_list, m_answer);
-    zrv.analyze_task(m_proletyRF, m_proletyZRV, m_sattelites_list, m_answer);
+    zrv.AnalyzeTask(m_proletyRF, m_proletyZRV, m_sattelites_list, m_answer);
+
+    //m_answer = zrv.SortAnswer(m_answer); // не требуется, т.к. теперь вывод по отдельным пунктам
     out.makeResultFile(m_answer);
     clock_t end = clock();
     time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
