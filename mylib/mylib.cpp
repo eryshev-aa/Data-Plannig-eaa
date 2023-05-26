@@ -39,7 +39,7 @@ bool Mylib::planning(){
     double time_spent = 0.0;
     clock_t begin = clock();
 
-    TableZRV zrv;
+    TableZRV zrv("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt","/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt","/home/anton/ProfIT-Data-Plannig/result.txt", 100,100);
     m_proletyZRV = zrv.SortZRV(m_proletyZRV);
     //создаем файл для промежуточных результатов для фотографии
     std::ofstream fout;

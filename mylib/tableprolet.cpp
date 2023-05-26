@@ -16,9 +16,13 @@ TableProletRF::TableProletRF()
 
 }
 
-TableZRV::TableZRV()
+TableZRV::TableZRV(std::string upload_path, std::string shoot_path, std::string result_path, int check_upload, int check_shoot)
 {
-
+    m_upload_path=upload_path;
+    m_check_pos_upload=check_upload;
+    m_shoot_path=shoot_path;
+    m_check_pos_shoot=check_shoot;
+    m_result_path=result_path;
 }
 
 double TableProletRF::TimeDifference(TimeZoneRF zone) {
@@ -195,6 +199,7 @@ double TableZRV::shooting(proletRF::TimeZoneRF prolet, double duration, std::vec
         }
         i++;
     }
+    if(m_shoot_data.size()%m_check_pos_shoot==0){makeResult_for_shoot(m_shoot_data.size()%m_check_pos_shoot);}
     return res;
 }
 //поиск между двух зрв если flag==1 , то входит начало пограничного ЗРВ(строго) а если
@@ -275,22 +280,18 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                     proletZRV::ZRV using_zrv;
                     if (get_current_tank_size(cur_prolet.satellite, satellites) == 1.0) { // если у текущего КА полный бак, то забираем эту ЗРВ под сброс
                         upload(cur_prolet, zrv.at(0), satellites, answer);
-                        if(m_upload_data.size()%10==0){makeResult_for_upload(m_upload_data.size()%10);}
                         delete_ZRV_after_upload(zrv.at(0), zrv_list);
                         if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            if(m_shoot_data.size()%10==0){makeResult_for_shoot(m_shoot_data.size()%10);}
                         }
                         finish_checks = true;
                         continue;
                     }
                     if (cross_zrv_check(satellites, zrv, zrv_list, using_zrv)) { // если бак не полный, смотрим у кого бак более заполнен
                         upload(cur_prolet, using_zrv, satellites, answer); // если у нас или вообще нет пересечений с другими КА, то мы збрасываем
-                        if(m_upload_data.size()%100==0){makeResult_for_upload(m_upload_data.size()%10);}
                         delete_ZRV_after_upload(using_zrv, zrv_list);
                         if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            if(m_shoot_data.size()%10==0){makeResult_for_shoot(m_shoot_data.size()%10);}
                         }
                         finish_checks = true;
                         break;
@@ -299,18 +300,15 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                         if (!zrv.empty()) { //если нашли ЗРВ
                             if (cross_zrv_check(satellites, zrv, zrv_list, using_zrv)) {
                                 upload(cur_prolet, using_zrv, satellites, answer);
-                                if(m_upload_data.size()%100==0){makeResult_for_upload(m_upload_data.size()%10);}
                                 delete_ZRV_after_upload(using_zrv, zrv_list);
                                 break;
                             } else { // если и в расширенном интервале все занято, то просто снимаем
                                 shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                                if(m_shoot_data.size()%10==0){makeResult_for_shoot(m_shoot_data.size()%10);}
                                 finish_checks = true;
                                 break;
                             }
                         } else {
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            if(m_shoot_data.size()%10==0){makeResult_for_shoot(m_shoot_data.size()%10);}
                             finish_checks = true;
                             break;
                         }
@@ -321,26 +319,22 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                         proletZRV::ZRV using_zrv;
                         if (get_current_tank_size(cur_prolet.satellite, satellites) == 1.0) {
                             upload(cur_prolet, zrv.at(0), satellites, answer);
-                            if(m_upload_data.size()%100==0){makeResult_for_upload(m_upload_data.size()%10);}
                             delete_ZRV_after_upload(zrv.at(0), zrv_list);
                             finish_checks = true;
                             break;
                         }
                         if (cross_zrv_check(satellites, zrv, zrv_list, using_zrv)) {
                             upload(cur_prolet, using_zrv, satellites, answer);
-                            if(m_upload_data.size()%100==0){makeResult_for_upload(m_upload_data.size()%10);}
                             delete_ZRV_after_upload(using_zrv, zrv_list);
                             finish_checks = true;
                             break;
                         } else {
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            if(m_shoot_data.size()%10==0){makeResult_for_shoot(m_shoot_data.size()%10);}
                             finish_checks = true;
                             break;
                         }
                     } else {
                         shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                        if(m_shoot_data.size()%10==0){makeResult_for_shoot(m_shoot_data.size()%10);}
                         finish_checks = true;
                         break;
                     }
@@ -349,7 +343,6 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
             }
         } else {
             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-            if(m_shoot_data.size()%10==0){makeResult_for_shoot(m_shoot_data.size()%10);}
             delete_ZRV_after_prolet(sat, zrv_list);
         }
 
@@ -462,7 +455,7 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
         }
         i++;
     }
-
+    if(m_upload_data.size()%m_check_pos_upload==0){makeResult_for_upload(m_upload_data.size()%m_check_pos_upload);}
     return res;
 }
 
@@ -641,8 +634,7 @@ void TableZRV::makeResultFile(std::vector <proletZRV::AnswerData> answerData, in
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
-//    fout.open("/home/anton/ProfIT-Data-Plannig/result.txt", std::fstream::out | std::fstream::app);
+    fout.open(m_result_path, std::fstream::out | std::fstream::app);
     time_t t;
     char start [80];
     char end [80];
@@ -677,14 +669,13 @@ void TableZRV::makeResult_for_shoot(int pos){
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::app);
-//    fout.open("/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::app);
+    fout.open(m_shoot_path, std::fstream::app);
 
     time_t t;
     char start [80];
     char end [80];
 
-    pos=pos>100?pos*100:pos;
+    pos=pos>m_check_pos_shoot?m_check_pos_shoot*100:pos;
     for (auto i = pos - 1; i < m_shoot_data.size(); i++)
     {
         time (&t);
@@ -710,14 +701,13 @@ void TableZRV::makeResult_for_upload(int pos){
     int  access = pos;
     std::ofstream fout;
 
-    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::app);
-//    fout.open("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::app);
+    fout.open(m_upload_path, std::fstream::app);
     time_t t;
     char start [80];
     char end [80];
     //m_total_upload += answerData.at(0).transfered_inf;
 
-    pos = pos>100?pos*100:pos;
+    pos = pos>m_check_pos_upload?pos*m_check_pos_upload:pos;
 
     for (auto i = pos - 1; i < m_upload_data.size(); i++)
     {

@@ -90,7 +90,7 @@ struct AnswerData{
 class TableZRV
 {
 public:
-    TableZRV();
+    TableZRV(std::string upload_path, std::string shoot_path, std::string result_path, int check_upload, int check_shoot);
     static bool ZRVComporator(const proletZRV::ZRV &zone1,const proletZRV::ZRV &zone2);
     static bool AnswerComporator(const proletZRV::AnswerData &zone1,const proletZRV::AnswerData &zone2);
     std::vector<proletZRV::ZRV> SortZRV(std::vector<proletZRV::ZRV> tableZRV);
@@ -115,6 +115,11 @@ private:
     void makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos, int counterRF);
 
     double m_total_upload = 0.0;
+    int m_check_pos_upload = 100;
+    int m_check_pos_shoot = 100;
+    std::string m_shoot_path;
+    std::string m_upload_path;
+    std::string m_result_path;
     std::vector<proletZRV::AnswerData> m_shoot_data;
     std::vector<proletZRV::AnswerData> m_upload_data;
 };
