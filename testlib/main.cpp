@@ -3,13 +3,6 @@
 #include <iostream>
 
 #include <QCoreApplication>
-#include <QSettings>
-#include <QFile>
-#include <QTextStream>
-
-#include <finddatafilenames.h>
-//#include <restrictionsparser.h>
-//#include <zrvparser.h>
 
 using namespace std;
 
