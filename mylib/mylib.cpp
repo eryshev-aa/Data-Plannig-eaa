@@ -48,7 +48,7 @@ bool Mylib::planning(){
     out.makeProletRFFile("/home/user/qt_projects/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
     out.makeZRVFile("/home/user/qt_projects/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
 
-//    OutputResult out("/home/anton/ProfIT-Data-Plannig/");
+    //OutputResult out("/home/anton/ProfIT-Data-Plannig/");
 //    out.makeProletRFFile("/home/anton/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
 //    out.makeZRVFile("/home/anton/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
 
@@ -64,7 +64,7 @@ bool Mylib::planning(){
 //    out.makeZRVFile("C:/Users/tad.INAV/Documents/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
 
     //zrv.analyze_task(m_proletyRF, m_proletyZRV, m_sattelites_list, m_answer);
-    zrv.analyze_task_new(m_proletyRF, m_proletyZRV, m_sattelites_list, m_answer);
+    zrv.analyze_task(m_proletyRF, m_proletyZRV, m_sattelites_list, m_answer);
     out.makeResultFile(m_answer);
     clock_t end = clock();
     time_spent += (double)(end - begin) / CLOCKS_PER_SEC;

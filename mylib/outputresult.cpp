@@ -13,7 +13,7 @@ OutputResult::OutputResult(std::string out_file_name)
 void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData){
     int  access = 1;
     std::ofstream fout;
-    std::string current_path=m_out_file_name+"Facility-"+answerData[0].ppi+".txt";
+    std::string current_path=m_out_file_name+"-Facility-"+answerData[0].ppi+".txt";
     fout.open(current_path);
     std::string current_ppi=answerData[0].ppi;
     std::vector <std::string> put_ppi;
@@ -30,7 +30,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     for (auto answer: answerData)
     {
         if(answer.ppi!=current_ppi){
-            current_path=m_out_file_name+"Facility-"+answer.ppi+".txt";
+            current_path=m_out_file_name+"-Facility-"+answer.ppi+".txt";
             current_ppi=answer.ppi;
             fout.open(current_path, std::fstream::app);
             auto it =std::find_if(put_ppi.begin(),put_ppi.end(), [&current_ppi](const std::string& a){
@@ -50,7 +50,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
             fout << access << "   "
                  << start << makeOutputStringMsec(answer.milisecs_start) << "   "
                  << end << makeOutputStringMsec(answer.milisecs_end) << "   "
-                 << std::setw(7) << std::fixed << std::right << TimeDifference(answer)
+                 << std::setw(7) << std::fixed << std::right << TimeDifference(answer) << "   "
                  << answer.satellite << "   "
                  << answer.transfered_inf
                  << std::endl;
@@ -63,7 +63,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
             fout << access << "   "
                 << start << makeOutputStringMsec(answer.milisecs_start) << "   "
                 << end << makeOutputStringMsec(answer.milisecs_end) << "   "
-                << std::setw(7) << std::fixed << std::right << TimeDifference(answer)
+                << std::setw(7) << std::fixed << std::right << TimeDifference(answer) << "   "
                 << answer.satellite << "   "
                 << answer.transfered_inf
                 << std::endl;
