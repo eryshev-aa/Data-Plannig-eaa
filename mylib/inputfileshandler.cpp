@@ -3,9 +3,7 @@
 #include <fstream>
 //#include <filesystem> //getFileNamesInDir_FS // gcc
 #include <iostream>
-#include <string>
 #include <iomanip>
-#include <algorithm>
 
 InputFileRFHandler::InputFileRFHandler()
 {
@@ -52,7 +50,6 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
     proletRF::Satellite satellite;
 
     for (const auto& entry : files) {
-        //std::cout << "!========== " << entry.path() << std::endl;
         ifstream in_RF_file(entry);
 
         if (in_RF_file.is_open())
@@ -65,10 +62,10 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
                     (line.find("AreaTarget-Russia-To-Satellite") != std::string::npos ) ||
                     (line.find("------") != std::string::npos) ||
                     (line.find("Access") != std::string::npos) ||
-                    (line.find("Min Duration") != std::string::npos) ||             // В нашем алгоритме
-                    (line.find("Max Duration") != std::string::npos) ||             // эти значения
-                    (line.find("Mean Duration") != std::string::npos) ||            // не используются.
-                    (line.find("Total Duration") != std::string::npos) ||           // Но может их не просто так дали...?
+                    (line.find("Min Duration") != std::string::npos) ||
+                    (line.find("Max Duration") != std::string::npos) ||
+                    (line.find("Mean Duration") != std::string::npos) ||
+                    (line.find("Total Duration") != std::string::npos) ||
                     (line.find("Global Statistics") != std::string::npos) ||
                     (line[0] == '\0')) {
 

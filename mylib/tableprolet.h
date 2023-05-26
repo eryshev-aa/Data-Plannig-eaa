@@ -21,7 +21,6 @@ struct TimeZoneRF{
     struct tm tm_end = {}; ///< время конца пролета над РФ без мили секунд
     int milisecs_end; ///< миллисекунды начала пролета над РФ
     int satellite; ///< КА
-    int vitok; ///< виток
     double duration; ///< продолжительность
     SATELLITE_TASK task; ///< задача
 };
@@ -61,8 +60,6 @@ public:
 
 private:
     static bool Comparator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
-    static bool ZoneComporator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
-
     std::vector <TimeZoneRF> m_prolety_nad_RF;
 };
 }

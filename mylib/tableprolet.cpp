@@ -58,11 +58,6 @@ bool TableProletRF::Comparator(const TimeZoneRF &zone1, const  TimeZoneRF &zone2
     }
 }
 
-// компоратор для сортировки по витку
-bool TableProletRF::ZoneComporator(const TimeZoneRF& zone1, const TimeZoneRF& zone2){
-    return zone1.vitok < zone2.vitok;
-}
-
 //функция в которой происходит сортировка таблицы
 std::vector<TimeZoneRF> TableProletRF::SortTable(std::vector<TimeZoneRF> ProletRF){
     std::sort(ProletRF.begin(), ProletRF.end(), &TableProletRF::Comparator);
