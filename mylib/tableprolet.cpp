@@ -201,7 +201,9 @@ double TableZRV::shooting(proletRF::TimeZoneRF prolet, double duration, std::vec
         }
         i++;
     }
+
     if(m_shoot_data.size()%m_check_pos_shoot==0){makeResult_for_shoot(m_shoot_data.size()/m_check_pos_shoot);}
+
     return res;
 }
 //поиск между двух зрв если flag==1 , то входит начало пограничного ЗРВ(строго) а если
@@ -457,7 +459,9 @@ double TableZRV::upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::ve
         }
         i++;
     }
+
     if(m_upload_data.size()%m_check_pos_upload==0){makeResult_for_upload(m_upload_data.size()/m_check_pos_upload);}
+
     return res;
 }
 
@@ -675,6 +679,7 @@ void TableZRV::makeResult_for_shoot(int pos){
     if(fout.is_open()){
         int ar=1;
     }
+
     time_t t;
     char start [80];
     char end [80];
@@ -709,6 +714,7 @@ void TableZRV::makeResult_for_upload(int pos){
     time_t t;
     char start [80];
     char end [80];
+
     //m_total_upload += answerData.at(0).transfered_inf;
 
     pos = pos>m_check_pos_upload?pos*m_check_pos_upload:pos;
