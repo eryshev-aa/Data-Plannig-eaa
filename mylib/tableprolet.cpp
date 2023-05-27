@@ -260,6 +260,12 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
     bool finish_checks = false;
 
     for(auto cur_prolet: proletyRF){
+        proletRF::TimeZoneRF test = Adding_zrv_duration(cur_prolet, 0.001);
+        test = Adding_zrv_duration(cur_prolet, 0.010);
+        test = Adding_zrv_duration(cur_prolet, 0.1);
+        test = Adding_zrv_duration(cur_prolet, 1.0);
+        test = Adding_zrv_duration(cur_prolet, 60.0);
+        test = Adding_zrv_duration(cur_prolet, 60.0);
         if (counterRF%50 == 0) {
             std::cout << "Prolet = " << counterRF << "/" << totalCountRF << ", ZRV total count = " << zrv_list.size() << std::endl;
         }
@@ -689,12 +695,12 @@ void TableZRV::makeResult_for_upload(int pos){
     fout.close();
 }
 
-proletZRV::ZRV TableZRV::Adding_zrv_duration(proletZRV::ZRV zone, double duration){
-    proletZRV::ZRV tmp=zone;
+proletRF::TimeZoneRF TableZRV::Adding_zrv_duration(proletRF::TimeZoneRF zone, double duration){
+    proletRF::TimeZoneRF tmp=zone;
     double secs;
     double millisecs = 0.0;
     millisecs = std::modf(duration, &secs) * 1000 + zone.milisecs_start;
-    int millisecs_int;
+    int millisecs_int =static_cast<int>(millisecs);
     std::time_t tmp_start= std::mktime(&zone.tm_start)+static_cast<int>(secs);
     if(millisecs > 1000){
         tmp_start = tmp_start+(static_cast<int>(millisecs)/1000);
@@ -702,6 +708,5 @@ proletZRV::ZRV TableZRV::Adding_zrv_duration(proletZRV::ZRV zone, double duratio
     }
     tmp.tm_start=*localtime(&tmp_start);
     tmp.milisecs_start=millisecs_int;
-
     return tmp;
 }
