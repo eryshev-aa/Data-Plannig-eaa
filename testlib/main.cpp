@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     lib.set_result_file(result_file);
 
     if (lib.readInputData(dirRF,dirZRV)) {
-        lib.planning(false, false, true, true);
+        lib.planning(true, false, true, true);
     }
 
     std::cout << "Finish!" << std::endl;

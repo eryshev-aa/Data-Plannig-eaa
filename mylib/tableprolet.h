@@ -41,7 +41,7 @@ struct Satellite{
     double filled_inf_percent; ///< объем заполненной памяти в %
     double tank; ///< размер памяти в Гбит
     double bitrate; ///< скорость передечи в Гбит/с
-    int shooting_speed = 4; ///< скорость заполенеия изображениями в Гбит/с
+    double shooting_speed = 0.5; ///< скорость заполенеия изображениями в Гбайт/с
     TimeZoneRF last_prolet; ///< пролет
 };
 

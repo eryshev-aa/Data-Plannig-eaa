@@ -65,9 +65,9 @@ std::vector<TimeZoneRF> TableProletRF::SortTable(std::vector<TimeZoneRF> ProletR
 
 double TableProletRF::get_bitrate(SATELLITE_TYPE type){
     if (type == SATELLITE_TYPE::KINOSPUTNIK) {
-        return 1.0;
+        return 0.125;//1.0; //
     } else if (type == SATELLITE_TYPE::ZORKIY) {
-        return 0.25;
+        return 0.03125; //0.25;//
     } else
         return 0.0;
 }
@@ -276,7 +276,7 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                         if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
                         }
-                        finish_checks = true;
+                        //finish_checks = true;
                         continue;
                     }
                     if (cross_zrv_check(satellites, zrv, zrv_list, using_zrv)) { // если бак не полный, смотрим у кого бак более заполнен
@@ -541,11 +541,11 @@ void TableZRV::delete_ZRV_after_prolet(proletRF::Satellite satellite, std::vecto
 }
 
 bool TableZRV::cross_zrv_check(std::vector<proletRF::Satellite> satellites, std::vector<proletZRV::ZRV> target_zrv, std::vector<ZRV> table_zrv, proletZRV::ZRV &using_zrv) {
-    int result = 0;
+    unsigned long long result = 0;
     std::vector<proletZRV::ZRV> cross_zrv_list;
     cross_zrv_list.reserve(1);
 
-    for (auto cur_target_zrv: target_zrv) {
+    for (const auto &cur_target_zrv: target_zrv) {
         char target_zrv_start1 [80];
         char target_zrv_end1 [80];
         strftime (target_zrv_start1, 80, "%d.%m.%Y %H:%M:%S.", &cur_target_zrv.tm_start);
