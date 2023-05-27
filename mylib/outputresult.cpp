@@ -17,6 +17,9 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     fout.open(current_path);
     std::string current_ppi=answerData[0].ppi;
     std::vector <std::string> put_ppi;
+    std::vector<double> totals;
+    totals.reserve(1);
+    totals.push_back(0.0);
     put_ppi.reserve(1);
     put_ppi.push_back(current_ppi);
     time_t t;
@@ -30,7 +33,8 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     for (auto answer: answerData)
     {
         if (answer.ppi!=current_ppi) {
-            fout << "Sum of transfered information: "<<total_upload <<"Gbyte"<< std::endl;
+            auto i = std::find(put_ppi.begin(), put_ppi.end(),current_ppi);
+            totals.at(std::distance(put_ppi.begin(),i))+=total_upload;
             current_path=m_out_file_name+"-Facility-"+answer.ppi+".txt";
             current_ppi=answer.ppi;
             total_upload=0.0;
@@ -41,6 +45,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
             });
             if (it==put_ppi.end()) {
                 put_ppi.push_back(current_ppi);
+                totals.push_back(0.0);
                 fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Data(Gbyte)" << std::endl;
                 fout << "--------------------------------------------------------------------------------------------" << std::endl;
                 fout << std::flush;
@@ -74,8 +79,14 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
         }
         access ++;
     }
-    fout << "Sum of transfered information: "<<total_upload <<"Gbyte" <<std::endl;
     fout.close();
+    int i=0;
+    for(const auto& ppi:put_ppi){
+        fout.open(m_out_file_name+"-Facility-"+ppi+".txt", std::fstream::app);
+        fout<<"Total transfered information: "<<totals[i]<<std::endl;
+        i++;
+        fout.close();
+    }
 }
 
 void OutputResult::makeProletRFFile(std::string out_file_name, std::vector <proletRF::TimeZoneRF> prolet){
