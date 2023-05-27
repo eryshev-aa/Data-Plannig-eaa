@@ -6,6 +6,31 @@
 1. Файлы с пролетами спутников над РФ
 2. Файлы с зонами радиовидимости 
 
+# Как подключить
+Для подключения библиотеки в Qt Creator выполните следующие действия:
+1. Создайте новый проект с использованием состемы сборки "qmake"
+2. Добавьте в .pro файл проекта следующие строчки:
+```c++
+unix:!macx: LIBS += -L$$PWD/../build-mylib-Desktop-Debug/ -lmylib
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Release/release/ -lmylib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/debug/ -lmylib
+
+INCLUDEPATH += $$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/debug
+DEPENDPATH += $$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/debug
+
+INCLUDEPATH += $$PWD/../mylib
+
+INCLUDEPATH += $$PWD/../build-mylib-Desktop-Debug
+DEPENDPATH += $$PWD/../build-mylib-Desktop-Debug
+
+DISTFILES +=
+
+RESOURCES +=
+
+HEADERS += \
+```
+
 # Как использовать
 
 1. Подключите библиотеку `mylib` к Вашему проекту 
@@ -64,29 +89,4 @@ int main(int argc, char *argv[]) {
 
 	a.exit();
 }
-```
-
-# Как подключить
-Для подключения библиотеки в Qt Creator выполните следующие действия:
-1. Создайте новый проект с использованием состемы сборки "qmake"
-2. Добавьте в .pro файл проекта следующие строчки:
-```c++
-unix:!macx: LIBS += -L$$PWD/../build-mylib-Desktop-Debug/ -lmylib
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Release/release/ -lmylib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/debug/ -lmylib
-
-INCLUDEPATH += $$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/debug
-DEPENDPATH += $$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/debug
-
-INCLUDEPATH += $$PWD/../mylib
-
-INCLUDEPATH += $$PWD/../build-mylib-Desktop-Debug
-DEPENDPATH += $$PWD/../build-mylib-Desktop-Debug
-
-DISTFILES +=
-
-RESOURCES +=
-
-HEADERS += \
 ```
