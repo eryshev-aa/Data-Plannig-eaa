@@ -32,6 +32,8 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
         if (answer.ppi!=current_ppi) {
             current_path=m_out_file_name+"-Facility-"+answer.ppi+".txt";
             current_ppi=answer.ppi;
+
+            fout.close();
             fout.open(current_path, std::fstream::app | std::fstream::out);
             auto it =std::find_if(put_ppi.begin(),put_ppi.end(), [&current_ppi](const std::string& a){
                 return a==current_ppi;
