@@ -47,10 +47,10 @@ enum class SATELLITE_TYPE {
 struct Satellite{
     int satellite; ///< КА
     SATELLITE_TYPE type; ///< тип КА
-    double filled_inf; ///< объем заполненной памяти в Гбит
+    double filled_inf; ///< объем заполненной памяти в Гбайт
     double filled_inf_percent; ///< объем заполненной памяти в %
-    double tank; ///< размер памяти в Гбит
-    double bitrate; ///< скорость передечи в Гбит/с
+    double tank; ///< размер памяти в Гбайт
+    double bitrate; ///< скорость передечи в Гбайт/с
     double shooting_speed = 0.5; ///< скорость заполенеия изображениями в Гбайт/с
     TimeZoneRF last_prolet; ///< пролет
 };
@@ -104,7 +104,7 @@ struct AnswerData{
     int satellite; ///< КА
     std::string ppi; ///< пункт приема информации (ППИ/НС)
     double transfered_inf; ///< объем переданной памяти в Гбит
-    double tank_balance; ///< остаток в баке в %
+    double tank_balance; ///< остаток в баке
 };
 
 /*!
@@ -174,7 +174,7 @@ private:
     void delete_ZRV_after_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);
     void delete_1_ZRV_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);
     void delete_ZRV_after_prolet(proletRF::Satellite satellite, std::vector<ZRV> &table_zrv);
-    proletRF::TimeZoneRF Adding_zrv_duration(proletRF::TimeZoneRF zone, double duration);
+    proletRF::TimeZoneRF adding_prolet_duration(proletRF::TimeZoneRF zone, double duration);
     void makeResult_for_upload(int pos);
     void makeResult_for_shoot(int pos);
     std::string makeOutputStringMsec(int msec);

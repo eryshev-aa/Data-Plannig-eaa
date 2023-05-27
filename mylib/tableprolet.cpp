@@ -169,10 +169,19 @@ double TableZRV::shooting(proletRF::TimeZoneRF prolet, double duration, std::vec
             if (satellites.at(i).filled_inf_percent == 1.0) {
                 return 1.0;
             }
+
+            TableProletRF t;
+            double how_much_to_full_tank = t.get_tank_size(satellites.at(i).type) - satellites.at(i).filled_inf;
+            if ((duration * sat.shooting_speed) > how_much_to_full_tank) {
+                double add = how_much_to_full_tank / satellites.at(i).shooting_speed;
+                proletRF::TimeZoneRF virt_prolet = adding_prolet_duration(prolet, add);
+                prolet.tm_end = virt_prolet.tm_start;
+                prolet.milisecs_end = virt_prolet.milisecs_start;
+            }
             satellites.at(i).filled_inf += duration * sat.shooting_speed;
             satellites.at(i).filled_inf_percent = satellites.at(i).filled_inf / satellites.at(i).tank;
+
             if (satellites.at(i).filled_inf_percent > 1.0) { //если переполнили при фото, то выставляем ровно полный бак
-                TableProletRF t;
                 satellites.at(i).filled_inf = t.get_tank_size(satellites.at(i).type);
                 satellites.at(i).filled_inf_percent = 1.0;
             }
@@ -182,13 +191,13 @@ double TableZRV::shooting(proletRF::TimeZoneRF prolet, double duration, std::vec
             cur_sat = satellites.at(i);
             // заполнение данных для вывода промежуточных в файл
             proletZRV::AnswerData tmp;
-            tmp.duration=duration;
-            tmp.milisecs_end=prolet.milisecs_end;
-            tmp.milisecs_start=prolet.milisecs_start;
-            tmp.tm_end=prolet.tm_end;
-            tmp.tm_start=prolet.tm_start;
-            tmp.transfered_inf=satellites.at(i).filled_inf;
-            tmp.satellite=sat.satellite;
+            tmp.duration = duration;
+            tmp.milisecs_end = prolet.milisecs_end;
+            tmp.milisecs_start = prolet.milisecs_start;
+            tmp.tm_end = prolet.tm_end;
+            tmp.tm_start = prolet.tm_start;
+            tmp.transfered_inf = satellites.at(i).filled_inf;
+            tmp.satellite = sat.satellite;
             m_shoot_data.push_back(tmp);
             break;
         }
@@ -260,12 +269,6 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
     bool finish_checks = false;
 
     for(auto cur_prolet: proletyRF){
-        proletRF::TimeZoneRF test = Adding_zrv_duration(cur_prolet, 0.001);
-        test = Adding_zrv_duration(cur_prolet, 0.010);
-        test = Adding_zrv_duration(cur_prolet, 0.1);
-        test = Adding_zrv_duration(cur_prolet, 1.0);
-        test = Adding_zrv_duration(cur_prolet, 60.0);
-        test = Adding_zrv_duration(cur_prolet, 60.0);
         if (counterRF%50 == 0) {
             std::cout << "Prolet = " << counterRF << "/" << totalCountRF << ", ZRV total count = " << zrv_list.size() << std::endl;
         }
@@ -340,7 +343,7 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                     delete_ZRV_after_prolet(sat, zrv_list);
                 }
             }
-        } else {
+        } else {            
             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
             delete_ZRV_after_prolet(sat, zrv_list);
         }
@@ -685,7 +688,7 @@ void TableZRV::makeResult_for_upload(int pos){
              << std::setw(7) << std::fixed << std::right << m_upload_data[i].duration << "   "
              << std::setw(7) << m_upload_data[i].satellite
              << std::setw(12) << m_upload_data[i].ppi << "   "
-             << std::right << m_upload_data[i].transfered_inf << "   "
+             << std::right << m_upload_data[i].transfered_inf << "        "
              << std::setw(7) << m_upload_data[i].tank_balance * 100
              << std::endl;
 
@@ -695,7 +698,7 @@ void TableZRV::makeResult_for_upload(int pos){
     fout.close();
 }
 
-proletRF::TimeZoneRF TableZRV::Adding_zrv_duration(proletRF::TimeZoneRF zone, double duration){
+proletRF::TimeZoneRF TableZRV::adding_prolet_duration(proletRF::TimeZoneRF zone, double duration){
     proletRF::TimeZoneRF tmp=zone;
     double secs;
     double millisecs = 0.0;
@@ -706,7 +709,7 @@ proletRF::TimeZoneRF TableZRV::Adding_zrv_duration(proletRF::TimeZoneRF zone, do
         tmp_start = tmp_start+(static_cast<int>(millisecs)/1000);
         millisecs_int=static_cast<int>(millisecs)%1000;
     }
-    tmp.tm_start=*localtime(&tmp_start);
-    tmp.milisecs_start=millisecs_int;
+    tmp.tm_start =* localtime(&tmp_start);
+    tmp.milisecs_start = millisecs_int;
     return tmp;
 }
