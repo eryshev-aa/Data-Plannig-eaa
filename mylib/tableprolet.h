@@ -107,6 +107,7 @@ private:
     void delete_ZRV_after_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);
     void delete_1_ZRV_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);
     void delete_ZRV_after_prolet(proletRF::Satellite satellite, std::vector<ZRV> &table_zrv);
+    proletZRV::ZRV Adding_zrv_duration(proletZRV::ZRV zone, double duration);
     void makeResult_for_upload(int pos);
     void makeResult_for_shoot(int pos);
     std::string makeOutputStringMsec(int msec);

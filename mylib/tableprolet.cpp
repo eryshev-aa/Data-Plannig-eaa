@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include <cmath>
+
 #include <sstream>
 #include <iostream>
 #include <iomanip>
@@ -687,4 +689,18 @@ void TableZRV::makeResult_for_upload(int pos){
     fout<<"All uploaded data for now: "<<m_total_upload<<std::endl;
     //fout << "Total upload: " << std::setw(9) << std::setprecision(3) << std::right << m_total_upload << std::endl;
     fout.close();
+}
+
+proletZRV::ZRV TableZRV::Adding_zrv_duration(proletZRV::ZRV zone, double duration){
+    proletZRV::ZRV tmp=zone;
+    double secs;
+    double millisecs = std::modf(duration, &secs)*1000+zone.milisecs_start;
+    int millisecs_int;
+    std::time_t tmp_start= std::mktime(&zone.tm_start)+static_cast<int>(secs);
+    if(millisecs>1000){
+        tmp_start = tmp_start+(static_cast<int>(millisecs)/1000);
+        millisecs_int=static_cast<int>(millisecs)%1000;
+    }
+    tmp.tm_start=localtime(&tmp_start);
+    tmp.milisecs_start=millisecs_int;
 }
