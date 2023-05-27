@@ -686,7 +686,6 @@ void TableZRV::makeResult_for_upload(int pos){
         access ++;
     }
     fout<<"All uploaded data for now: "<<m_total_upload<<std::endl;
-    //fout << "Total upload: " << std::setw(9) << std::setprecision(3) << std::right << m_total_upload << std::endl;
     fout.close();
 }
 

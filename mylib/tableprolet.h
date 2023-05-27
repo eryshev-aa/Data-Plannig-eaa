@@ -16,6 +16,11 @@ enum class SATELLITE_TASK {
     UPLOAD = 2,   ///< Сброс данных
 };
 
+/*! \struct Satellite
+    \brief Структура пролета над РФ
+
+    Описывает характеристики пролета над РФ для конкретного КА
+*/
 struct TimeZoneRF{
     struct tm tm_start = {}; ///< время начала пролета над РФ без мили секунд
     int milisecs_start; ///< миллисекунды начала пролета над РФ
@@ -34,6 +39,11 @@ enum class SATELLITE_TYPE {
     ZORKIY = 1, ///< Зоркий
 };
 
+/*! \struct Satellite
+    \brief Структура КА
+
+    Описывает характеристики КА и хранит его текущее состояние
+*/
 struct Satellite{
     int satellite; ///< КА
     SATELLITE_TYPE type; ///< тип КА
@@ -45,6 +55,9 @@ struct Satellite{
     TimeZoneRF last_prolet; ///< пролет
 };
 
+/*!
+ * \brief Класс для работы с пролетами над РФ
+ */
 class TableProletRF
 {
 public:
@@ -62,6 +75,11 @@ private:
 }
 
 namespace proletZRV {
+/*! \struct Satellite
+    \brief Структура ЗРВ
+
+    Описывает характеристики зоны видимости для конкретного КА
+*/
 struct ZRV{
     struct tm tm_start = {}; ///< время начала ЗРВ без мили секунд
     int milisecs_start; ///< миллисекунды начала ЗРВ
@@ -72,7 +90,11 @@ struct ZRV{
     double duration; ///< продолжительность
 };
 
+/*! \struct Satellite
+    \brief Структура результата
 
+    Хранит информацию о каждом сбросе данных с конкретного КА
+*/
 struct AnswerData{
     struct tm tm_start = {}; ///< время начала ЗРВ без мили секунд
     int milisecs_start; ///< миллисекунды начала ЗРВ
@@ -85,15 +107,60 @@ struct AnswerData{
     double tank_balance; ///< остаток в баке в %
 };
 
+/*!
+ * \brief Класс для работы с зонами видимости
+ */
 class TableZRV
 {
 public:
+    /*! \fn TableZRV()
+        \brief Конструктор класса TableZRV
+        \param [in] upload_path абсолютный путь и имя к файлу с промежуточными сведениями о сброшенных данных. Для отладки
+        \param [in] shoot_path  абсолютный путь и имя к файлу с промежуточными сведениями о фотосъемке. Для отладки
+        \param [in] check_upload необходимость создавать и наполнять файл со сведениями о сбросе. Для отладки
+        \param [in] check_shoot необходимость создавать и наполнять файл со сведениями о фотосъемке. Для отладки
+        \return отсортированный вектор ЗРВ
+    */
+
     TableZRV(std::string upload_path, std::string shoot_path, int check_upload, int check_shoot);
+
+    /*! \fn ZRVComporator()
+        \brief Компаратор. Сравниваеет структуры зон видимости
+        \param [in] zone1 первая ЗРВ
+        \param [in] zone2 вторя ЗРВ
+        \return отсортированный вектор ЗРВ
+    */
     static bool ZRVComporator(const proletZRV::ZRV &zone1,const proletZRV::ZRV &zone2);
+
+    /*! \fn AnswerComporator()
+        \brief Компаратор. Сравниваеет структуры резльтатов
+        \param [in] zone1 первый результат
+        \param [in] zone2 второй результат
+        \return отсортированный вектор ЗРВ
+    */
     static bool AnswerComporator(const proletZRV::AnswerData &zone1,const proletZRV::AnswerData &zone2);
+
+    /*! \fn SortZRV()
+        \brief Сортировка вектора с зонами видимости по времени начала сброса данных
+        \param [in] tableZRV вектор ЗРВ (ZRV)
+        \return отсортированный вектор ЗРВ
+    */
     std::vector<proletZRV::ZRV> SortZRV(std::vector<proletZRV::ZRV> tableZRV);
+
+    /*! \fn SortAnswer()
+        \brief Сортировка вектора результатов по времени начала сброса данных
+        \param [in] answer вектор результатов (AnswerData)
+        \return отсортированный вектор результатов
+    */
     std::vector<proletZRV::AnswerData> SortAnswer(std::vector<proletZRV::AnswerData> answer);
 
+    /*! \fn AnalyzeTask()
+        \brief Планирование фотосъемкм и сеансов связи для сброса данных от первого до последнего пролета над РФ
+        \param [in] proletyRF вектор пролетов над РФ (TimeZoneRF)
+        \param [in] zrv_list вектор ЗРВ (ZRV)
+        \param [in] satellites вектор КА (Satellite)
+        \param [in] answer вектор для результатов (AnswerData)
+    */
     void AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::vector<proletZRV::ZRV> &zrv_list , std::vector<proletRF::Satellite> &satellites, std::vector <proletZRV::AnswerData> &answer);
 private:
     proletRF::TimeZoneRF find_before(std::vector<proletRF::Satellite> satellites, int curr_sat);

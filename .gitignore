@@ -2,6 +2,8 @@
 result.txt*
 proletRF.txt*
 zrv*
+shoot_intermediate.txt
+upload_intermediate.txt
 
 # Prerequisites
 *.d
