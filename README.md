@@ -90,14 +90,15 @@ int main(int argc, char *argv[]) {
 	a.exit();
 }
 ```
+
 #Сборка библиотеки
 
-***Сборка библиотеки под GCC:***
+**Сборка библиотеки под GCC:**
 1. В Qt Creator открыть файлы библиотеки через .pro файл
 2. Нажать правой кнопкой мыши на имя библиотеки
 3. Выбрать в появившемся списке выбрать "Собрать"
 
-***Сборка библиотеки под MingW:***
+**Сборка библиотеки под MingW:**
 1. В Qt Creator  открыть файлы библиотеки через .pro файл
 2. Зайти в файл inputfileshandler.cpp
 3. Расскомментровать следующие строки:
@@ -117,6 +118,66 @@ vector <string> InputFileRFHandler::getFileNamesInDir_FS(string dirName){
     return result;
 }
 ```
-4. Сохранить изменения в данном файле
-5. Нажать правой кнопкой мыши на имя библиотеки
-6. Выбрать в появившемся списке выбрать "Собрать"
+
+В методе ***bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZoneRF> &rf_trace_list, vector<Satellite> &sattelites_list):***
+
+```c++
+vector <string> files = getFileNamesInDir_FS(dirPath);
+```
+
+В методе ***bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list, string min_time):***
+
+```c++
+vector <string> files = getFileNamesInDir_FS(dirPath)
+```
+4. В этом же файле закомментировать следующие строки:
+```c++
+vector <string> InputFileRFHandler::getFileNamesInDir_QDir(string dirName){
+    vector <string> result;
+
+    QFileInfoList filesList;
+    QDir filesDir(QString::fromStdString(dirName));
+    filesDir.setFilter(QDir::Files);
+    filesList = filesDir.entryInfoList();
+    if (filesList.count() > 0) {
+        for (int i = 0; i < filesList.size(); ++i) {
+            QFileInfo fileInfo = filesList.at(i);
+            result.push_back(fileInfo.absolutePath().toStdString() + "/" + fileInfo.fileName().toStdString());
+        }
+    } else {
+        cout << "Data folder " << dirName << " is empty!" << endl;
+        result.clear();
+        return result;
+    }
+
+    return result;
+}
+```
+
+В методе ***bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZoneRF> &rf_trace_list, vector<Satellite> &sattelites_list):***
+
+```c++
+vector <string> files = getFileNamesInDir_QDir(dirPath);
+```
+
+В методе ***bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list, string min_time):***
+
+```c++
+vector <string> files = getFileNamesInDir_FS(dirPath)
+```
+
+4. Зайти в файл inputfileshandler.h
+5. Расскомментировать в нем следующую строку:
+
+```c++
+vector <string> getFileNamesInDir_FS(string dirName);
+```
+6. В этом же файле закомментировать строку:
+
+```c++
+vector <string> getFileNamesInDir_QDir(string dirName);
+```
+
+7. Сохранить изменения в данных файлах
+8. Нажать правой кнопкой мыши на имя библиотеки
+9. Выбрать в появившемся списке выбрать "Собрать"
