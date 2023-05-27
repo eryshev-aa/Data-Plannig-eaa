@@ -13,7 +13,7 @@ OutputResult::OutputResult(std::string out_file_name)
 void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData){
     int  access = 1;
     std::ofstream fout;
-    std::string current_path=m_out_file_name+"-Facility-"+answerData[0].ppi+".txt";
+    std::string current_path = m_out_file_name+"-Facility-"+answerData[0].ppi+".txt";
     fout.open(current_path);
     std::string current_ppi=answerData[0].ppi;
     std::vector <std::string> put_ppi;

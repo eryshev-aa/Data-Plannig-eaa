@@ -10,27 +10,48 @@ int main(int argc, char *argv[]) {
 
     QCoreApplication a(argc, argv);
 
+    // ВХОДНЫЕ ДАННЫЕ. ОБЯЗАТЕЛЬНО!
+    // 1. Указать пути в входным данным
+    // windows style
+    string dirRF  = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
+    string dirZRV = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
 
-//    string dirRF  = "/home/user/qt_projects/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
-//    string dirZRV = "/home/user/qt_projects/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
+    // linux style
+    //string dirRF  = "/home/user1/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
+    //string dirZRV = "/home/user1/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
 
-    string dirRF  = "/home/user1/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
-    string dirZRV = "/home/user1/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
+    // ПРОМЕЖУТОЧНЫЙ ВЫВОД РЕЗУЛЬТАТОВ.
+    // 2. Указать пути и имена файлов для вывода промежуточных результатов. Данные файлы наполняются по мере выполнения
+    // 2.1 Файл пролетов над РФ отсортированный по времени начала пролета для всех КА. Для отладки
+    string prolety_file = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/proletRF.txt";
+    // 2.2 Файл со всеми зонами видимости отсортированными по времени начала. Для отладки
+    string zrv_file = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/zrv.txt";
+    // 2.3 Файл со сведениями о сброшенных данных
+    string upload_file = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/upload_intermediate.txt";
+    // 2.4 Частота выдачи промежуточных сведений о сброшенных данных
+    int upload_frequency = 4;
+    // 2.5 Файл со сведениями об интервалах и объемах фотосъемки
+    string shoot_file = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/shoot_intermediate.txt";
+    // 2.6 Частота выдачи промежуточных сведений о фотосъемке
+    int shoot_frequency = 5;
 
-
-    string dirRF  = "/home/anton/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
-    string dirZRV = "/home/anton/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
-
-//    string dirRF  = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
-//    string dirZRV = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
+    // РЕЗУЛЬТАТ. ОБЯЗАТЕЛЬНО!
+    // 3. Указать путь и имя файла с результатами. Формируется в конце.
+    string result_file  = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/result";
 
     Mylib lib;
 
+    lib.set_prolety_sorted_file(prolety_file);
+    lib.set_zrv_sorted_file(zrv_file);    
+    lib.set_upload_file(upload_file);
+    lib.set_check_pos_upload(upload_frequency);
+    lib.set_shoot_file(shoot_file);
+    lib.set_check_pos_shoot(shoot_frequency);
+    lib.set_result_file(result_file);
+
     if (lib.readInputData(dirRF,dirZRV)) {
-        lib.planning();
+        lib.planning(false, false, true, true);
     }
-
-
 
     std::cout << "Finish!" << std::endl;
 

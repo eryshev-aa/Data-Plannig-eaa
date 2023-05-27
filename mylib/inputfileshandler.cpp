@@ -106,13 +106,7 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
                     tz_current.tm_end = tm;
                     tz_current.milisecs_end = std::stoi(rf_trace_end_time.substr(21,3));
 
-//                    if ((tz_current.tm_end.tm_hour >= 18 && tz_current.tm_end.tm_min >= 0 && tz_current.tm_end.tm_sec >= 0) ||
-//                        (tz_current.tm_start.tm_hour >= 18 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0) ||
-//                        (tz_current.tm_start.tm_hour < 9 && tz_current.tm_start.tm_min >= 0 && tz_current.tm_start.tm_sec >= 0)) {
-//                        continue;
-//                    } else {
-                        tz_current.task = SATELLITE_TASK::WAIT;
-//                    }
+                    tz_current.task = SATELLITE_TASK::WAIT;
 
                     string rf_trace_duration_str = line.substr(91,7);
                     size_t ptr = -1;
@@ -125,8 +119,8 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
                     rf_trace_list.push_back(tz_current);
                 }
             }
-        } else
-        {
+        } else {
+            std::cout << "Files proletov nad RF open error!" << std::endl;
             return false;
         }
         in_RF_file.close();
@@ -136,7 +130,6 @@ bool InputFileRFHandler::make_proletRF(string dirPath, vector<proletRF::TimeZone
 }
 
 bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_trace_list, string min_time) {
-    //return true;
     //vector <string> files = getFileNamesInDir_FS(dirPath);
     vector <string> files = getFileNamesInDir_QDir(dirPath);
     string line;
@@ -210,11 +203,11 @@ bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector<ZRV> &zrv_tr
                     }else{
                         continue;
                     }
-                    //std::cout << zrv_start_time << "==" << zrv_end_time << "==" << zrv_duration << std::endl;
+
                 }
             }
-        } else
-        {
+        } else {
+            std::cout << "Files ZRV open error!" << std::endl;
             return false;
         }
         in_ZRV_file.close();

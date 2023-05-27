@@ -16,6 +16,34 @@ Mylib::Mylib()
 
 }
 
+void Mylib::set_prolety_sorted_file(string prolety_sorted_file) {
+    m_prolety_sorted_file = prolety_sorted_file;
+}
+
+void Mylib::set_zrv_sorted_file(string zrv_sorted_file) {
+    m_zrv_sorted_file = zrv_sorted_file;
+}
+
+void Mylib::set_result_file(string result_file) {
+    m_result_file = result_file;
+}
+
+void Mylib::set_upload_file(string upload_file) {
+    m_upload_file = upload_file;
+
+}
+void Mylib::set_shoot_file(string shoot_file) {
+    m_shoot_file = shoot_file;
+}
+
+void Mylib::set_check_pos_upload(int check_pos_upload) {
+    m_check_pos_upload = check_pos_upload;
+}
+
+void Mylib::set_check_pos_shoot(int check_pos_shoot) {
+    m_check_pos_shoot = check_pos_shoot;
+}
+
 bool Mylib::readInputData(string dirRF, string dirZRV){
     InputFileRFHandler in;
 
@@ -35,60 +63,41 @@ bool Mylib::readInputData(string dirRF, string dirZRV){
         return false;
 }
 
-bool Mylib::planning(){
+void Mylib::planning(bool makeRFsortFile, bool makeZRVsortFile, bool makeShootFile, bool makeUploadFile){
     double time_spent = 0.0;
     clock_t begin = clock();
 
-    TableZRV zrv("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt","/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt","/home/anton/ProfIT-Data-Plannig/result.txt", 1,1);
+    TableZRV zrv(m_upload_file, m_shoot_file, m_check_pos_upload, m_check_pos_shoot);
     m_proletyZRV = zrv.SortZRV(m_proletyZRV);
-    //создаем файл для промежуточных результатов для фотографии
+
+    //создаем файл для промежуточных результатов фотосъемки
     std::ofstream fout;
-    fout.open("/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
-    //fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
+    if (makeShootFile) {
+        fout.open(m_shoot_file, std::fstream::out);
 
-    //TableZRV zrv("/home/user1/ProfIT-Data-Plannig/upload_intermediate.txt",
-     //            "/home/user1/ProfIT-Data-Plannig/shoot_intermediate.txt",
-   //              "/home/user1/ProfIT-Data-Plannig/result.txt", 100,100);
-    m_proletyZRV = zrv.SortZRV(m_proletyZRV);
-    //создаем файл для промежуточных результатов для фотографии
-    //std::ofstream fout;
-    //fout.open("/home/user/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
-    fout.open("/home/user1/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
+        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)   *sat_n    * Filled inf." << std::endl;
+        fout << "-----------------------------------------------------------------------------------------------" << std::endl;
+        fout.close();
 
-    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Filled inf." << std::endl;
-    fout << "---------------------------------------------------------------------------------------------" << std::endl;
-    fout.close();
+    }
 
-    //создаем файл для промежуточных результатов выгруза данных
+    //создаем файл для промежуточных результатов сброса данных
+    if (makeUploadFile) {
+        fout.open(m_upload_file, std::fstream::out);
 
-    fout.open("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
-    //fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
+        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)   *sat_n     * ppi     * Filled   * tank % " << std::endl;
+        fout << "-----------------------------------------------------------------------------------------------------------------" << std::endl;
+        fout.close();
+    }
 
-    //fout.open("/home/user/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
-    fout.open("/home/user1/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
+    OutputResult out(m_result_file);
 
-    fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * ppi  * Filled inf. " << std::endl;
-    fout << "-----------------------------------------------------------------------------------------------------" << std::endl;
-    fout.close();
-
-    OutputResult out("/home/anton/ProfIT-Data-Plannig/");
-    out.makeProletRFFile("/home/anton/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
-    out.makeZRVFile("/home/anton/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
-
-//    OutputResult out("/home/user/ProfIT-Data-Plannig/result.txt");
-//    out.makeProletRFFile("/home/user/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
-//    out.makeZRVFile("/home/user/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
-
-
-
-//    OutputResult out("C:/Users/erysh/Documents/ProfIT-Data-Plannig/result.txt");
-//    out.makeProletRFFile("C:/Users/erysh/Documents/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
-//    out.makeZRVFile("C:/Users/erysh/Documents/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
-
-//    OutputResult out("/home/user1/ProfIT-Data-Plannig/result.txt");
-//    out.makeProletRFFile("/home/user1/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
-//    out.makeZRVFile("/home/user1/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
-
+    if (makeRFsortFile) {
+        out.makeProletRFFile(m_prolety_sorted_file, m_proletyRF);
+    }
+    if (makeZRVsortFile) {
+        out.makeZRVFile(m_zrv_sorted_file, m_proletyZRV);
+    }
 
     zrv.AnalyzeTask(m_proletyRF, m_proletyZRV, m_sattelites_list, m_answer);
 
@@ -96,10 +105,7 @@ bool Mylib::planning(){
     out.makeResultFile(m_answer);
     clock_t end = clock();
     time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+
     // вычислить прошедшее время, найдя разницу (end - begin)
     std::cout << "The elapsed time is " << time_spent << " sec" << std::endl;
-
-//    out.makeResultFile(m_answer);
-
-    return true;
 }

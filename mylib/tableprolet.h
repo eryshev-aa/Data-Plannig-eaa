@@ -1,5 +1,6 @@
 #ifndef TABLEPROLET_H
 #define TABLEPROLET_H
+
 #include <time.h>
 
 #include <vector>
@@ -51,12 +52,8 @@ public:
 
     std::vector<TimeZoneRF> SortTable(std::vector<TimeZoneRF> ProletRF);
 
-    double TimeDifference(TimeZoneRF zone);
-
     double get_bitrate(SATELLITE_TYPE type);
     double get_tank_size(SATELLITE_TYPE type);
-
-
 
 private:
     static bool Comparator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
@@ -65,7 +62,7 @@ private:
 }
 
 namespace proletZRV {
-struct ZRV{ // КА, НС, время начала, время конца, продолжительность.
+struct ZRV{
     struct tm tm_start = {}; ///< время начала ЗРВ без мили секунд
     int milisecs_start; ///< миллисекунды начала ЗРВ
     struct tm tm_end = {}; ///< время конца ЗРВ без мили секунд
@@ -85,12 +82,13 @@ struct AnswerData{
     int satellite; ///< КА
     std::string ppi; ///< пункт приема информации (ППИ/НС)
     double transfered_inf; ///< объем переданной памяти в Гбит
+    double tank_balance; ///< остаток в баке в %
 };
 
 class TableZRV
 {
 public:
-    TableZRV(std::string upload_path, std::string shoot_path, std::string result_path, int check_upload, int check_shoot);
+    TableZRV(std::string upload_path, std::string shoot_path, int check_upload, int check_shoot);
     static bool ZRVComporator(const proletZRV::ZRV &zone1,const proletZRV::ZRV &zone2);
     static bool AnswerComporator(const proletZRV::AnswerData &zone1,const proletZRV::AnswerData &zone2);
     std::vector<proletZRV::ZRV> SortZRV(std::vector<proletZRV::ZRV> tableZRV);
@@ -112,14 +110,15 @@ private:
     void makeResult_for_upload(int pos);
     void makeResult_for_shoot(int pos);
     std::string makeOutputStringMsec(int msec);
-    void makeResultFile(std::vector <proletZRV::AnswerData> answerData, int pos, int counterRF);
 
     double m_total_upload = 0.0;
     int m_check_pos_upload;
     int m_check_pos_shoot;
-    std::string m_shoot_path;
-    std::string m_upload_path;
-    std::string m_result_path;
+    std::string m_shoot_file;
+    bool isMakeShootFile =false;
+    std::string m_upload_file;
+    bool isMakeUploadFile = false;
+    std::string m_live_result_file;
     std::vector<proletZRV::AnswerData> m_shoot_data;
     std::vector<proletZRV::AnswerData> m_upload_data;
 };
