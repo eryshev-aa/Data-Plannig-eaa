@@ -89,24 +89,27 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_output_result.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_output_result.html">OutputResult</a></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="class_output_result.html">OutputResult</a>(std::string out_file_name);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">void</span> makeResultFile(std::vector&lt;proletZRV::AnswerData&gt; answerData);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="comment">//методы для проверки промежуточных действий</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">void</span> makeProletRFFile(std::string out_file_name, std::vector &lt;proletRF::TimeZoneRF&gt; prolet);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">void</span> makeZRVFile(std::string out_file_name, std::vector &lt;proletZRV::ZRV&gt; zrv);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    std::string m_out_file_name;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    std::string makeOutputStringMsec(<span class="keywordtype">int</span> msec);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">double</span> TimeDifference(<a class="code" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> zone);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;};</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// OUTPUTRESULT_H</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="class_output_result.html">OutputResult</a>(std::string out_file_name);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_output_result.html#a9f4469795ddac9e64e8dd5ac110872ee">makeResultFile</a>(std::vector&lt;proletZRV::AnswerData&gt; answerData);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_output_result.html#a9607a366d79f6ba031e1888068dcfa74">makeProletRFFile</a>(std::string out_file_name, std::vector &lt;proletRF::TimeZoneRF&gt; prolet);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_output_result.html#a0620a9e025e0bdd143daaf84ffad1756">makeZRVFile</a>(std::string out_file_name, std::vector &lt;proletZRV::ZRV&gt; zrv);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    std::string m_out_file_name;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    std::string makeOutputStringMsec(<span class="keywordtype">int</span> msec);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">double</span> TimeDifference(<a class="code" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> zone);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// OUTPUTRESULT_H</span></div>
 <div class="ttc" id="aclass_output_result_html"><div class="ttname"><a href="class_output_result.html">OutputResult</a></div><div class="ttdoc">Класс для вывода результатов в файл</div><div class="ttdef"><b>Definition:</b> outputresult.h:19</div></div>
-<div class="ttc" id="astructprolet_z_r_v_1_1_answer_data_html"><div class="ttname"><a href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a></div><div class="ttdef"><b>Definition:</b> tableprolet.h:82</div></div>
+<div class="ttc" id="aclass_output_result_html_a0620a9e025e0bdd143daaf84ffad1756"><div class="ttname"><a href="class_output_result.html#a0620a9e025e0bdd143daaf84ffad1756">OutputResult::makeZRVFile</a></div><div class="ttdeci">void makeZRVFile(std::string out_file_name, std::vector&lt; proletZRV::ZRV &gt; zrv)</div><div class="ttdoc">Создание файла с зонами радиовидимости отсортированного по времени начала ЗРВ</div><div class="ttdef"><b>Definition:</b> outputresult.cpp:112</div></div>
+<div class="ttc" id="aclass_output_result_html_a9607a366d79f6ba031e1888068dcfa74"><div class="ttname"><a href="class_output_result.html#a9607a366d79f6ba031e1888068dcfa74">OutputResult::makeProletRFFile</a></div><div class="ttdeci">void makeProletRFFile(std::string out_file_name, std::vector&lt; proletRF::TimeZoneRF &gt; prolet)</div><div class="ttdoc">Создание файла с пролетами над РФ отсортированного по времени начала пролета</div><div class="ttdef"><b>Definition:</b> outputresult.cpp:79</div></div>
+<div class="ttc" id="aclass_output_result_html_a9f4469795ddac9e64e8dd5ac110872ee"><div class="ttname"><a href="class_output_result.html#a9f4469795ddac9e64e8dd5ac110872ee">OutputResult::makeResultFile</a></div><div class="ttdeci">void makeResultFile(std::vector&lt; proletZRV::AnswerData &gt; answerData)</div><div class="ttdoc">Создание файлов с результатами работы программы.</div><div class="ttdef"><b>Definition:</b> outputresult.cpp:13</div></div>
+<div class="ttc" id="astructprolet_z_r_v_1_1_answer_data_html"><div class="ttname"><a href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a></div><div class="ttdoc">Структура результата</div><div class="ttdef"><b>Definition:</b> tableprolet.h:110</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

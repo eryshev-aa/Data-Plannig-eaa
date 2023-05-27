@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vitok_41',['vitok',['../structprolet_r_f_1_1_time_zone_r_f.html#a9a37f1ed0c4cbd469372c4cd923cd672',1,'proletRF::TimeZoneRF']]]
+  ['wait_52',['WAIT',['../namespaceprolet_r_f.html#a2ec88cd502bc4ef0a4ba60b18a79b655ad5cc6a0064b5c25ba37826aa3fda910c',1,'proletRF']]]
 ];

@@ -84,15 +84,15 @@ $(function() {
 <tr class="memitem:a7c2206e69022e8b3fbc7a1343e75fadb"><td class="memItemLeft" align="right" valign="top"><a id="a7c2206e69022e8b3fbc7a1343e75fadb"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>OutputResult</b> (std::string out_file_name)</td></tr>
 <tr class="separator:a7c2206e69022e8b3fbc7a1343e75fadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ca1ccc077327e8a02716f4e83356bc4"><td class="memItemLeft" align="right" valign="top"><a id="a8ca1ccc077327e8a02716f4e83356bc4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>makeResultFile</b> (std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt; answerData)</td></tr>
-<tr class="separator:a8ca1ccc077327e8a02716f4e83356bc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2724e50c0d4b063d297a2502dd40790"><td class="memItemLeft" align="right" valign="top"><a id="ab2724e50c0d4b063d297a2502dd40790"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>makeProletRFFile</b> (std::string out_file_name, std::vector&lt; <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> &gt; prolet)</td></tr>
-<tr class="separator:ab2724e50c0d4b063d297a2502dd40790"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a452d2f735e135755e0977170758ced2a"><td class="memItemLeft" align="right" valign="top"><a id="a452d2f735e135755e0977170758ced2a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>makeZRVFile</b> (std::string out_file_name, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; zrv)</td></tr>
-<tr class="separator:a452d2f735e135755e0977170758ced2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f4469795ddac9e64e8dd5ac110872ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_output_result.html#a9f4469795ddac9e64e8dd5ac110872ee">makeResultFile</a> (std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt; answerData)</td></tr>
+<tr class="memdesc:a9f4469795ddac9e64e8dd5ac110872ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание файлов с результатами работы программы.  <a href="class_output_result.html#a9f4469795ddac9e64e8dd5ac110872ee">Подробнее...</a><br /></td></tr>
+<tr class="separator:a9f4469795ddac9e64e8dd5ac110872ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9607a366d79f6ba031e1888068dcfa74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_output_result.html#a9607a366d79f6ba031e1888068dcfa74">makeProletRFFile</a> (std::string out_file_name, std::vector&lt; <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> &gt; prolet)</td></tr>
+<tr class="memdesc:a9607a366d79f6ba031e1888068dcfa74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание файла с пролетами над РФ отсортированного по времени начала пролета  <a href="class_output_result.html#a9607a366d79f6ba031e1888068dcfa74">Подробнее...</a><br /></td></tr>
+<tr class="separator:a9607a366d79f6ba031e1888068dcfa74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0620a9e025e0bdd143daaf84ffad1756"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_output_result.html#a0620a9e025e0bdd143daaf84ffad1756">makeZRVFile</a> (std::string out_file_name, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; zrv)</td></tr>
+<tr class="memdesc:a0620a9e025e0bdd143daaf84ffad1756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание файла с зонами радиовидимости отсортированного по времени начала ЗРВ  <a href="class_output_result.html#a0620a9e025e0bdd143daaf84ffad1756">Подробнее...</a><br /></td></tr>
+<tr class="separator:a0620a9e025e0bdd143daaf84ffad1756"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Закрытые члены</h2></td></tr>
@@ -111,7 +111,108 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_out_file_nam
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Класс для вывода результатов в файл </p>
-</div><hr/>Объявления и описания членов классов находятся в файлах:<ul>
+</div><h2 class="groupheader">Методы</h2>
+<a id="a9607a366d79f6ba031e1888068dcfa74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9607a366d79f6ba031e1888068dcfa74">&#9670;&nbsp;</a></span>makeProletRFFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">OutputResult::makeProletRFFile </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>out_file_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> &gt;&#160;</td>
+          <td class="paramname"><em>prolet</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Создание файла с пролетами над РФ отсортированного по времени начала пролета </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_file_name</td><td>абсолютный путь и имя файла </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">prolet</td><td>отсортированный вектор структур TimeZoneRF </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9f4469795ddac9e64e8dd5ac110872ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f4469795ddac9e64e8dd5ac110872ee">&#9670;&nbsp;</a></span>makeResultFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">OutputResult::makeResultFile </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt;&#160;</td>
+          <td class="paramname"><em>answerData</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Создание файлов с результатами работы программы. </p>
+<p>Кол-во файлов будет равно кол-ву пунктов </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">answerData</td><td>вектор структур AnswerData </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0620a9e025e0bdd143daaf84ffad1756"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0620a9e025e0bdd143daaf84ffad1756">&#9670;&nbsp;</a></span>makeZRVFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">OutputResult::makeZRVFile </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>out_file_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt;&#160;</td>
+          <td class="paramname"><em>zrv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Создание файла с зонами радиовидимости отсортированного по времени начала ЗРВ </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_file_name</td><td>абсолютный путь и имя файла </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zrv</td><td>отсортированный вектор структур ZRV </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>Объявления и описания членов классов находятся в файлах:<ul>
 <li>mylib/<a class="el" href="outputresult_8h_source.html">outputresult.h</a></li>
 <li>mylib/outputresult.cpp</li>
 </ul>

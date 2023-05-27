@@ -72,11 +72,16 @@ $(function() {
 <div class="title">Класс InputFileRFHandler</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Класс для чтения фходных данных из файлов  
+ <a href="class_input_file_r_f_handler.html#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="inputfileshandler_8h_source.html">inputfileshandler.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Открытые члены</h2></td></tr>
-<tr class="memitem:a8b91a74b07cc07986d9602e7a23e29fd"><td class="memItemLeft" align="right" valign="top"><a id="a8b91a74b07cc07986d9602e7a23e29fd"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>make_proletRF</b> (string dirPath, vector&lt; <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">TimeZoneRF</a> &gt; &amp;rf_trace_list, vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">Satellite</a> &gt; &amp;sattelites_list)</td></tr>
+<tr class="memitem:a8b91a74b07cc07986d9602e7a23e29fd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_input_file_r_f_handler.html#a8b91a74b07cc07986d9602e7a23e29fd">make_proletRF</a> (string dirPath, vector&lt; <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">TimeZoneRF</a> &gt; &amp;rf_trace_list, vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">Satellite</a> &gt; &amp;sattelites_list)</td></tr>
+<tr class="memdesc:a8b91a74b07cc07986d9602e7a23e29fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание вектора структур с пролетами над РФ (TimeZoneRF) и вектора структур КА (Satellite)  <a href="class_input_file_r_f_handler.html#a8b91a74b07cc07986d9602e7a23e29fd">Подробнее...</a><br /></td></tr>
 <tr class="separator:a8b91a74b07cc07986d9602e7a23e29fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7a58f1ded01fb87b64f474a4062a8b3"><td class="memItemLeft" align="right" valign="top"><a id="ad7a58f1ded01fb87b64f474a4062a8b3"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>make_ZRV_trace_list</b> (string dirPath, vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">ZRV</a> &gt; &amp;zrv_trace_list, string min_time)</td></tr>
@@ -88,6 +93,54 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>make_ZRV_trace_list</
 vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getFileNamesInDir_QDir</b> (string dirName)</td></tr>
 <tr class="separator:a383b57f57287a572727b3bb61aaceaf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Класс для чтения фходных данных из файлов </p>
+</div><h2 class="groupheader">Методы</h2>
+<a id="a8b91a74b07cc07986d9602e7a23e29fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b91a74b07cc07986d9602e7a23e29fd">&#9670;&nbsp;</a></span>make_proletRF()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool InputFileRFHandler::make_proletRF </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>dirPath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">TimeZoneRF</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>rf_trace_list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">Satellite</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sattelites_list</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Создание вектора структур с пролетами над РФ (TimeZoneRF) и вектора структур КА (Satellite) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">dirPath</td><td>абсолютный путь к папке с файлами пролетов над РФ </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rf_trace_list</td><td>вектор для наполения пролетами </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sattelites_list</td><td>вектор для наполнения аппаратами </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>false - если возникли проблемы при работе с файлами. Иначе - true. </dd></dl>
+
+</div>
+</div>
 <hr/>Объявления и описания членов классов находятся в файлах:<ul>
 <li>mylib/<a class="el" href="inputfileshandler_8h_source.html">inputfileshandler.h</a></li>
 <li>mylib/inputfileshandler.cpp</li>
