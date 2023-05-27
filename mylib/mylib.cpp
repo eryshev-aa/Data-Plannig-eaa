@@ -85,8 +85,8 @@ void Mylib::planning(bool makeRFsortFile, bool makeZRVsortFile, bool makeShootFi
     if (makeUploadFile) {
         fout.open(m_upload_file, std::fstream::out);
 
-        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)   *sat_n     * ppi     * Filled   * tank % " << std::endl;
-        fout << "-----------------------------------------------------------------------------------------------------------------" << std::endl;
+        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)   *sat_n     * ppi     * Fill(Gbyte)   * tank % " << std::endl;
+        fout << "----------------------------------------------------------------------------------------------------------------------" << std::endl;
         fout.close();
     }
 

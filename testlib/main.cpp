@@ -41,8 +41,8 @@ int main(int argc, char *argv[]) {
 
     // РЕЗУЛЬТАТ. ОБЯЗАТЕЛЬНО!
     // 3. Указать путь и имя файла с результатами. Формируется в конце.
-    //string result_file  = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/result";
-    string result_file  = "/home/anton/ProfIT-Data-Plannig/result";
+    string result_file  = "C:/Users/erysh/Documents/ProfIT-Data-Plannig/result";
+    //string result_file  = "/home/anton/ProfIT-Data-Plannig/result";
 
     Mylib lib;
 

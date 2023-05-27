@@ -679,7 +679,7 @@ void TableZRV::makeResult_for_upload(int pos){
              << std::setw(7) << std::fixed << std::right << m_upload_data[i].duration << "   "
              << std::setw(7) << m_upload_data[i].satellite
              << std::setw(12) << m_upload_data[i].ppi << "   "
-             << std::right << m_upload_data[i].transfered_inf << "   "
+             << std::right << m_upload_data[i].transfered_inf << "        "
              << std::setw(7) << m_upload_data[i].tank_balance * 100
              << std::endl;
 
