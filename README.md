@@ -90,3 +90,33 @@ int main(int argc, char *argv[]) {
 	a.exit();
 }
 ```
+#Сборка библиотеки
+
+***Сборка библиотеки под GCC:***
+1. В Qt Creator открыть файлы библиотеки через .pro файл
+2. Нажать правой кнопкой мыши на имя библиотеки
+3. Выбрать в появившемся списке выбрать "Собрать"
+
+***Сборка библиотеки под MingW:***
+1. В Qt Creator  открыть файлы библиотеки через .pro файл
+2. Зайти в файл inputfileshandler.cpp
+3. Расскомментровать следующие строки:
+
+```c++
+#include <filesystem>
+```
+
+```c++
+vector <string> InputFileRFHandler::getFileNamesInDir_FS(string dirName){
+    vector <string> result;
+
+    for (const auto & entry : std::filesystem::directory_iterator(dirName)) {
+        result.push_back(entry.path());
+    }
+
+    return result;
+}
+```
+4. Сохранить изменения в данном файле
+5. Нажать правой кнопкой мыши на имя библиотеки
+6. Выбрать в появившемся списке выбрать "Собрать"
