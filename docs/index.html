@@ -76,15 +76,49 @@ $(function() {
 <li>Файлы с зонами радиовидимости</li>
 </ol>
 <h1><a class="anchor" id="autotoc_md2"></a>
+Как подключить</h1>
+<p>Для подключения библиотеки в Qt Creator выполните следующие действия:</p><ol type="1">
+<li>Создайте новый проект с использованием состемы сборки "qmake"</li>
+<li>Добавьте в .pro файл проекта следующие строчки: <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">unix:!macx: LIBS += -L$$PWD/../build-mylib-Desktop-Debug/ -lmylib</div>
+<div class="line"> </div>
+<div class="line">win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Release/release/ -lmylib</div>
+<div class="line">else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/debug/ -lmylib</div>
+<div class="line"> </div>
+<div class="line">INCLUDEPATH += $$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/debug</div>
+<div class="line">DEPENDPATH += $$PWD/../build-mylib-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/debug</div>
+<div class="line"> </div>
+<div class="line">INCLUDEPATH += $$PWD/../mylib</div>
+<div class="line"> </div>
+<div class="line">INCLUDEPATH += $$PWD/../build-mylib-Desktop-Debug</div>
+<div class="line">DEPENDPATH += $$PWD/../build-mylib-Desktop-Debug</div>
+<div class="line"> </div>
+<div class="line">DISTFILES +=</div>
+<div class="line"> </div>
+<div class="line">RESOURCES +=</div>
+<div class="line"> </div>
+<div class="line">HEADERS += \</div>
+</div><!-- fragment --></li>
+</ol>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Как использовать</h1>
 <ol type="1">
 <li>Подключите библиотеку <code>mylib</code> к Вашему проекту</li>
-<li>Укажите абсолютные пути к папкам с фходными файлами</li>
+<li>Укажите абсолютные пути к папкам с входными файлами</li>
+<li>Укажите пути к файлам для выходных файлов</li>
+<li>Укажите параметры для запуска</li>
 <li>Поочередно вызовите следующие методы:</li>
 </ol>
 <ul>
+<li>set_prolety_sorted_file(string prolety_sorted_file)</li>
+<li>set_zrv_sorted_file(string zrv_file)</li>
+<li>set_upload_file(string upload_file)</li>
+<li>set_check_pos_upload(int check_pos_upload)</li>
+<li>set_shoot_file(string shoot_file)</li>
+<li>set_check_pos_shoot(int check_pos_shoot)</li>
+<li>set_result_file(string result_file)</li>
 <li>readInputData(string dirRF, string dirZRV)</li>
-<li></li>
+<li>planning(bool makeRFsortFile, bool makeZRVsortFile, bool makeShootFile, bool makeUploadFile)</li>
 <li></li>
 <li></li>
 </ul>
@@ -102,11 +136,27 @@ $(function() {
 <div class="line">    string dirRF  = &quot;/home/user/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/&quot;;</div>
 <div class="line">    string dirZRV = &quot;/home/user/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/&quot;;</div>
 <div class="line"> </div>
+<div class="line">    string prolety_file = &quot;/home/anton/ProfIT-Data-Plannig/proletRF.txt&quot;;</div>
+<div class="line">    string zrv_file = &quot;/home/anton/ProfIT-Data-Plannig/zrv.txt&quot;;</div>
+<div class="line">    string upload_file = &quot;/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt&quot;;</div>
+<div class="line">    int upload_frequency = 1;</div>
+<div class="line">    string shoot_file = &quot;/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt&quot;;</div>
+<div class="line">    int shoot_frequency = 1;</div>
+<div class="line">    string result_file  = &quot;/home/anton/ProfIT-Data-Plannig/result&quot;;</div>
 <div class="line"> </div>
 <div class="line">    Mylib lib;</div>
-<div class="line">    lib.readInputData(dirRF,dirZRV);</div>
 <div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; &quot;Finish!&quot; &lt;&lt; std::endl;</div>
+<div class="line">    lib.set_prolety_sorted_file(prolety_file);</div>
+<div class="line">    lib.set_zrv_sorted_file(zrv_file);    </div>
+<div class="line">    lib.set_upload_file(upload_file);</div>
+<div class="line">    lib.set_check_pos_upload(upload_frequency);</div>
+<div class="line">    lib.set_shoot_file(shoot_file);</div>
+<div class="line">    lib.set_check_pos_shoot(shoot_frequency);</div>
+<div class="line">    lib.set_result_file(result_file);</div>
+<div class="line"> </div>
+<div class="line">    if (lib.readInputData(dirRF,dirZRV)) {</div>
+<div class="line">        lib.planning(true, true, true, true);</div>
+<div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    a.exit();</div>
 <div class="line">}</div>

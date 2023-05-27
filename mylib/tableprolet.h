@@ -6,6 +6,12 @@
 #include <vector>
 #include <string>
 
+/*!
+ *  \addtogroup proletRF
+ *  @{
+ */
+
+//! Пространство имен для пролетов над РФ
 namespace proletRF {
 /*!
    * \brief Набор состояний спутника
@@ -16,15 +22,15 @@ enum class SATELLITE_TASK {
     UPLOAD = 2,   ///< Сброс данных
 };
 
-/*! \struct Satellite
-    \brief Структура пролета над РФ
+/*! \struct TimeZoneRF
+    \brief Структура с пролетами над РФ
 
     Описывает характеристики пролета над РФ для конкретного КА
 */
 struct TimeZoneRF{
-    struct tm tm_start = {}; ///< время начала пролета над РФ без мили секунд
+    struct tm tm_start = {}; ///< время начала пролета над РФ без миллисекунд
     int milisecs_start; ///< миллисекунды начала пролета над РФ
-    struct tm tm_end = {}; ///< время конца пролета над РФ без мили секунд
+    struct tm tm_end = {}; ///< время конца пролета над РФ без миллисекунд
     int milisecs_end; ///< миллисекунды начала пролета над РФ
     int satellite; ///< КА
     double duration; ///< продолжительность
@@ -72,38 +78,44 @@ private:
     static bool Comparator(const TimeZoneRF &zone1,const TimeZoneRF &zone2);
     std::vector <TimeZoneRF> m_prolety_nad_RF;
 };
-}
+} /*! @} End of Doxygen Groups*/
 
+/*!
+ *  \addtogroup proletZRV
+ *  @{
+ */
+
+//! Пространство имен для зон видимости
 namespace proletZRV {
-/*! \struct Satellite
+/*! \struct ZRV
     \brief Структура ЗРВ
 
     Описывает характеристики зоны видимости для конкретного КА
 */
 struct ZRV{
-    struct tm tm_start = {}; ///< время начала ЗРВ без мили секунд
+    struct tm tm_start = {}; ///< время начала ЗРВ без миллисекунд
     int milisecs_start; ///< миллисекунды начала ЗРВ
-    struct tm tm_end = {}; ///< время конца ЗРВ без мили секунд
+    struct tm tm_end = {}; ///< время конца ЗРВ без миллисекунд
     int milisecs_end; ///< миллисекунды начала ЗРВ
     int satellite; ///< КА
     std::string ppi; ///< пункт приема информации (ППИ/НС)
     double duration; ///< продолжительность
 };
 
-/*! \struct Satellite
+/*! \struct AnswerData
     \brief Структура результата
 
     Хранит информацию о каждом сбросе данных с конкретного КА
 */
 struct AnswerData{
-    struct tm tm_start = {}; ///< время начала ЗРВ без мили секунд
+    struct tm tm_start = {}; ///< время начала ЗРВ без миллисекунд
     int milisecs_start; ///< миллисекунды начала ЗРВ
-    struct tm tm_end = {}; ///< время конца ЗРВ без мили секунд
+    struct tm tm_end = {}; ///< время конца ЗРВ без миллисекунд
     int milisecs_end; ///< миллисекунды начала ЗРВ
     double duration; ///< продолжительность сброса
     int satellite; ///< КА
     std::string ppi; ///< пункт приема информации (ППИ/НС)
-    double transfered_inf; ///< объем переданной памяти в Гбит
+    double transfered_inf; ///< объем переданной памяти в Гбайт
     double tank_balance; ///< остаток в баке
 };
 
@@ -190,5 +202,5 @@ private:
     std::vector<proletZRV::AnswerData> m_shoot_data;
     std::vector<proletZRV::AnswerData> m_upload_data;
 };
-}
+} /*! @} End of Doxygen Groups*/
 #endif // TABLEPROLET_H

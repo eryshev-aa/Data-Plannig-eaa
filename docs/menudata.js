@@ -24,11 +24,18 @@
 */
 var menudata={children:[
 {text:"Титульная страница",url:"index.html"},
+{text:"Группы",url:"modules.html"},
+{text:"Пространства имен",url:"namespaces.html",children:[
+{text:"Пространства имен",url:"namespaces.html"},
+{text:"Члены пространств имен",url:"namespacemembers.html",children:[
+{text:"Указатель",url:"namespacemembers.html"},
+{text:"Перечисления",url:"namespacemembers_enum.html"}]}]},
 {text:"Классы",url:"annotated.html",children:[
 {text:"Классы",url:"annotated.html"},
 {text:"Алфавитный указатель классов",url:"classes.html"},
 {text:"Члены классов",url:"functions.html",children:[
 {text:"Указатель",url:"functions.html",children:[
+{text:"a",url:"functions.html#index_a"},
 {text:"b",url:"functions.html#index_b"},
 {text:"d",url:"functions.html#index_d"},
 {text:"f",url:"functions.html#index_f"},
@@ -38,7 +45,7 @@ var menudata={children:[
 {text:"r",url:"functions.html#index_r"},
 {text:"s",url:"functions.html#index_s"},
 {text:"t",url:"functions.html#index_t"},
-{text:"v",url:"functions.html#index_v"}]},
+{text:"z",url:"functions.html#index_z"}]},
 {text:"Функции",url:"functions_func.html"},
 {text:"Переменные",url:"functions_vars.html",children:[
 {text:"b",url:"functions_vars.html#index_b"},
@@ -48,7 +55,6 @@ var menudata={children:[
 {text:"m",url:"functions_vars.html#index_m"},
 {text:"p",url:"functions_vars.html#index_p"},
 {text:"s",url:"functions_vars.html#index_s"},
-{text:"t",url:"functions_vars.html#index_t"},
-{text:"v",url:"functions_vars.html#index_v"}]}]}]},
+{text:"t",url:"functions_vars.html#index_t"}]}]}]},
 {text:"Файлы",url:"files.html",children:[
 {text:"Файлы",url:"files.html"}]}]}

@@ -64,7 +64,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>proletZRV</b></li><li class="navelem"><a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html">TableZRV</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceprolet_z_r_v.html">proletZRV</a></li><li class="navelem"><a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html">TableZRV</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -78,64 +78,367 @@ $(function() {
 <div class="title">Класс proletZRV::TableZRV</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Класс для работы с зонами видимости  
+ <a href="classprolet_z_r_v_1_1_table_z_r_v.html#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="tableprolet_8h_source.html">tableprolet.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Открытые члены</h2></td></tr>
-<tr class="memitem:aed8daa1788eae04c7138b067a4f6aae7"><td class="memItemLeft" align="right" valign="top"><a id="aed8daa1788eae04c7138b067a4f6aae7"></a>
-std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>SortZRV</b> (std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; tableZRV)</td></tr>
-<tr class="separator:aed8daa1788eae04c7138b067a4f6aae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b0cdef557a630fef8c7366aef55ed6b"><td class="memItemLeft" align="right" valign="top"><a id="a0b0cdef557a630fef8c7366aef55ed6b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>analyze_task_new</b> (std::vector&lt; <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> &gt; &amp;proletyRF, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; &amp;zrv_list, std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; &amp;satellites, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt; &amp;answer)</td></tr>
-<tr class="separator:a0b0cdef557a630fef8c7366aef55ed6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2f412f71678a583196a59e4352755a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html#ab2f412f71678a583196a59e4352755a8">TableZRV</a> (std::string upload_path, std::string shoot_path, int check_upload, int check_shoot)</td></tr>
+<tr class="memdesc:ab2f412f71678a583196a59e4352755a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор класса <a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html" title="Класс для работы с зонами видимости">TableZRV</a>.  <a href="classprolet_z_r_v_1_1_table_z_r_v.html#ab2f412f71678a583196a59e4352755a8">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab2f412f71678a583196a59e4352755a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae54a40f4677871dc34ae40a71357470b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html#ae54a40f4677871dc34ae40a71357470b">SortZRV</a> (std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; tableZRV)</td></tr>
+<tr class="memdesc:ae54a40f4677871dc34ae40a71357470b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Сортировка вектора с зонами видимости по времени начала сброса данных  <a href="classprolet_z_r_v_1_1_table_z_r_v.html#ae54a40f4677871dc34ae40a71357470b">Подробнее...</a><br /></td></tr>
+<tr class="separator:ae54a40f4677871dc34ae40a71357470b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a143de07fa525de51aa6c6b1f826a3cab"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html#a143de07fa525de51aa6c6b1f826a3cab">SortAnswer</a> (std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt; answer)</td></tr>
+<tr class="memdesc:a143de07fa525de51aa6c6b1f826a3cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Сортировка вектора результатов по времени начала сброса данных  <a href="classprolet_z_r_v_1_1_table_z_r_v.html#a143de07fa525de51aa6c6b1f826a3cab">Подробнее...</a><br /></td></tr>
+<tr class="separator:a143de07fa525de51aa6c6b1f826a3cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b4f1f7b9c040bb08651d967d918f1a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html#a2b4f1f7b9c040bb08651d967d918f1a5">AnalyzeTask</a> (std::vector&lt; <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> &gt; &amp;proletyRF, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; &amp;zrv_list, std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; &amp;satellites, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt; &amp;answer)</td></tr>
+<tr class="memdesc:a2b4f1f7b9c040bb08651d967d918f1a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Планирование фотосъемкм и сеансов связи для сброса данных от первого до последнего пролета над РФ  <a href="classprolet_z_r_v_1_1_table_z_r_v.html#a2b4f1f7b9c040bb08651d967d918f1a5">Подробнее...</a><br /></td></tr>
+<tr class="separator:a2b4f1f7b9c040bb08651d967d918f1a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Открытые статические члены</h2></td></tr>
-<tr class="memitem:ad9b49d46337c33dc47346de4bde36844"><td class="memItemLeft" align="right" valign="top"><a id="ad9b49d46337c33dc47346de4bde36844"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>ZRVComporator</b> (const <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &amp;zone1, const <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &amp;zone2)</td></tr>
-<tr class="separator:ad9b49d46337c33dc47346de4bde36844"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a728e8fc8bcb264d16da23aa8a38c7b0b"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html#a728e8fc8bcb264d16da23aa8a38c7b0b">ZRVComporator</a> (const <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &amp;zone1, const <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &amp;zone2)</td></tr>
+<tr class="memdesc:a728e8fc8bcb264d16da23aa8a38c7b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Компаратор.  <a href="classprolet_z_r_v_1_1_table_z_r_v.html#a728e8fc8bcb264d16da23aa8a38c7b0b">Подробнее...</a><br /></td></tr>
+<tr class="separator:a728e8fc8bcb264d16da23aa8a38c7b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39640aad706f61b5bd9fe94b30bfcda0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html#a39640aad706f61b5bd9fe94b30bfcda0">AnswerComporator</a> (const <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &amp;zone1, const <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &amp;zone2)</td></tr>
+<tr class="memdesc:a39640aad706f61b5bd9fe94b30bfcda0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Компаратор.  <a href="classprolet_z_r_v_1_1_table_z_r_v.html#a39640aad706f61b5bd9fe94b30bfcda0">Подробнее...</a><br /></td></tr>
+<tr class="separator:a39640aad706f61b5bd9fe94b30bfcda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Закрытые члены</h2></td></tr>
 <tr class="memitem:a4648233fe35f8853fc4c9c67368daad4"><td class="memItemLeft" align="right" valign="top"><a id="a4648233fe35f8853fc4c9c67368daad4"></a>
 <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a>&#160;</td><td class="memItemRight" valign="bottom"><b>find_before</b> (std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; satellites, int curr_sat)</td></tr>
 <tr class="separator:a4648233fe35f8853fc4c9c67368daad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8a2d163154146a07456aa14f253ddff"><td class="memItemLeft" align="right" valign="top"><a id="ab8a2d163154146a07456aa14f253ddff"></a>
-std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>find_ZRV_between_2_prolet</b> (std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; <a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html">TableZRV</a>, const <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> &amp;prolet1, const <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> &amp;prolet2, int flag)</td></tr>
-<tr class="separator:ab8a2d163154146a07456aa14f253ddff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3570d0a64399bcc7b9ef735fcc26dbd4"><td class="memItemLeft" align="right" valign="top"><a id="a3570d0a64399bcc7b9ef735fcc26dbd4"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>shooting</b> (<a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> prolet, double duration, std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; &amp;satellites)</td></tr>
-<tr class="separator:a3570d0a64399bcc7b9ef735fcc26dbd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac29a72e7b22bdea27151c1dd5f6cb496"><td class="memItemLeft" align="right" valign="top"><a id="ac29a72e7b22bdea27151c1dd5f6cb496"></a>
+std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>find_ZRV_between_2_prolet</b> (std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; <a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html">TableZRV</a>, const <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> prolet1, const <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> &amp;prolet2, int flag)</td></tr>
+<tr class="separator:ac29a72e7b22bdea27151c1dd5f6cb496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56c549b2355321e207ba900c1e120ef1"><td class="memItemLeft" align="right" valign="top"><a id="a56c549b2355321e207ba900c1e120ef1"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>shooting</b> (<a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> prolet, double duration, std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; &amp;satellites, <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &amp;cur_sat)</td></tr>
+<tr class="separator:a56c549b2355321e207ba900c1e120ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad931295868913aa6b707dfd74a995932"><td class="memItemLeft" align="right" valign="top"><a id="ad931295868913aa6b707dfd74a995932"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>upload</b> (<a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> prolet, <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> zrv, std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; &amp;satellites, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">AnswerData</a> &gt; &amp;answer)</td></tr>
 <tr class="separator:ad931295868913aa6b707dfd74a995932"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a319b31d7a51ad248c7eb200ad428d5a7"><td class="memItemLeft" align="right" valign="top"><a id="a319b31d7a51ad248c7eb200ad428d5a7"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>get_current_tank_size</b> (int sat_number, std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; satellites)</td></tr>
 <tr class="separator:a319b31d7a51ad248c7eb200ad428d5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8d2862ec6b3b5874f52f7e15767d7f4"><td class="memItemLeft" align="right" valign="top"><a id="ab8d2862ec6b3b5874f52f7e15767d7f4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>cross_zrv_check_new</b> (std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; satellites, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt;, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; table_zrv, <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &amp;using_zrv)</td></tr>
-<tr class="separator:ab8d2862ec6b3b5874f52f7e15767d7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03b5ef2b07a50e8c9416d5a3acd0fba8"><td class="memItemLeft" align="right" valign="top"><a id="a03b5ef2b07a50e8c9416d5a3acd0fba8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>find_ZRV_for_delete_after_shooting</b> (<a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> prolet, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">ZRV</a> &gt; &amp;table_zrv)</td></tr>
-<tr class="separator:a03b5ef2b07a50e8c9416d5a3acd0fba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f21da8ca3ef6f70332675cbf2d62310"><td class="memItemLeft" align="right" valign="top"><a id="a4f21da8ca3ef6f70332675cbf2d62310"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>find_ZRV_for_delete_after_upload</b> (<a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> cur_zrv, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">ZRV</a> &gt; &amp;table_zrv)</td></tr>
-<tr class="separator:a4f21da8ca3ef6f70332675cbf2d62310"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29c7d7b02dc4307e3f38e39e29a42001"><td class="memItemLeft" align="right" valign="top"><a id="a29c7d7b02dc4307e3f38e39e29a42001"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>find_ZRV_for_delete_after_prolet</b> (<a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> prolet, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">ZRV</a> &gt; &amp;table_zrv)</td></tr>
-<tr class="separator:a29c7d7b02dc4307e3f38e39e29a42001"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac646f41765da31a9bd06f7ef24615eeb"><td class="memItemLeft" align="right" valign="top"><a id="ac646f41765da31a9bd06f7ef24615eeb"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>cross_zrv_check</b> (std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; satellites, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt;, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; table_zrv, <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &amp;using_zrv)</td></tr>
+<tr class="separator:ac646f41765da31a9bd06f7ef24615eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a101f6ac5bcadc5003c236b0ca17deb4a"><td class="memItemLeft" align="right" valign="top"><a id="a101f6ac5bcadc5003c236b0ca17deb4a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>analyze_after_prolet</b> (std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; &amp;zrv_list, std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; &amp;satellites, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt; &amp;answer)</td></tr>
+<tr class="separator:a101f6ac5bcadc5003c236b0ca17deb4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7719639f80aa82036df9e3c74d509738"><td class="memItemLeft" align="right" valign="top"><a id="a7719639f80aa82036df9e3c74d509738"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>delete_ZRV_after_upload</b> (<a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> cur_zrv, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">ZRV</a> &gt; &amp;table_zrv)</td></tr>
+<tr class="separator:a7719639f80aa82036df9e3c74d509738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a947da81cf3f3c4da8469afa1addac923"><td class="memItemLeft" align="right" valign="top"><a id="a947da81cf3f3c4da8469afa1addac923"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>delete_1_ZRV_upload</b> (<a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> cur_zrv, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">ZRV</a> &gt; &amp;table_zrv)</td></tr>
+<tr class="separator:a947da81cf3f3c4da8469afa1addac923"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59d2d6780b1c56775e76512598aedf38"><td class="memItemLeft" align="right" valign="top"><a id="a59d2d6780b1c56775e76512598aedf38"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>delete_ZRV_after_prolet</b> (<a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> satellite, std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">ZRV</a> &gt; &amp;table_zrv)</td></tr>
+<tr class="separator:a59d2d6780b1c56775e76512598aedf38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bc8516d8d2f44f65283e4667f40eb47"><td class="memItemLeft" align="right" valign="top"><a id="a4bc8516d8d2f44f65283e4667f40eb47"></a>
+<a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a>&#160;</td><td class="memItemRight" valign="bottom"><b>adding_prolet_duration</b> (<a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> zone, double duration)</td></tr>
+<tr class="separator:a4bc8516d8d2f44f65283e4667f40eb47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a78b984436f8776fdefbd770a7ca0c"><td class="memItemLeft" align="right" valign="top"><a id="a21a78b984436f8776fdefbd770a7ca0c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>makeResult_for_upload</b> (int pos)</td></tr>
+<tr class="separator:a21a78b984436f8776fdefbd770a7ca0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a77d204e1c6fd904e092f6dba2b515a"><td class="memItemLeft" align="right" valign="top"><a id="a9a77d204e1c6fd904e092f6dba2b515a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>makeResult_for_shoot</b> (int pos)</td></tr>
+<tr class="separator:a9a77d204e1c6fd904e092f6dba2b515a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4205bf0dd255d25b7c550b441897de0"><td class="memItemLeft" align="right" valign="top"><a id="af4205bf0dd255d25b7c550b441897de0"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>makeOutputStringMsec</b> (int msec)</td></tr>
 <tr class="separator:af4205bf0dd255d25b7c550b441897de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e08b68eadbede3047a964b0f72048ad"><td class="memItemLeft" align="right" valign="top"><a id="a4e08b68eadbede3047a964b0f72048ad"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>makeResultFile</b> (std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt; answerData, int pos, int counterRF)</td></tr>
-<tr class="separator:a4e08b68eadbede3047a964b0f72048ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Закрытые данные</h2></td></tr>
 <tr class="memitem:a7ce7b917f4885b7e42681dbc95d941cd"><td class="memItemLeft" align="right" valign="top"><a id="a7ce7b917f4885b7e42681dbc95d941cd"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>m_total_upload</b> = 0.0</td></tr>
 <tr class="separator:a7ce7b917f4885b7e42681dbc95d941cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ba7ed0e457af40a8148585bc31e4f5d"><td class="memItemLeft" align="right" valign="top"><a id="a1ba7ed0e457af40a8148585bc31e4f5d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>m_check_pos_upload</b></td></tr>
+<tr class="separator:a1ba7ed0e457af40a8148585bc31e4f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e0697fe1e9dfa27666c2cfb44407250"><td class="memItemLeft" align="right" valign="top"><a id="a2e0697fe1e9dfa27666c2cfb44407250"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>m_check_pos_shoot</b></td></tr>
+<tr class="separator:a2e0697fe1e9dfa27666c2cfb44407250"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af00d932d1259bded5f773e182b2466b6"><td class="memItemLeft" align="right" valign="top"><a id="af00d932d1259bded5f773e182b2466b6"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_shoot_file</b></td></tr>
+<tr class="separator:af00d932d1259bded5f773e182b2466b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7533612f940e79723d315a5f2c568ef9"><td class="memItemLeft" align="right" valign="top"><a id="a7533612f940e79723d315a5f2c568ef9"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isMakeShootFile</b> =false</td></tr>
+<tr class="separator:a7533612f940e79723d315a5f2c568ef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99a58aa593e24aa11808b9079d58a595"><td class="memItemLeft" align="right" valign="top"><a id="a99a58aa593e24aa11808b9079d58a595"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_upload_file</b></td></tr>
+<tr class="separator:a99a58aa593e24aa11808b9079d58a595"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a061c0486a3ab15ca95bb06982d6ebb27"><td class="memItemLeft" align="right" valign="top"><a id="a061c0486a3ab15ca95bb06982d6ebb27"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isMakeUploadFile</b> = false</td></tr>
+<tr class="separator:a061c0486a3ab15ca95bb06982d6ebb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a037c4e47abc67dc5aa6ffca55495f41b"><td class="memItemLeft" align="right" valign="top"><a id="a037c4e47abc67dc5aa6ffca55495f41b"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_live_result_file</b></td></tr>
+<tr class="separator:a037c4e47abc67dc5aa6ffca55495f41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab98670b7f99d2e51cac6c053488c3647"><td class="memItemLeft" align="right" valign="top"><a id="ab98670b7f99d2e51cac6c053488c3647"></a>
+std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_shoot_data</b></td></tr>
+<tr class="separator:ab98670b7f99d2e51cac6c053488c3647"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8029941ae15a2e9b08286ca87cda0bc4"><td class="memItemLeft" align="right" valign="top"><a id="a8029941ae15a2e9b08286ca87cda0bc4"></a>
+std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_upload_data</b></td></tr>
+<tr class="separator:a8029941ae15a2e9b08286ca87cda0bc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Класс для работы с зонами видимости </p>
+</div><h2 class="groupheader">Конструктор(ы)</h2>
+<a id="ab2f412f71678a583196a59e4352755a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2f412f71678a583196a59e4352755a8">&#9670;&nbsp;</a></span>TableZRV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">proletZRV::TableZRV::TableZRV </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>upload_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>shoot_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>check_upload</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>check_shoot</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Конструктор класса <a class="el" href="classprolet_z_r_v_1_1_table_z_r_v.html" title="Класс для работы с зонами видимости">TableZRV</a>. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">upload_path</td><td>абсолютный путь и имя к файлу с промежуточными сведениями о сброшенных данных. Для отладки </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">shoot_path</td><td>абсолютный путь и имя к файлу с промежуточными сведениями о фотосъемке. Для отладки </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">check_upload</td><td>необходимость создавать и наполнять файл со сведениями о сбросе. Для отладки </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">check_shoot</td><td>необходимость создавать и наполнять файл со сведениями о фотосъемке. Для отладки </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>отсортированный вектор ЗРВ </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="a2b4f1f7b9c040bb08651d967d918f1a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b4f1f7b9c040bb08651d967d918f1a5">&#9670;&nbsp;</a></span>AnalyzeTask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">proletZRV::TableZRV::AnalyzeTask </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structprolet_r_f_1_1_time_zone_r_f.html">proletRF::TimeZoneRF</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>proletyRF</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>zrv_list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structprolet_r_f_1_1_satellite.html">proletRF::Satellite</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>satellites</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>answer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Планирование фотосъемкм и сеансов связи для сброса данных от первого до последнего пролета над РФ </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">proletyRF</td><td>вектор пролетов над РФ (TimeZoneRF) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zrv_list</td><td>вектор ЗРВ (<a class="el" href="structprolet_z_r_v_1_1_z_r_v.html" title="Структура ЗРВ">ZRV</a>) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">satellites</td><td>вектор КА (Satellite) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">answer</td><td>вектор для результатов (<a class="el" href="structprolet_z_r_v_1_1_answer_data.html" title="Структура результата">AnswerData</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a39640aad706f61b5bd9fe94b30bfcda0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39640aad706f61b5bd9fe94b30bfcda0">&#9670;&nbsp;</a></span>AnswerComporator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">proletZRV::TableZRV::AnswerComporator </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &amp;&#160;</td>
+          <td class="paramname"><em>zone1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &amp;&#160;</td>
+          <td class="paramname"><em>zone2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Компаратор. </p>
+<p>Сравниваеет структуры резльтатов </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone1</td><td>первый результат </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone2</td><td>второй результат </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>отсортированный вектор ЗРВ </dd></dl>
+
+</div>
+</div>
+<a id="a143de07fa525de51aa6c6b1f826a3cab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a143de07fa525de51aa6c6b1f826a3cab">&#9670;&nbsp;</a></span>SortAnswer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">proletZRV::TableZRV::SortAnswer </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_answer_data.html">proletZRV::AnswerData</a> &gt;&#160;</td>
+          <td class="paramname"><em>answer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Сортировка вектора результатов по времени начала сброса данных </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">answer</td><td>вектор результатов (<a class="el" href="structprolet_z_r_v_1_1_answer_data.html" title="Структура результата">AnswerData</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>отсортированный вектор результатов </dd></dl>
+
+</div>
+</div>
+<a id="ae54a40f4677871dc34ae40a71357470b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae54a40f4677871dc34ae40a71357470b">&#9670;&nbsp;</a></span>SortZRV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">proletZRV::TableZRV::SortZRV </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &gt;&#160;</td>
+          <td class="paramname"><em>tableZRV</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Сортировка вектора с зонами видимости по времени начала сброса данных </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">tableZRV</td><td>вектор ЗРВ (<a class="el" href="structprolet_z_r_v_1_1_z_r_v.html" title="Структура ЗРВ">ZRV</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>отсортированный вектор ЗРВ </dd></dl>
+
+</div>
+</div>
+<a id="a728e8fc8bcb264d16da23aa8a38c7b0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a728e8fc8bcb264d16da23aa8a38c7b0b">&#9670;&nbsp;</a></span>ZRVComporator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">proletZRV::TableZRV::ZRVComporator </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &amp;&#160;</td>
+          <td class="paramname"><em>zone1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structprolet_z_r_v_1_1_z_r_v.html">proletZRV::ZRV</a> &amp;&#160;</td>
+          <td class="paramname"><em>zone2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Компаратор. </p>
+<p>Сравниваеет структуры зон видимости </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone1</td><td>первая ЗРВ </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone2</td><td>вторя ЗРВ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>отсортированный вектор ЗРВ </dd></dl>
+
+</div>
+</div>
 <hr/>Объявления и описания членов классов находятся в файлах:<ul>
 <li>mylib/<a class="el" href="tableprolet_8h_source.html">tableprolet.h</a></li>
 <li>mylib/tableprolet.cpp</li>
