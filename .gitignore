@@ -34,14 +34,14 @@ upload_intermediate.txt
 *.lib
 
 # Executables
-*.exe
+#*.exe
 *.out
 *.app
 
 # Build results
-[Dd]ebug/
+#[Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/
+#[Rr]elease/
 [Rr]eleases/
 x64/
 x86/
