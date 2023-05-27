@@ -39,35 +39,56 @@ bool Mylib::planning(){
     double time_spent = 0.0;
     clock_t begin = clock();
 
-    TableZRV zrv;
+    TableZRV zrv("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt","/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt","/home/anton/ProfIT-Data-Plannig/result.txt", 1,1);
     m_proletyZRV = zrv.SortZRV(m_proletyZRV);
     //создаем файл для промежуточных результатов для фотографии
     std::ofstream fout;
+    fout.open("/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
+    //fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
+
+    //TableZRV zrv("/home/user1/ProfIT-Data-Plannig/upload_intermediate.txt",
+     //            "/home/user1/ProfIT-Data-Plannig/shoot_intermediate.txt",
+   //              "/home/user1/ProfIT-Data-Plannig/result.txt", 100,100);
+    m_proletyZRV = zrv.SortZRV(m_proletyZRV);
+    //создаем файл для промежуточных результатов для фотографии
+    //std::ofstream fout;
     //fout.open("/home/user/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
-    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
+    fout.open("/home/user1/ProfIT-Data-Plannig/shoot_intermediate.txt", std::fstream::out );
+
     fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * Filled inf." << std::endl;
     fout << "---------------------------------------------------------------------------------------------" << std::endl;
     fout.close();
 
     //создаем файл для промежуточных результатов выгруза данных
+
+    fout.open("/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
+    //fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
+
     //fout.open("/home/user/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
-    fout.open("C:/Users/erysh/Documents/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
+    fout.open("/home/user1/ProfIT-Data-Plannig/upload_intermediate.txt", std::fstream::out);
+
     fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)    *sat_n * ppi  * Filled inf. " << std::endl;
     fout << "-----------------------------------------------------------------------------------------------------" << std::endl;
     fout.close();
 
-    //OutputResult out("/home/anton/ProfIT-Data-Plannig/");
-//    out.makeProletRFFile("/home/anton/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
-//    out.makeZRVFile("/home/anton/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
+    OutputResult out("/home/anton/ProfIT-Data-Plannig/");
+    out.makeProletRFFile("/home/anton/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
+    out.makeZRVFile("/home/anton/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
 
 //    OutputResult out("/home/user/ProfIT-Data-Plannig/result.txt");
 //    out.makeProletRFFile("/home/user/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
 //    out.makeZRVFile("/home/user/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
 
 
-    OutputResult out("C:/Users/erysh/Documents/ProfIT-Data-Plannig/result.txt");
-    out.makeProletRFFile("C:/Users/erysh/Documents/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
-    out.makeZRVFile("C:/Users/erysh/Documents/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
+
+//    OutputResult out("C:/Users/erysh/Documents/ProfIT-Data-Plannig/result.txt");
+//    out.makeProletRFFile("C:/Users/erysh/Documents/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
+//    out.makeZRVFile("C:/Users/erysh/Documents/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
+
+//    OutputResult out("/home/user1/ProfIT-Data-Plannig/result.txt");
+//    out.makeProletRFFile("/home/user1/ProfIT-Data-Plannig/proletRF.txt", m_proletyRF);
+//    out.makeZRVFile("/home/user1/ProfIT-Data-Plannig/zrv.txt", m_proletyZRV);
+
 
     zrv.AnalyzeTask(m_proletyRF, m_proletyZRV, m_sattelites_list, m_answer);
 
