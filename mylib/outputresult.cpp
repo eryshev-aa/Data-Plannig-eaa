@@ -30,7 +30,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     for (auto answer: answerData)
     {
         if (answer.ppi!=current_ppi) {
-            fout << "Sum of transfered information: "<<total_upload << std::endl;
+            fout << "Sum of transfered information: "<<total_upload <<"Gbyte"<< std::endl;
             current_path=m_out_file_name+"-Facility-"+answer.ppi+".txt";
             current_ppi=answer.ppi;
             total_upload=0.0;
@@ -74,7 +74,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
         }
         access ++;
     }
-    fout << "Sum of transfered information: "<<total_upload << std::endl;
+    fout << "Sum of transfered information: "<<total_upload <<"Gbyte" <<std::endl;
     fout.close();
 }
 
