@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
 **Сборка библиотеки под MingW:**
 1. В Qt Creator  открыть файлы библиотеки через .pro файл
 2. Зайти в файл inputfileshandler.cpp
-3. Расскомментровать следующие строки:
+3. Раскомментровать следующие строки:
 
 ```c++
 #include <filesystem>
@@ -167,7 +167,7 @@ vector <string> files = getFileNamesInDir_FS(dirPath)
 ```
 
 4. Зайти в файл inputfileshandler.h
-5. Расскомментировать в нем следующую строку:
+5. Раскомментировать в нем следующую строку:
 
 ```c++
 vector <string> getFileNamesInDir_FS(string dirName);
@@ -180,4 +180,4 @@ vector <string> getFileNamesInDir_QDir(string dirName);
 
 7. Сохранить изменения в данных файлах
 8. Нажать правой кнопкой мыши на имя библиотеки
-9. Выбрать в появившемся списке выбрать "Собрать"
+9. Выбрать в появившемся списке "Собрать"
