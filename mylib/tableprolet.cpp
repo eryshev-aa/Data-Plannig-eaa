@@ -700,7 +700,7 @@ proletZRV::ZRV TableZRV::Adding_zrv_duration(proletZRV::ZRV zone, double duratio
         tmp_start = tmp_start+(static_cast<int>(millisecs)/1000);
         millisecs_int=static_cast<int>(millisecs)%1000;
     }
-    //tmp.tm_start=localtime(&tmp_start);
+    tmp.tm_start=*localtime(&tmp_start);
     tmp.milisecs_start=millisecs_int;
 
     return tmp;
