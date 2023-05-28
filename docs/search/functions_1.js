@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['make_5fproletrf_69',['make_proletRF',['../class_input_file_r_f_handler.html#a8b91a74b07cc07986d9602e7a23e29fd',1,'InputFileRFHandler']]],
-  ['makeproletrffile_70',['makeProletRFFile',['../class_output_result.html#a9607a366d79f6ba031e1888068dcfa74',1,'OutputResult']]],
-  ['makeresultfile_71',['makeResultFile',['../class_output_result.html#a9f4469795ddac9e64e8dd5ac110872ee',1,'OutputResult']]],
-  ['makezrvfile_72',['makeZRVFile',['../class_output_result.html#a0620a9e025e0bdd143daaf84ffad1756',1,'OutputResult']]],
-  ['mylib_73',['Mylib',['../class_mylib.html#afff691cf26afdc6425c5dfe9f0e9bcd3',1,'Mylib']]]
+  ['get_5fbitrate_73',['get_bitrate',['../classprolet_r_f_1_1_table_prolet_r_f.html#af3a9384ff6bbd23a285f71750472a539',1,'proletRF::TableProletRF']]],
+  ['get_5fsatellite_5ftype_74',['get_satellite_type',['../classprolet_r_f_1_1_table_prolet_r_f.html#a50ea95d504a42e8e16132d9c0ac1c945',1,'proletRF::TableProletRF']]],
+  ['get_5ftank_5fsize_75',['get_tank_size',['../classprolet_r_f_1_1_table_prolet_r_f.html#ab2455c526771dad646945384a56ec741',1,'proletRF::TableProletRF']]]
 ];

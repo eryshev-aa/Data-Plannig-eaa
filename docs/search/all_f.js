@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['zorkiy_53',['ZORKIY',['../namespaceprolet_r_f.html#a045378e5e4339d29e80c7a390e108dbba491d05906fe81dfa5c1d2fd5bf1ccd4b',1,'proletRF']]],
-  ['zrv_54',['ZRV',['../structprolet_z_r_v_1_1_z_r_v.html',1,'proletZRV']]],
-  ['zrvcomporator_55',['ZRVComporator',['../classprolet_z_r_v_1_1_table_z_r_v.html#a728e8fc8bcb264d16da23aa8a38c7b0b',1,'proletZRV::TableZRV']]]
+  ['wait_56',['WAIT',['../namespaceprolet_r_f.html#a2ec88cd502bc4ef0a4ba60b18a79b655ad5cc6a0064b5c25ba37826aa3fda910c',1,'proletRF']]]
 ];

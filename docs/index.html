@@ -70,15 +70,34 @@ $(function() {
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a> Планировщик передачи данных от КА на станции</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
+Содержимое каталогов</h1>
+<ol type="1">
+<li>docs - документация исходного кода библиотеки в стиле Doxyden. Для просмотра откройте файл index.html</li>
+<li>mylib - исходный код библиотеки</li>
+<li>testlib - исходный код прототипа, использующего mylib</li>
+<li>prototype - исполняемый файл прототипа</li>
+<li>lib - скомпелированные библиотеки для Windows (.dll) и Linux (.so)</li>
+<li>results - файлы с резульатами работы программы. Информация о сбросе данных представлена в Гбайт</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md2"></a>
 Входные данные</h1>
 <ol type="1">
 <li>Файлы с пролетами спутников над РФ</li>
 <li>Файлы с зонами радиовидимости</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
+Выходные данные</h1>
+<ol type="1">
+<li>result-ИМЯ_ПУНКТА.txt - файлы, сформированные по окончанию работы программы, с зонами видимости и объмами переданной информации в Гбайт для каждого пункта</li>
+<li>shoot_intermediate.txt - файл, формируемый в процессе выполнения, со списоком интервалов, на которых производилась фотосъемка</li>
+<li>upload_intermediate.txt файл, формируемый в процессе выполнения, со списоком зон видимости и объмами переданной информации в Гбайт</li>
+<li>proletRF.txt - список всех пролетов КА над РФ, отсортированный по времени начала</li>
+<li>zrv.txt - список всех зон видимости, отсортированный по времени начала</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Как подключить</h1>
 <p>Для подключения библиотеки в Qt Creator выполните следующие действия:</p><ol type="1">
-<li>Создайте новый проект с использованием состемы сборки "qmake"</li>
+<li>Создайте новый проект с использованием системы сборки "qmake"</li>
 <li>Добавьте в .pro файл проекта следующие строчки: <div class="fragment"><div class="line"> {c++}</div>
 <div class="line">unix:!macx: LIBS += -L$$PWD/../build-mylib-Desktop-Debug/ -lmylib</div>
 <div class="line"> </div>
@@ -100,12 +119,12 @@ $(function() {
 <div class="line">HEADERS += \</div>
 </div><!-- fragment --></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3"></a>
-Как использовать</h1>
+<h1><a class="anchor" id="autotoc_md5"></a>
+Как использовать на примере QtCreator</h1>
 <ol type="1">
 <li>Подключите библиотеку <code>mylib</code> к Вашему проекту</li>
 <li>Укажите абсолютные пути к папкам с входными файлами</li>
-<li>Укажите пути к файлам для выходных файлов</li>
+<li>Укажите пути и имена к файлам для выходных файлов</li>
 <li>Укажите параметры для запуска</li>
 <li>Поочередно вызовите следующие методы:</li>
 </ol>
@@ -119,14 +138,11 @@ $(function() {
 <li>set_result_file(string result_file)</li>
 <li>readInputData(string dirRF, string dirZRV)</li>
 <li>planning(bool makeRFsortFile, bool makeZRVsortFile, bool makeShootFile, bool makeUploadFile)</li>
-<li></li>
-<li></li>
 </ul>
 <p>Пример: </p><div class="fragment"><div class="line"> {c++}</div>
 <div class="line">#include &lt;mylib.h&gt;</div>
-<div class="line">#include &lt;finddatafilenames.h&gt;</div>
-<div class="line"> </div>
 <div class="line">#include &lt;iostream&gt;</div>
+<div class="line">#include &lt;QCoreApplication&gt;</div>
 <div class="line"> </div>
 <div class="line">using namespace std;</div>
 <div class="line"> </div>
@@ -139,9 +155,9 @@ $(function() {
 <div class="line">    string prolety_file = &quot;/home/anton/ProfIT-Data-Plannig/proletRF.txt&quot;;</div>
 <div class="line">    string zrv_file = &quot;/home/anton/ProfIT-Data-Plannig/zrv.txt&quot;;</div>
 <div class="line">    string upload_file = &quot;/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt&quot;;</div>
-<div class="line">    int upload_frequency = 1;</div>
+<div class="line">    int upload_frequency = 10;</div>
 <div class="line">    string shoot_file = &quot;/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt&quot;;</div>
-<div class="line">    int shoot_frequency = 1;</div>
+<div class="line">    int shoot_frequency = 10;</div>
 <div class="line">    string result_file  = &quot;/home/anton/ProfIT-Data-Plannig/result&quot;;</div>
 <div class="line"> </div>
 <div class="line">    Mylib lib;</div>
@@ -158,9 +174,85 @@ $(function() {
 <div class="line">        lib.planning(true, true, true, true);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    a.exit();</div>
+<div class="line">    return a.exec();</div>
 <div class="line">}</div>
-</div><!-- fragment --> </div></div><!-- PageDoc -->
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+Сборка библиотеки</h1>
+<p><b>Сборка библиотеки под MingW:</b></p><ol type="1">
+<li>В Qt Creator открыть файлы библиотеки через .pro файл</li>
+<li>Нажать правой кнопкой мыши на имя библиотеки</li>
+<li>Выбрать в появившемся списке выбрать "Собрать"</li>
+</ol>
+<p><b>Сборка библиотеки под GCC:</b></p><ol type="1">
+<li>В Qt Creator открыть файлы библиотеки через .pro файл</li>
+<li>Зайти в файл inputfileshandler.cpp</li>
+<li>Раскомментровать следующие строки:</li>
+</ol>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">#include &lt;filesystem&gt;</div>
+</div><!-- fragment --><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">vector &lt;string&gt; InputFileRFHandler::getFileNamesInDir_FS(string dirName){</div>
+<div class="line">    vector &lt;string&gt; result;</div>
+<div class="line"> </div>
+<div class="line">    for (const auto &amp; entry : std::filesystem::directory_iterator(dirName)) {</div>
+<div class="line">        result.push_back(entry.path());</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    return result;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>В методе <em><b>bool InputFileRFHandler::make_proletRF(string dirPath, vector&lt;proletRF::TimeZoneRF&gt; &amp;rf_trace_list, vector&lt;Satellite&gt; &amp;sattelites_list):</b></em></p>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">vector &lt;string&gt; files = getFileNamesInDir_FS(dirPath);</div>
+</div><!-- fragment --><p>В методе <em><b>bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector&lt;ZRV&gt; &amp;zrv_trace_list, string min_time):</b></em></p>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">vector &lt;string&gt; files = getFileNamesInDir_FS(dirPath)</div>
+</div><!-- fragment --><ol type="1">
+<li>В этом же файле закомментировать следующие строки: <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">vector &lt;string&gt; InputFileRFHandler::getFileNamesInDir_QDir(string dirName){</div>
+<div class="line">    vector &lt;string&gt; result;</div>
+<div class="line"> </div>
+<div class="line">    QFileInfoList filesList;</div>
+<div class="line">    QDir filesDir(QString::fromStdString(dirName));</div>
+<div class="line">    filesDir.setFilter(QDir::Files);</div>
+<div class="line">    filesList = filesDir.entryInfoList();</div>
+<div class="line">    if (filesList.count() &gt; 0) {</div>
+<div class="line">        for (int i = 0; i &lt; filesList.size(); ++i) {</div>
+<div class="line">            QFileInfo fileInfo = filesList.at(i);</div>
+<div class="line">            result.push_back(fileInfo.absolutePath().toStdString() + &quot;/&quot; + fileInfo.fileName().toStdString());</div>
+<div class="line">        }</div>
+<div class="line">    } else {</div>
+<div class="line">        cout &lt;&lt; &quot;Data folder &quot; &lt;&lt; dirName &lt;&lt; &quot; is empty!&quot; &lt;&lt; endl;</div>
+<div class="line">        result.clear();</div>
+<div class="line">        return result;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    return result;</div>
+<div class="line">}</div>
+</div><!-- fragment --></li>
+</ol>
+<p>В методе <em><b>bool InputFileRFHandler::make_proletRF(string dirPath, vector&lt;proletRF::TimeZoneRF&gt; &amp;rf_trace_list, vector&lt;Satellite&gt; &amp;sattelites_list):</b></em></p>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">vector &lt;string&gt; files = getFileNamesInDir_QDir(dirPath);</div>
+</div><!-- fragment --><p>В методе <em><b>bool InputFileRFHandler::make_ZRV_trace_list(string dirPath, vector&lt;ZRV&gt; &amp;zrv_trace_list, string min_time):</b></em></p>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">vector &lt;string&gt; files = getFileNamesInDir_FS(dirPath)</div>
+</div><!-- fragment --><ol type="1">
+<li>Зайти в файл <a class="el" href="inputfileshandler_8h_source.html">inputfileshandler.h</a></li>
+<li>Раскомментировать в нем следующую строку:</li>
+</ol>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">vector &lt;string&gt; getFileNamesInDir_FS(string dirName);</div>
+</div><!-- fragment --><ol type="1">
+<li>В этом же файле закомментировать строку:</li>
+</ol>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">vector &lt;string&gt; getFileNamesInDir_QDir(string dirName);</div>
+</div><!-- fragment --><ol type="1">
+<li>Сохранить изменения в данных файлах</li>
+<li>Нажать правой кнопкой мыши на имя библиотеки</li>
+<li>Выбрать в появившемся списке "Собрать" </li>
+</ol>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

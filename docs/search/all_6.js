@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['last_5fprolet_9',['last_prolet',['../structprolet_r_f_1_1_satellite.html#a7d9c5722985f1be37e1de7bfb8a959f9',1,'proletRF::Satellite']]]
+  ['kinosputnik_11',['KINOSPUTNIK',['../namespaceprolet_r_f.html#a045378e5e4339d29e80c7a390e108dbba4ecb34d1a2966e1e29c4347aba7cbfba',1,'proletRF']]]
 ];
