@@ -1,9 +1,9 @@
 # Output results
 result.txt*
-proletRF.txt*
-zrv*
-shoot_intermediate.txt
-upload_intermediate.txt
+#proletRF.txt*
+#zrv*
+#shoot_intermediate.txt
+#upload_intermediate.txt
 user*
 #/prototype
 
