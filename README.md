@@ -2,6 +2,12 @@
 
 Планировщик передачи данных от КА на станции
 
+# Содержимое каталогов
+1. docs - документация исходного кода библиотеки в стиле Doxyden. Для просмотра откройте файл index.html
+2. mylib - исходный код библиотеки
+3. testlib - исходный код прототипа, использующего mylib
+4. prototype - исполняемый файл прототипа
+
 # Входные данные
 1. Файлы с пролетами спутников над РФ
 2. Файлы с зонами радиовидимости 
@@ -31,7 +37,7 @@ RESOURCES +=
 HEADERS += \
 ```
 
-# Как использовать
+# Как использовать на примере QtCreator
 
 1. Подключите библиотеку `mylib` к Вашему проекту 
 2. Укажите абсолютные пути к папкам с входными файлами
@@ -51,9 +57,8 @@ HEADERS += \
 Пример:
 ```c++
 #include <mylib.h>
-#include <finddatafilenames.h>
-
 #include <iostream>
+#include <QCoreApplication>
 
 using namespace std;
 
@@ -63,12 +68,12 @@ int main(int argc, char *argv[]) {
     string dirRF  = "/home/user/ProfIT-Data-Plannig/DATA_Files/Russia2Constellation/";
     string dirZRV = "/home/user/ProfIT-Data-Plannig/DATA_Files/Facility2Constellation/";
 
-	string prolety_file = "/home/anton/ProfIT-Data-Plannig/proletRF.txt";
-	string zrv_file = "/home/anton/ProfIT-Data-Plannig/zrv.txt";
+    string prolety_file = "/home/anton/ProfIT-Data-Plannig/proletRF.txt";
+    string zrv_file = "/home/anton/ProfIT-Data-Plannig/zrv.txt";
     string upload_file = "/home/anton/ProfIT-Data-Plannig/upload_intermediate.txt";
-    int upload_frequency = 1;
+    int upload_frequency = 10;
     string shoot_file = "/home/anton/ProfIT-Data-Plannig/shoot_intermediate.txt";
-    int shoot_frequency = 1;
+    int shoot_frequency = 10;
     string result_file  = "/home/anton/ProfIT-Data-Plannig/result";
 
     Mylib lib;
@@ -85,19 +90,19 @@ int main(int argc, char *argv[]) {
         lib.planning(true, true, true, true);
     }
 
-	a.exit();
+    a.exit();
 }
 ```
 
 # Сборка библиотеки
 
-**Сборка библиотеки под GCC:**
-1. В Qt Creator открыть файлы библиотеки через .pro файл
-2. Нажать правой кнопкой мыши на имя библиотеки
-3. Выбрать в появившемся списке выбрать "Собрать"
-
 **Сборка библиотеки под MingW:**
 1. В Qt Creator  открыть файлы библиотеки через .pro файл
+2. Нажать правой кнопкой мыши на имя библиотеки 
+3. Выбрать в появившемся списке выбрать "Собрать" 
+
+**Сборка библиотеки под GCC:**
+1. В Qt Creator открыть файлы библиотеки через .pro файл
 2. Зайти в файл inputfileshandler.cpp
 3. Раскомментровать следующие строки:
 
@@ -175,7 +180,7 @@ vector <string> getFileNamesInDir_FS(string dirName);
 ```c++
 vector <string> getFileNamesInDir_QDir(string dirName);
 ```
-
+	
 7. Сохранить изменения в данных файлах
 8. Нажать правой кнопкой мыши на имя библиотеки
 9. Выбрать в появившемся списке "Собрать"
