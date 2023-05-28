@@ -69,11 +69,37 @@ class TableProletRF
 public:
     TableProletRF();
 
+    /*! \fn SortTable()
+        \brief Сортировка вектора с пролетами над РФ по времени начала пролета
+        \param [in] ProletRF вектор пролетов над РФ (TimeZoneRF)
+        \return отсортированный вектор пролетов над РФ
+    */
     std::vector<TimeZoneRF> SortTable(std::vector<TimeZoneRF> ProletRF);
 
+    /*! \fn get_satellite_type(int sat_number, std::vector<proletRF::Satellite> satellites)
+        \brief Получить структуру КА (proletRF::Satellite)
+        \param [in] sat_number номер КА
+        \param [in] satellites вектор структур КА
+    */
     proletRF::Satellite get_cur_satellite_struct(int sat_number, std::vector<proletRF::Satellite> satellites);
+
+    /*! \fn get_satellite_type(int sat_number, std::vector<proletRF::Satellite> satellites)
+        \brief Получить тип КА
+        \param [in] sat_number номер КА
+        \param [in] satellites вектор структур КА
+    */
     SATELLITE_TYPE get_satellite_type(int sat_number, std::vector<proletRF::Satellite> satellites);
+
+    /*! \fn get_bitrate(SATELLITE_TYPE type)
+        \brief Получить скорость сброса данных
+        \param [in] zrv_sorted_file
+    */
     double get_bitrate(SATELLITE_TYPE type);
+
+    /*! \fn get_tank_size(SATELLITE_TYPE type)
+        \brief Получить максимальный объем ЗУ для конкретного типа КА
+        \param [in] type типа КА
+    */
     double get_tank_size(SATELLITE_TYPE type);
 
 private:
