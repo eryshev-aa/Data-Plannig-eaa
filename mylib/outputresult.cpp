@@ -15,8 +15,8 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     std::ofstream fout;
     std::string current_path = m_out_file_name+"-Facility-"+answerData[0].ppi+".txt";
     fout.open(current_path);
-    std::string current_ppi=answerData[0].ppi;
-    std::vector <std::string> put_ppi;
+    std::string current_ppi = answerData[0].ppi;
+    std::vector<std::string> put_ppi;
     std::vector<double> totals;
     totals.reserve(1);
     totals.push_back(0.0);
@@ -25,19 +25,19 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     time_t t;
     char start [80];
     char end [80];
-    //just a beautiful comment
+
     fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)  *sat_n   * Data(Gbyte)" << std::endl;
     fout << "--------------------------------------------------------------------------------------------" << std::endl;
     fout << std::flush;
-    double total_upload=0.0;
+    double total_upload = 0.0;
     for (auto answer: answerData)
     {
         if (answer.ppi!=current_ppi) {
             auto i = std::find(put_ppi.begin(), put_ppi.end(),current_ppi);
-            totals.at(std::distance(put_ppi.begin(),i))+=total_upload;
-            current_path=m_out_file_name+"-Facility-"+answer.ppi+".txt";
+            totals.at(std::distance(put_ppi.begin(),i)) += total_upload;
+            current_path=m_out_file_name + "-Facility-" + answer.ppi + ".txt";
             current_ppi=answer.ppi;
-            total_upload=0.0;
+            total_upload = 0.0;
             fout.close();
             fout.open(current_path, std::fstream::app | std::fstream::out);
             auto it =std::find_if(put_ppi.begin(),put_ppi.end(), [&current_ppi](const std::string& a){
@@ -62,6 +62,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
                  << answer.satellite << "   "
                  << answer.transfered_inf
                  << std::endl;
+
             total_upload+=answer.transfered_inf;
         } else {
             time (&t);
@@ -84,7 +85,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
 
     for(const auto& ppi:put_ppi){
         fout.open(m_out_file_name+"-Facility-"+ppi+".txt", std::fstream::app);
-        fout<<"Total transfered information (Gbyte): "<<totals[i]<<std::endl;
+        fout << "Total transfered information (Gbyte): " << totals[i] << std::endl;
         i++;
         fout.close();
     }

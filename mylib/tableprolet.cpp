@@ -60,8 +60,6 @@ bool TableProletRF::Comparator(const TimeZoneRF &zone1, const  TimeZoneRF &zone2
 //функция в которой происходит сортировка таблицы
 std::vector<TimeZoneRF> TableProletRF::SortTable(std::vector<TimeZoneRF> ProletRF){
     std::sort(ProletRF.begin(), ProletRF.end(), &TableProletRF::Comparator);
-    // добавить в однук сортировку не получилось иначе происходит "каша" с данными
-    //std::sort(ProletRF.begin(), ProletRF.end(), &TableProletRF::ZoneComporator);
     return ProletRF;
 }
 
@@ -610,10 +608,10 @@ bool TableZRV::cross_zrv_check(proletRF::Satellite cur_sat, std::vector<proletRF
             for(const auto& tmpZRV: cross_zrv_list){
                 double target_ka_tank = get_current_tank_size(cur_target_zrv.satellite, satellites);
                 double tmp_ka_tank = get_current_tank_size(tmpZRV.satellite, satellites);
-                TableProletRF tRF;
-                double need_time_for_upload_target_ka_tank = target_ka_tank / cur_sat.bitrate;
-                proletRF::Satellite tmp_sat = tRF.get_cur_satellite_struct(tmpZRV.satellite, satellites);
-                double need_time_for_upload_tmp_ka_tank = tmp_ka_tank / tmp_sat.bitrate;
+                //TableProletRF tRF;
+                //double need_time_for_upload_target_ka_tank = target_ka_tank / cur_sat.bitrate;
+                //proletRF::Satellite tmp_sat = tRF.get_cur_satellite_struct(tmpZRV.satellite, satellites);
+                //double need_time_for_upload_tmp_ka_tank = tmp_ka_tank / tmp_sat.bitrate;
                 if (target_ka_tank == 1.0) {
                     using_zrv = tmpZRV;
                     return true;
