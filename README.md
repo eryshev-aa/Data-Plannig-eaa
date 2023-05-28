@@ -35,7 +35,7 @@ HEADERS += \
 
 1. Подключите библиотеку `mylib` к Вашему проекту 
 2. Укажите абсолютные пути к папкам с входными файлами
-3. Укажите пути к файлам для выходных файлов
+3. Укажите пути и имена к файлам для выходных файлов
 4. Укажите параметры для запуска
 5. Поочередно вызовите следующие методы:
 - set_prolety_sorted_file(string prolety_sorted_file)
@@ -47,8 +47,6 @@ HEADERS += \
 - set_result_file(string result_file)
 - readInputData(string dirRF, string dirZRV)
 - planning(bool makeRFsortFile, bool makeZRVsortFile, bool makeShootFile, bool makeUploadFile)
-- 
-- 
 
 Пример:
 ```c++
