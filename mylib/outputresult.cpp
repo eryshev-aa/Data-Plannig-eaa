@@ -84,7 +84,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
 
     for(const auto& ppi:put_ppi){
         fout.open(m_out_file_name+"-Facility-"+ppi+".txt", std::fstream::app);
-        fout<<"Total transfered information: "<<totals[i]<<std::endl;
+        fout<<"Total transfered information (Gbyte): "<<totals[i]<<std::endl;
         i++;
         fout.close();
     }
