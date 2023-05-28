@@ -26,13 +26,14 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)  *sat_n   * Data(Gbyte)" << std::endl;
     fout << "--------------------------------------------------------------------------------------------" << std::endl;
     fout << std::flush;
-
+    double total_upload=0.0;
     for (auto answer: answerData)
     {
         if (answer.ppi!=current_ppi) {
+            fout << "Sum of transfered information: "<<total_upload <<"Gbyte"<< std::endl;
             current_path=m_out_file_name+"-Facility-"+answer.ppi+".txt";
             current_ppi=answer.ppi;
-
+            total_upload=0.0;
             fout.close();
             fout.open(current_path, std::fstream::app | std::fstream::out);
             auto it =std::find_if(put_ppi.begin(),put_ppi.end(), [&current_ppi](const std::string& a){
@@ -56,11 +57,12 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
                  << answer.satellite << "   "
                  << answer.transfered_inf
                  << std::endl;
+            total_upload+=answer.transfered_inf;
         } else {
             time (&t);
             strftime (start, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_start);
             strftime (end, 80, "%d.%m.%Y %H:%M:%S.", &answer.tm_end);
-
+            total_upload+=answer.transfered_inf;
             fout << std::setw(6) << std::setprecision(3) << std::right;
             fout << access << "   "
                  << start << makeOutputStringMsec(answer.milisecs_start) << "   "
@@ -72,7 +74,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
         }
         access ++;
     }
-
+    fout << "Sum of transfered information: "<<total_upload <<"Gbyte" <<std::endl;
     fout.close();
 }
 
