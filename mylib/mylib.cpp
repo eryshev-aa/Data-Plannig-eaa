@@ -13,7 +13,7 @@
 
 Mylib::Mylib()
 {
-
+    std::cout << "Start Mylib" << std::endl;
 }
 
 void Mylib::set_prolety_sorted_file(string prolety_sorted_file) {
@@ -85,8 +85,8 @@ void Mylib::planning(bool makeRFsortFile, bool makeZRVsortFile, bool makeShootFi
     if (makeUploadFile) {
         fout.open(m_upload_file, std::fstream::out);
 
-        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)   *sat_n     * ppi     * Fill(Gbyte)   * tank % " << std::endl;
-        fout << "----------------------------------------------------------------------------------------------------------------------" << std::endl;
+        fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)   *sat_n   * ppi          * drop(Gbyte)  * tank %" << std::endl;
+        fout << "-----------------------------------------------------------------------------------------------------------------------" << std::endl;
         fout.close();
     }
 

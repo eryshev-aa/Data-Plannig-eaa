@@ -28,8 +28,8 @@ public:
 
     /*! \fn readInputData(string dirRF, string dirZRV)
         \brief Чтение входных данных из файлов с пролетами над РФ и фалов с ЗРВ
-        \param [in] dirRF абсолютный путь к папке с файлами пролетов над РФ
-        \param [in] dirZRV абсолютный путь к папке с файлами с зонами видимости
+        \param [in] dirRF путь к папке с файлами пролетов над РФ
+        \param [in] dirZRV путь к папке с файлами с зонами видимости
         \return false - если возникли проблемы при работе с файлами. Иначе - true.
     */
     bool readInputData(string dirRF, string dirZRV);

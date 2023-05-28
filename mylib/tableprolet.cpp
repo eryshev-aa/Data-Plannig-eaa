@@ -65,6 +65,28 @@ std::vector<TimeZoneRF> TableProletRF::SortTable(std::vector<TimeZoneRF> ProletR
     return ProletRF;
 }
 
+proletRF::Satellite TableProletRF::get_cur_satellite_struct(int sat_number, std::vector<proletRF::Satellite> satellites) {
+    proletRF::Satellite res;
+    for(auto sat: satellites){
+        if (sat.satellite == sat_number) {
+            res = sat;
+            break;
+        }
+    }
+    return res;
+}
+
+SATELLITE_TYPE TableProletRF::get_satellite_type(int sat_number, std::vector<proletRF::Satellite> satellites) {
+    SATELLITE_TYPE type;
+    for(auto sat: satellites){
+        if (sat.satellite == sat_number) {
+            type = sat.type;
+            break;
+        }
+    }
+    return type;
+}
+
 double TableProletRF::get_bitrate(SATELLITE_TYPE type){
     if (type == SATELLITE_TYPE::KINOSPUTNIK) {
         return 0.125;//1.0; //
@@ -274,8 +296,10 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
         }
         finish_checks = false;
         proletRF::Satellite sat;
+        TableProletRF tRF;
+        proletRF::Satellite cur_sat = tRF.get_cur_satellite_struct(cur_prolet.satellite, satellites);
         if (get_current_tank_size(cur_prolet.satellite, satellites) > 0.60) {
-            while (get_current_tank_size(cur_prolet.satellite, satellites) > 0.60) { //пока в баке более 60% пытаемся найти ЗРВ для сброса и сбросить
+            while (get_current_tank_size(cur_prolet.satellite, satellites) > 0.60) { //пока в баке более установленного% пытаемся найти ЗРВ для сброса и сбросить
                 if (finish_checks) break;
                 proletRF::TimeZoneRF before = find_before(satellites, cur_prolet.satellite); // находим время окончания прошлого пролета или время окончаня прошлого сброса
                 std::vector<proletZRV::ZRV> zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 1); //вектор всех возможных подходящих ЗРВ строго между пролетами этого КА
@@ -284,12 +308,12 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                     if (get_current_tank_size(cur_prolet.satellite, satellites) == 1.0) { // если у текущего КА полный бак, то забираем эту ЗРВ под сброс
                         upload(cur_prolet, zrv.at(0), satellites, answer);
                         delete_ZRV_after_upload(zrv.at(0), zrv_list);
-                        if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
+                        if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно, то еще и снимаем
                             shooting(cur_prolet, cur_prolet.duration, satellites, sat);
                         }
                         continue;
                     }
-                    if (cross_zrv_check(satellites, zrv, zrv_list, using_zrv)) { // если бак не полный, смотрим у кого бак более заполнен
+                    if (cross_zrv_check(cur_sat, satellites, zrv, zrv_list, using_zrv)) { // анализ пересечений ЗРВ
                         upload(cur_prolet, using_zrv, satellites, answer); // если у нас или вообще нет пересечений с другими КА, то мы збрасываем
                         delete_ZRV_after_upload(using_zrv, zrv_list);
                         if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
@@ -300,7 +324,7 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                     } else { // если не удалось найти ЗРВ, т.к. на всех пересечениях у дгурих КА больше данных в баке
                         zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервал
                         if (!zrv.empty()) { //если нашли ЗРВ
-                            if (cross_zrv_check(satellites, zrv, zrv_list, using_zrv)) {
+                            if (cross_zrv_check(cur_sat, satellites, zrv, zrv_list, using_zrv)) {
                                 upload(cur_prolet, using_zrv, satellites, answer);
                                 delete_ZRV_after_upload(using_zrv, zrv_list);
                                 break;
@@ -325,7 +349,7 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                             finish_checks = true;
                             break;
                         }
-                        if (cross_zrv_check(satellites, zrv, zrv_list, using_zrv)) {
+                        if (cross_zrv_check(cur_sat, satellites, zrv, zrv_list, using_zrv)) {
                             upload(cur_prolet, using_zrv, satellites, answer);
                             delete_ZRV_after_upload(using_zrv, zrv_list);
                             finish_checks = true;
@@ -390,7 +414,7 @@ void TableZRV::analyze_after_prolet(std::vector<proletZRV::ZRV> &zrv_list, std::
                     }
                     continue;
                 }
-                if (cross_zrv_check(satellites, zrv, zrv_list, using_zrv)) { // если бак не полный, смотрим у кого бак более заполнен
+                if (cross_zrv_check(sat, satellites, zrv, zrv_list, using_zrv)) { // если бак не полный, смотрим у кого бак более заполнен
                     upload(zrv_prolet, using_zrv, satellites, answer); // если у нас или вообще нет пересечений с другими КА, то мы cбрасываем
                     //if(m_shoot_data.size()%100==0){makeResult_for_shoot(m_shoot_data%100);}
                     delete_ZRV_after_upload(using_zrv, zrv_list);
@@ -550,7 +574,7 @@ void TableZRV::delete_ZRV_after_prolet(proletRF::Satellite satellite, std::vecto
     }),table_zrv.end());
 }
 
-bool TableZRV::cross_zrv_check(std::vector<proletRF::Satellite> satellites, std::vector<proletZRV::ZRV> target_zrv, std::vector<ZRV> table_zrv, proletZRV::ZRV &using_zrv) {
+bool TableZRV::cross_zrv_check(proletRF::Satellite cur_sat, std::vector<proletRF::Satellite> satellites, std::vector<proletZRV::ZRV> target_zrv, std::vector<ZRV> table_zrv, proletZRV::ZRV &using_zrv) {
     unsigned long long result = 0;
     std::vector<proletZRV::ZRV> cross_zrv_list;
     cross_zrv_list.reserve(1);
@@ -586,16 +610,27 @@ bool TableZRV::cross_zrv_check(std::vector<proletRF::Satellite> satellites, std:
             for(const auto& tmpZRV: cross_zrv_list){
                 double target_ka_tank = get_current_tank_size(cur_target_zrv.satellite, satellites);
                 double tmp_ka_tank = get_current_tank_size(tmpZRV.satellite, satellites);
+                TableProletRF tRF;
+                double need_time_for_upload_target_ka_tank = target_ka_tank / cur_sat.bitrate;
+                proletRF::Satellite tmp_sat = tRF.get_cur_satellite_struct(tmpZRV.satellite, satellites);
+                double need_time_for_upload_tmp_ka_tank = tmp_ka_tank / tmp_sat.bitrate;
                 if (target_ka_tank == 1.0) {
                     using_zrv = tmpZRV;
                     return true;
-                } else if (target_ka_tank >= tmp_ka_tank) {
+                } else if (need_time_for_upload_target_ka_tank > need_time_for_upload_tmp_ka_tank) {
                     using_zrv = cur_target_zrv;
                     result ++;
-                } else { // если у другого КА бак более заполнен
+                } else {
                     result = 0;
                     break;
                 }
+//                } else if (target_ka_tank >= tmp_ka_tank) {
+//                    using_zrv = cur_target_zrv;
+//                    result ++;
+//                } else { // если у другого КА бак более заполнен
+//                    result = 0;
+//                    break;
+//                }
                 if (result == cross_zrv_list.size()) {
                     return true;
                 }
@@ -686,15 +721,15 @@ void TableZRV::makeResult_for_upload(int pos){
              << start << makeOutputStringMsec(m_upload_data[i].milisecs_start) << "   "
              << end << makeOutputStringMsec(m_upload_data[i].milisecs_end) << "   "
              << std::setw(7) << std::fixed << std::right << m_upload_data[i].duration << "   "
-             << std::setw(7) << m_upload_data[i].satellite
-             << std::setw(12) << m_upload_data[i].ppi << "   "
-             << std::right << m_upload_data[i].transfered_inf << "        "
-             << std::setw(7) << m_upload_data[i].tank_balance * 100
+             << std::setw(7) << m_upload_data[i].satellite << "   "
+             << std::left << std::setw(12) << m_upload_data[i].ppi << "  "
+             << std::setw(7) << std::right << m_upload_data[i].transfered_inf << "        "
+             << std::right << std::setw(7) << m_upload_data[i].tank_balance * 100
              << std::endl;
 
         access ++;
     }
-    fout<<"All uploaded data for now: "<<m_total_upload<<std::endl;
+    fout << "All uploaded data for now: " << m_total_upload << std::endl;
     fout.close();
 }
 

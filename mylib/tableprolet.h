@@ -71,6 +71,8 @@ public:
 
     std::vector<TimeZoneRF> SortTable(std::vector<TimeZoneRF> ProletRF);
 
+    proletRF::Satellite get_cur_satellite_struct(int sat_number, std::vector<proletRF::Satellite> satellites);
+    SATELLITE_TYPE get_satellite_type(int sat_number, std::vector<proletRF::Satellite> satellites);
     double get_bitrate(SATELLITE_TYPE type);
     double get_tank_size(SATELLITE_TYPE type);
 
@@ -181,7 +183,7 @@ private:
     double upload(proletRF::TimeZoneRF prolet, proletZRV::ZRV zrv, std::vector<proletRF::Satellite> &satellites, std::vector<AnswerData> &answer);
     double get_current_tank_size(int sat_number, std::vector<proletRF::Satellite> satellites);
 
-    bool cross_zrv_check(std::vector<proletRF::Satellite> satellites, std::vector<proletZRV::ZRV>, std::vector<proletZRV::ZRV> table_zrv, proletZRV::ZRV &using_zrv);
+    bool cross_zrv_check(proletRF::Satellite cur_sat, std::vector<proletRF::Satellite> satellites, std::vector<proletZRV::ZRV>, std::vector<proletZRV::ZRV> table_zrv, proletZRV::ZRV &using_zrv);
     void analyze_after_prolet(std::vector<proletZRV::ZRV> &zrv_list, std::vector<proletRF::Satellite> &satellites, std::vector <proletZRV::AnswerData> &answer);
     void delete_ZRV_after_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);
     void delete_1_ZRV_upload(proletZRV::ZRV cur_zrv, std::vector<ZRV> &table_zrv);

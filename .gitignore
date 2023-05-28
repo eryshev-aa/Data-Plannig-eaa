@@ -4,6 +4,8 @@ proletRF.txt*
 zrv*
 shoot_intermediate.txt
 upload_intermediate.txt
+user*
+/prototype
 
 # Prerequisites
 *.d
