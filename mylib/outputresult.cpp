@@ -25,7 +25,7 @@ void OutputResult::makeResultFile(std::vector <proletZRV::AnswerData> answerData
     time_t t;
     char start [80];
     char end [80];
-
+    //just a beautiful comment
     fout << " Access  *  Start Time(UTCG)       *   Stop Time(UTCG)       * dur(s)  *sat_n   * Data(Gbyte)" << std::endl;
     fout << "--------------------------------------------------------------------------------------------" << std::endl;
     fout << std::flush;
