@@ -617,20 +617,20 @@ bool TableZRV::cross_zrv_check(proletRF::Satellite cur_sat, std::vector<proletRF
                 if (target_ka_tank == 1.0) {
                     using_zrv = tmpZRV;
                     return true;
-                } else if (need_time_for_upload_target_ka_tank > need_time_for_upload_tmp_ka_tank) {
-                    using_zrv = cur_target_zrv;
-                    result ++;
-                } else {
-                    result = 0;
-                    break;
-                }
-//                } else if (target_ka_tank >= tmp_ka_tank) {
+//                } else if (need_time_for_upload_target_ka_tank > need_time_for_upload_tmp_ka_tank) {
 //                    using_zrv = cur_target_zrv;
 //                    result ++;
-//                } else { // если у другого КА бак более заполнен
+//                } else {
 //                    result = 0;
 //                    break;
 //                }
+                } else if (target_ka_tank >= tmp_ka_tank) {
+                    using_zrv = cur_target_zrv;
+                    result ++;
+                } else { // если у другого КА бак более заполнен
+                    result = 0;
+                    break;
+                }
                 if (result == cross_zrv_list.size()) {
                     return true;
                 }
