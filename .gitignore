@@ -5,7 +5,7 @@ zrv*
 shoot_intermediate.txt
 upload_intermediate.txt
 user*
-/prototype
+#/prototype
 
 # Prerequisites
 *.d
