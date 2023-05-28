@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
         lib.planning(true, true, true, true);
     }
 
-    a.exit();
+    return a.exec();
 }
 ```
 
