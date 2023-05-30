@@ -311,30 +311,33 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                         }
                         continue;
                     }
-                    if (cross_zrv_check(cur_sat, satellites, zrv, zrv_list, using_zrv)) { // анализ пересечений ЗРВ
-                        upload(cur_prolet, using_zrv, satellites, answer); // если у нас или вообще нет пересечений с другими КА, то мы збрасываем
-                        delete_ZRV_after_upload(using_zrv, zrv_list);
-                        if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
-                            shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                        }
-                        finish_checks = true;
-                        break;
-                    } else { // если не удалось найти ЗРВ, т.к. на всех пересечениях у дгурих КА больше данных в баке
-                        zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервал
-                        if (!zrv.empty()) { //если нашли ЗРВ
-                            if (cross_zrv_check(cur_sat, satellites, zrv, zrv_list, using_zrv)) {
-                                upload(cur_prolet, using_zrv, satellites, answer);
-                                delete_ZRV_after_upload(using_zrv, zrv_list);
-                                break;
-                            } else { // если и в расширенном интервале все занято, то просто снимаем
+                    for (int i = 0; i < 10; i++) { //для ускорения интересно посмотреть, только первые 10 пересечний
+                        if (cross_zrv_check(cur_sat, satellites, zrv, zrv_list, using_zrv)) { // анализ пересечений ЗРВ
+                            upload(cur_prolet, using_zrv, satellites, answer); // если у нас или вообще нет пересечений с другими КА, то мы збрасываем
+                            delete_ZRV_after_upload(using_zrv, zrv_list);
+                            if (get_current_tank_size(cur_prolet.satellite, satellites) <= 0.60) { // если после сброса высвободилось достаточно (<60), то еще и снимаем
+                                shooting(cur_prolet, cur_prolet.duration, satellites, sat);
+                            }
+                            finish_checks = true;
+                            break;
+                        } else { // если не удалось найти ЗРВ, т.к. на всех пересечениях у дгурих КА больше данных в баке
+                            zrv = find_ZRV_between_2_prolet(zrv_list, before, cur_prolet, 2); //вектор всех возможных подходящих ЗРВ в расширенном интервал
+                            // здесь попробуем не уменьшать поиск до 10
+                            if (!zrv.empty()) { //если нашли ЗРВ
+                                if (cross_zrv_check(cur_sat, satellites, zrv, zrv_list, using_zrv)) {
+                                    upload(cur_prolet, using_zrv, satellites, answer);
+                                    delete_ZRV_after_upload(using_zrv, zrv_list);
+                                    break;
+                                } else { // если и в расширенном интервале все занято, то просто снимаем
+                                    shooting(cur_prolet, cur_prolet.duration, satellites, sat);
+                                    finish_checks = true;
+                                    break;
+                                }
+                            } else {
                                 shooting(cur_prolet, cur_prolet.duration, satellites, sat);
                                 finish_checks = true;
                                 break;
                             }
-                        } else {
-                            shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            finish_checks = true;
-                            break;
                         }
                     }
                 } else { //если не нашли, то расширяем интервао до коца пролета
@@ -347,15 +350,17 @@ void TableZRV::AnalyzeTask(std::vector<proletRF::TimeZoneRF> &proletyRF, std::ve
                             finish_checks = true;
                             break;
                         }
-                        if (cross_zrv_check(cur_sat, satellites, zrv, zrv_list, using_zrv)) {
-                            upload(cur_prolet, using_zrv, satellites, answer);
-                            delete_ZRV_after_upload(using_zrv, zrv_list);
-                            finish_checks = true;
-                            break;
-                        } else {
-                            shooting(cur_prolet, cur_prolet.duration, satellites, sat);
-                            finish_checks = true;
-                            break;
+                        for (int i = 0; i < 10; i++) { //для ускорения интересно посмотреть, только первые 10 пересечний
+                            if (cross_zrv_check(cur_sat, satellites, zrv, zrv_list, using_zrv)) {
+                                upload(cur_prolet, using_zrv, satellites, answer);
+                                delete_ZRV_after_upload(using_zrv, zrv_list);
+                                finish_checks = true;
+                                break;
+                            } else {
+                                shooting(cur_prolet, cur_prolet.duration, satellites, sat);
+                                finish_checks = true;
+                                break;
+                            }
                         }
                     } else {
                         shooting(cur_prolet, cur_prolet.duration, satellites, sat);
@@ -605,32 +610,63 @@ bool TableZRV::cross_zrv_check(proletRF::Satellite cur_sat, std::vector<proletRF
         });
 
         if (!cross_zrv_list.empty()) {
-            for(const auto& tmpZRV: cross_zrv_list){
-                double target_ka_tank = get_current_tank_size(cur_target_zrv.satellite, satellites);
-                double tmp_ka_tank = get_current_tank_size(tmpZRV.satellite, satellites);
-                //TableProletRF tRF;
-                //double need_time_for_upload_target_ka_tank = target_ka_tank / cur_sat.bitrate;
-                //proletRF::Satellite tmp_sat = tRF.get_cur_satellite_struct(tmpZRV.satellite, satellites);
-                //double need_time_for_upload_tmp_ka_tank = tmp_ka_tank / tmp_sat.bitrate;
-                if (target_ka_tank == 1.0) {
-                    using_zrv = tmpZRV;
-                    return true;
-//                } else if (need_time_for_upload_target_ka_tank > need_time_for_upload_tmp_ka_tank) {
-//                    using_zrv = cur_target_zrv;
-//                    result ++;
-//                } else {
-//                    result = 0;
-//                    break;
-//                }
-                } else if (target_ka_tank >= tmp_ka_tank) {
-                    using_zrv = cur_target_zrv;
-                    result ++;
-                } else { // если у другого КА бак более заполнен
-                    result = 0;
-                    break;
+            if (cross_zrv_list.size() < 10) { //
+                for(const auto& tmpZRV: cross_zrv_list){
+                    double target_ka_tank = get_current_tank_size(cur_target_zrv.satellite, satellites);
+                    double tmp_ka_tank = get_current_tank_size(tmpZRV.satellite, satellites);
+                    //TableProletRF tRF;
+                    //double need_time_for_upload_target_ka_tank = target_ka_tank / cur_sat.bitrate;
+                    //proletRF::Satellite tmp_sat = tRF.get_cur_satellite_struct(tmpZRV.satellite, satellites);
+                    //double need_time_for_upload_tmp_ka_tank = tmp_ka_tank / tmp_sat.bitrate;
+                    if (target_ka_tank == 1.0) {
+                        using_zrv = tmpZRV;
+                        return true;
+                        //                } else if (need_time_for_upload_target_ka_tank > need_time_for_upload_tmp_ka_tank) {
+                        //                    using_zrv = cur_target_zrv;
+                        //                    result ++;
+                        //                } else {
+                        //                    result = 0;
+                        //                    break;
+                        //                }
+                    } else if (target_ka_tank >= tmp_ka_tank) {
+                        using_zrv = cur_target_zrv;
+                        result ++;
+                    } else { // если у другого КА бак более заполнен
+                        result = 0;
+                        break;
+                    }
+                    if (result == cross_zrv_list.size()) {
+                        return true;
+                    }
                 }
-                if (result == cross_zrv_list.size()) {
-                    return true;
+            } else {
+                for(int i = 0; i < 10; i++){
+                    double target_ka_tank = get_current_tank_size(cur_target_zrv.satellite, satellites);
+                    double tmp_ka_tank = get_current_tank_size(cross_zrv_list.at(i).satellite, satellites);
+                    //TableProletRF tRF;
+                    //double need_time_for_upload_target_ka_tank = target_ka_tank / cur_sat.bitrate;
+                    //proletRF::Satellite tmp_sat = tRF.get_cur_satellite_struct(tmpZRV.satellite, satellites);
+                    //double need_time_for_upload_tmp_ka_tank = tmp_ka_tank / tmp_sat.bitrate;
+                    if (target_ka_tank == 1.0) {
+                        using_zrv = cross_zrv_list.at(i);
+                        return true;
+                        //                } else if (need_time_for_upload_target_ka_tank > need_time_for_upload_tmp_ka_tank) {
+                        //                    using_zrv = cur_target_zrv;
+                        //                    result ++;
+                        //                } else {
+                        //                    result = 0;
+                        //                    break;
+                        //                }
+                    } else if (target_ka_tank >= tmp_ka_tank) {
+                        using_zrv = cur_target_zrv;
+                        result ++;
+                    } else { // если у другого КА бак более заполнен
+                        result = 0;
+                        break;
+                    }
+                    if (result == 10) {
+                        return true;
+                    }
                 }
             }
         } else {
